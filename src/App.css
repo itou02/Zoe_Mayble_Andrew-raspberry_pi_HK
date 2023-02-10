@@ -1,3 +1,68 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Century Gothic";
+}
+
+.time_box {
+  margin: 2% 0;
+  background-color: none !important;
+  /* display: flex; */
+  /* justify-content:"center"; */
+  /* align-items:"center"; */
+}
+
+.record_box {
+  margin: 5% 0;
+  background-color: #E0E0E0;
+  border-radius: 10px;
+}
+.temperature_box {
+  /* padding: 5%; */
+}
+.humidity_box {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  object-fit: fill;
+}
+.chart_box {
+  margin: 5% 0;
+  background-color: #E0E0E0;
+  border-radius: 10px;
+}
+
+.time_background {
+  background: gray;
+}
+
+.record_background {
+  background: rgb(215, 215, 215);
+}
+
+.chart_background {
+  background: rgb(132, 132, 132);
+}
+
+.date {
+  font-size: 250%;
+}
+
+.time {
+  font-size: 400%;
+  font-weight: bolder;
+}
+
+#c1 {
+  text-align: center;
+  display: block;
+  margin: 0px auto;
+  background-color: none !important;
+  padding: 1px;
+  border: none;
+}
+
 .App {
   text-align: center;
 }
@@ -32,6 +97,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
