@@ -28,9 +28,16 @@
   object-fit: fill;
 }
 .chart_box {
-  margin: 5% 0;
   background-color: #E0E0E0;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tabs{
+  font-weight: bold;  
+  font-size: 48px;
 }
 
 .time_background {
@@ -43,6 +50,8 @@
 
 .chart_background {
   background: rgb(132, 132, 132);
+  display: flex;
+  justify-content: center;
 }
 
 .date {
@@ -101,4 +110,27 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+:where(.css-dev-only-do-not-override-ixblex).ant-tabs >.ant-tabs-nav .ant-tabs-nav-wrap, :where(.css-dev-only-do-not-override-ixblex).ant-tabs >div>.ant-tabs-nav .ant-tabs-nav-wrap {
+  position: relative;
+  display: flex;
+  flex: auto;
+  align-self: stretch;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translate(0);
+  justify-content: center;
+}
+
+:where(.css-dev-only-do-not-override-ixblex).ant-tabs .ant-tabs-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 28px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
 }

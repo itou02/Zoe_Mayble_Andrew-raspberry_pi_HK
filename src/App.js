@@ -1,11 +1,25 @@
 import * as echarts from "echarts";
 import "./App.css";
-import { Layout, Menu, Breadcrumb, Button, Row, Col, DatePicker } from "antd";
+import { Row, Col, Anchor, Tabs } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
+import RecordChart from "./recordChart.tsx";
+import Chart from "./components/chart/Chart";
+import TabPane from "antd/es/tabs/TabPane";
+import PropTypes from "prop-types";
+
+/*圖表標籤頁*/
+const onChange = (key) => {
+  console.log(key);
+};
+
+/*----------*/
 
 function App() {
+  // tab test
+  // ---
+
   function ticking() {
     const element = (
       <div>
@@ -181,7 +195,7 @@ function App() {
           xAxisIndex: 0,
           data: [
             {
-              value: (showValue + 30), // 条状高度和刻度值一样
+              value: showValue + 30, // 条状高度和刻度值一样
             },
           ],
 
@@ -197,9 +211,9 @@ function App() {
           name: "白框",
           type: "bar",
           xAxisIndex: 1,
-          
+
           barGap: "-100%",
-          data: [89],//裡面長條的長度
+          data: [89], //裡面長條的長度
           barWidth: 28,
           itemStyle: {
             normal: {
@@ -310,140 +324,8 @@ function App() {
     option && myChart.setOption(option);
   };
 
-  // 折線圖
-  const initChart = () => {
-    var chartDom = document.getElementById("lineChart");
-    var myChart = echarts.init(chartDom);
-    var option;
-
-    let base = +new Date(2016, 9, 3);
-    let oneDay = 24 * 3600 * 1000;
-    let valueBase = Math.random() * 300;
-    let valueBase2 = Math.random() * 50;
-    let time = [1, 2, 3, 4]; //[時間]
-    let line1 = [
-      [time[0], 10],
-      [time[1], 21],
-    ]; //[時間,值] 溫度數據
-    let line2 = [
-      [time[0], 14],
-      [time[1], 20],
-    ]; //[時間,值] 濕度數據
-    option = {
-      title: {
-        top: "5%",
-        left: "center",
-        text: "溫溼度統計變化",
-      },
-      legend: {
-        top: "bottom",
-        data: ["Intention"],
-      },
-      tooltip: {
-        triggerOn: "none",
-        position: function (pt) {
-          return [pt[0], 130];
-        },
-      },
-      toolbox: {
-        left: "center",
-        itemSize: 25,
-        top: 55,
-        feature: {
-          dataZoom: {
-            yAxisIndex: "none",
-          },
-          restore: {},
-        },
-      },
-      xAxis: {
-        type: "time",
-        axisPointer: {
-          value: "2016-10-7",
-          snap: true,
-          lineStyle: {
-            color: "#7581BD",
-            width: 2,
-          },
-          label: {
-            show: true,
-            formatter: function (params) {
-              return echarts.format.formatTime("yyyy-MM-dd", params.value);
-            },
-            backgroundColor: "#7581BD",
-          },
-          handle: {
-            show: false,
-            color: "#7581BD",
-          },
-        },
-        splitLine: {
-          show: false,
-        },
-      },
-      yAxis: {
-        type: "value",
-        axisTick: {
-          inside: true,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          inside: true,
-          formatter: "{value}\n",
-        },
-        z: 10,
-      },
-      grid: {
-        top: 110,
-        left: 150,
-        right: 150,
-        height: 250,
-      },
-      dataZoom: [
-        {
-          type: "inside",
-          throttle: 50,
-        },
-      ],
-      series: [
-        {
-          name: "Fake Data",
-          type: "line",
-          smooth: true,
-          symbol: "circle",
-          symbolSize: 5,
-          sampling: "average",
-          itemStyle: {
-            color: "#0770FF",
-          },
-          stack: "a",
-
-          data: line1,
-        },
-        {
-          name: "Fake Data",
-          type: "line",
-          smooth: true,
-          stack: "a",
-          symbol: "circle",
-          symbolSize: 5,
-          sampling: "average",
-          itemStyle: {
-            color: "#F2597F",
-          },
-
-          data: line2,
-        },
-      ],
-    };
-
-    option && myChart.setOption(option);
-  };
-
   useEffect(() => {
-    initChart();
+    onChange();
     temp();
   }, []);
 
@@ -474,12 +356,20 @@ function App() {
         </Col>
       </Row>
       <Row className="chart_background">
+        {/* 統計圖表標籤頁 */}
         <Col span={24} justify="centers" align="center">
           <div className="chart_box">
-            <div
-              id="lineChart"
-              style={{ width: "80%", margin: "50px auto", height: "600px" }}
-            ></div>
+            <Tabs defaultActiveKey={1} className="tabs">
+              <Tabs.TabPane tab="Hour" key="1">
+                <RecordChart />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Day" key="2">
+                <RecordChart />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="Week" key="3">
+                <RecordChart />
+              </Tabs.TabPane>
+            </Tabs>
           </div>
         </Col>
       </Row>
