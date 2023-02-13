@@ -134,3 +134,11 @@
   outline: none;
   cursor: pointer;
 }
+
+.temperature_degree{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 64px;
+  font-weight: bold;
+}

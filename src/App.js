@@ -56,7 +56,7 @@ function App() {
     var chartDom = document.getElementById("temp");
     var myChart = echarts.init(chartDom);
     // var option;
-    var TP_value = 30;
+    var TP_value = 9;
     var kd = [];
     var Gradient = [];
     var leftColor = "";
@@ -64,7 +64,7 @@ function App() {
     var boxPosition = [65, 0];
     var TP_txt = "";
     // 刻度使用柱状图模拟，短设置1，长的设置3；构造一个数据
-    for (var i = 0, len = 80; i <= len; i += 1) {
+    for (var i = 0, len = 70; i <= len; i += 1) {
       if (i < 10) {
         kd.push("");
       } else if ((i - 10) % 10 === 0) {
@@ -75,7 +75,7 @@ function App() {
     }
 
     //中间线的渐变色和文本内容
-    if (TP_value > 20) {
+    if (TP_value > 25) {
       TP_txt = "温度偏高";
       Gradient.push(
         {
@@ -125,7 +125,7 @@ function App() {
     leftColor = Gradient[Gradient.length - 1].color;
     // 因为柱状初始化为0，温度存在负值，所以加上负值60和空出距离10
     var option = {
-      backgroundColor: "#0C2F6F",
+      // backgroundColor: "#0C2F6F", //背景色
       title: {
         text: "温度计",
         show: false,
@@ -135,7 +135,7 @@ function App() {
           show: false,
           data: [],
           min: 0,
-          max: 90,
+          max: 75,
           axisLine: {
             show: false,
           },
@@ -143,7 +143,7 @@ function App() {
         {
           show: false,
           min: 0,
-          max: 50,
+          max: 40,
         },
         {
           type: "category",
@@ -213,11 +213,11 @@ function App() {
           xAxisIndex: 1,
 
           barGap: "-100%",
-          data: [89], //裡面長條的長度
+          data: [74], //裡面長條的長度
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#0C2E6D",
+              color: "#0C2E6D", //整個上部的裡面
               barBorderRadius: 50,
             },
           },
@@ -232,7 +232,7 @@ function App() {
           barWidth: 38,
           itemStyle: {
             normal: {
-              color: "#4577BA",
+              color: "#4577BA", //上面那條外框
               barBorderRadius: 50,
             },
           },
@@ -247,7 +247,7 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#93FE94",
+              color: "#93FE94", //下面圓圓的
               opacity: 1,
             },
           },
@@ -262,7 +262,7 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#0C2E6D",
+              color: "#0C2E6D", //下面的中間那層圓框
               opacity: 1,
             },
           },
@@ -277,7 +277,7 @@ function App() {
           symbolSize: 70,
           itemStyle: {
             normal: {
-              color: "#4577BA",
+              color: "#4577BA", //下面圓圓的外框
               opacity: 1,
             },
           },
@@ -293,7 +293,7 @@ function App() {
               show: true,
               position: "left",
               distance: 10,
-              color: "white",
+              color: "rgb(97, 97, 97)", //刻度數字
               fontSize: 14,
               formatter: function (params) {
                 if (params.dataIndex > 80 || params.dataIndex < 10) {
@@ -308,12 +308,14 @@ function App() {
               },
             },
           },
+          // 小刻度
           barGap: "-100%",
           data: kd,
           barWidth: 1,
           itemStyle: {
             normal: {
-              color: "white",
+              distance: 10,
+              color: "rgb(97, 97, 97)",
               barBorderRadius: 120,
             },
           },
@@ -343,10 +345,11 @@ function App() {
         <Col span={16} offset={4} justify="centers" align="center">
           <div className="record_box">
             <Row>
-              <Col span={8} offset={3} className="temperature_box">
-                <div id="temp" style={{ height: "400px" }}></div>
+              <Col span={6} push={3} className="temperature_box">
+                <div id="temp" style={{ height: "350px" }}></div>
               </Col>
-              <Col span={12} className="humidity_box">
+              <Col span={8} pull={2} className="temperature_degree"><div>17°C</div></Col>
+              <Col span={8} className="humidity_box">
                 <div>
                   <WaterChart />
                 </div>
