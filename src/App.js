@@ -14,14 +14,13 @@ const onChange = (key) => {
   console.log(key);
 };
 
-/*時間選擇器*/
+/*日期選擇器*/
 const onTimeChange = (date, dateString) => {
   console.log(date, dateString);
 };
 
 function App() {
-  // tab test
-  // ---
+  // 時間選擇器
   const [value, setValue] = useState(null);
   const onChange = (time) => {
     setValue(time);
@@ -374,7 +373,7 @@ function App() {
             <Tabs defaultActiveKey={1} className="tabs">
               <Tabs.TabPane tab="Hour" key="1">
                 <RecordChart />
-                <TimePicker value={value} onChange={onChange} secondStep="60" />
+                <TimePicker value={value} onChange={onChange} format="HH" showNow={false} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">
                 <RecordChart />
