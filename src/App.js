@@ -1,6 +1,6 @@
 import * as echarts from "echarts";
 import "./App.css";
-import { Row, Col, Anchor, Tabs } from "antd";
+import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
@@ -14,11 +14,18 @@ const onChange = (key) => {
   console.log(key);
 };
 
-/*----------*/
+/*時間選擇器*/
+const onTimeChange = (date, dateString) => {
+  console.log(date, dateString);
+};
 
 function App() {
   // tab test
   // ---
+  const [value, setValue] = useState(null);
+  const onChange = (time) => {
+    setValue(time);
+  };
 
   function ticking() {
     const element = (
@@ -348,7 +355,9 @@ function App() {
               <Col span={6} push={3} className="temperature_box">
                 <div id="temp" style={{ height: "350px" }}></div>
               </Col>
-              <Col span={8} pull={2} className="temperature_degree"><div>17°C</div></Col>
+              <Col span={8} pull={2} className="temperature_degree">
+                <div>17°C</div>
+              </Col>
               <Col span={8} className="humidity_box">
                 <div>
                   <WaterChart />
@@ -365,14 +374,18 @@ function App() {
             <Tabs defaultActiveKey={1} className="tabs">
               <Tabs.TabPane tab="Hour" key="1">
                 <RecordChart />
+                <TimePicker value={value} onChange={onChange} secondStep="60" />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">
                 <RecordChart />
+                <DatePicker onChange={onTimeChange} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Week" key="3">
                 <RecordChart />
+                <DatePicker onChange={onTimeChange} picker="week" />
               </Tabs.TabPane>
             </Tabs>
+            <Space direction="vertical"></Space>
           </div>
         </Col>
       </Row>
