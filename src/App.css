@@ -2,11 +2,13 @@
   margin: 0;
   padding: 0;
   font-family: "Century Gothic";
+  /* background-color: #000000; */
 }
 
 .time_box {
   margin: 2% 0;
   background-color: none !important;
+  color: #282c34;
   /* display: flex; */
   /* justify-content:"center"; */
   /* align-items:"center"; */
@@ -14,7 +16,7 @@
 
 .record_box {
   margin: 5% 0;
-  background-color: #E0E0E0;
+  background-color: #eeeeee;
   border-radius: 10px;
 }
 .temperature_box {
@@ -28,7 +30,7 @@
   object-fit: fill;
 }
 .chart_box {
-  background-color: #E0E0E0;
+  background-color: #fff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -41,11 +43,11 @@
 }
 
 .time_background {
-  background: gray;
+  background: #d7d7d7;
 }
 
 .record_background {
-  background: rgb(215, 215, 215);
+  background: #e0e0e0;
 }
 
 .chart_background {
@@ -140,5 +142,6 @@
   justify-content: center;
   align-items: center;
   font-size: 64px;
+  color: #282c34;
   font-weight: bold;
 }

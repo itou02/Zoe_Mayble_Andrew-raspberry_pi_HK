@@ -5,10 +5,14 @@ import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
 import RecordChart from "./recordChart.tsx";
+import RecordChart_day from "./recordChart_day.tsx";
+import RecordChart_week from "./recordChart_week.tsx";
 import Chart from "./components/chart/Chart";
 import TabPane from "antd/es/tabs/TabPane";
 import PropTypes from "prop-types";
-
+{/* <link rel="stylesheet/less" type="text/css" href="styles.less" /> */}
+let day=setTimeout(<RecordChart_day />,500);
+let week=setTimeout(<RecordChart_week />,1000);
 /*圖表標籤頁*/
 const onChange = (key) => {
   console.log(key);
@@ -86,7 +90,7 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#93FE94",
+          color: "#F7D94C",
         },
         {
           offset: 0.5,
@@ -102,7 +106,7 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#93FE94",
+          color: "#F7D94C",
         },
         {
           offset: 1,
@@ -113,7 +117,7 @@ function App() {
       TP_txt = "温度偏低";
       Gradient.push({
         offset: 1,
-        color: "#93FE94",
+        color: "#F7D94C",
       });
     }
     if (TP_value > 62) {
@@ -223,7 +227,7 @@ function App() {
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#0C2E6D", //整個上部的裡面
+              color: "#e0e0e0", //整個上部的裡面
               barBorderRadius: 50,
             },
           },
@@ -253,7 +257,7 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#93FE94", //下面圓圓的
+              color: "#F7D94C", //下面圓圓的
               opacity: 1,
             },
           },
@@ -268,7 +272,7 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#0C2E6D", //下面的中間那層圓框
+              color: "#e0e0e0", //下面的中間那層圓框
               opacity: 1,
             },
           },
@@ -376,11 +380,12 @@ function App() {
                 <TimePicker value={value} onChange={onChange} format="HH" showNow={false} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">
-                <RecordChart />
+                <div id="day" height="10%"></div>
+                {/* <RecordChart_day /> */}
                 <DatePicker onChange={onTimeChange} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Week" key="3">
-                <RecordChart />
+                {/* <RecordChart_week /> */}
                 <DatePicker onChange={onTimeChange} picker="week" />
               </Tabs.TabPane>
             </Tabs>
