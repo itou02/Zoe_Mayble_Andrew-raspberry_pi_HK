@@ -6,10 +6,11 @@ import React from "react";
 const LineCharts: FC = () => {
 
     useEffect(() => {
-        RecordChart();
+        DayChart();
     });
-    const RecordChart = () => {
-        var chartDom = document.getElementById("lineChart");
+
+    const DayChart = () => {
+        var chartDom = document.getElementById("dayLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
 
@@ -40,17 +41,6 @@ const LineCharts: FC = () => {
                 triggerOn: "none",
                 position: function (pt) {
                     return [pt[0], 130];
-                },
-            },
-            toolbox: {
-                left: "center",
-                itemSize: 25,
-                top: 55,
-                feature: {
-                    dataZoom: {
-                        yAxisIndex: "none",
-                    },
-                    restore: {},
                 },
             },
             xAxis: {
@@ -140,7 +130,10 @@ const LineCharts: FC = () => {
 
 
     };
-    return <div id="lineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />;
+
+    return (
+            <div id="dayLineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />
+    );
 };
 export default LineCharts;
  // 折線圖

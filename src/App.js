@@ -4,13 +4,15 @@ import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
-import RecordChart from "./recordChart.tsx";
+import HourChart from "./HourChart.tsx";
+import DayChart from "./DayChart.tsx";
+import WeekChart from "./WeekChart.tsx";
 import Chart from "./components/chart/Chart";
 import TabPane from "antd/es/tabs/TabPane";
 import PropTypes from "prop-types";
 
 /*圖表標籤頁*/
-const onChange = (key) => {
+const onTabChange = (key) => {
   console.log(key);
 };
 
@@ -333,6 +335,7 @@ function App() {
   };
 
   useEffect(() => {
+    onTabChange();
     onChange();
     temp();
   }, []);
@@ -370,17 +373,17 @@ function App() {
         {/* 統計圖表標籤頁 */}
         <Col span={24} justify="centers" align="center">
           <div className="chart_box">
-            <Tabs defaultActiveKey={1} className="tabs">
+            <Tabs defaultActiveKey={1} className="tabs" onChange={onTabChange}>
               <Tabs.TabPane tab="Hour" key="1">
-                <RecordChart />
+                <HourChart />
                 <TimePicker value={value} onChange={onChange} format="HH" showNow={false} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">
-                <RecordChart />
+                <DayChart />
                 <DatePicker onChange={onTimeChange} />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Week" key="3">
-                <RecordChart />
+                <WeekChart />
                 <DatePicker onChange={onTimeChange} picker="week" />
               </Tabs.TabPane>
             </Tabs>
