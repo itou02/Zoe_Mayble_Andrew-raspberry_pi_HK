@@ -10,22 +10,7 @@ import WeekChart from "./WeekChart.tsx";
 /*firebase相關*/
 import { getDatabase, ref, child, get } from "firebase/database";
 import { initializeApp } from "firebase/app";
-const firebaseConfig = {
-  databaseURL: "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-};
-const app = initializeApp(firebaseConfig);
-const dbRef = ref(getDatabase(app));
-get(dbRef).then((snapshot) => {
-  if (snapshot.exists()) {
-    console.log(snapshot.val().data);
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
 
-/*-----------------------------------------------------------------------*/
 /*圖表標籤頁*/
 const onTabChange = (key) => {
   console.log(key);
@@ -36,7 +21,10 @@ const onTimeChange = (date, dateString) => {
   console.log(date, dateString);
 };
 
+
 function App() {
+  
+
   // 時間選擇器
   const [value, setValue] = useState(null);
   const onChange = (time) => {
@@ -188,25 +176,25 @@ function App() {
       xAxis: [
         {
           show: false,
-          min: -15,
+          min: -60,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -15,
+          min: -60,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -15,
+          min: -60,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -5,
+          min: -40,
           max: 80,
         },
       ],
@@ -355,7 +343,34 @@ function App() {
     onChange();
     temp();
   }, []);
+  const [temps, setTemps] = useState([]);
+  const [humis, setHumis] = useState([]);
+  /*資料*/
+  const firebaseConfig = {
+    databaseURL:
+      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  };
+  const app = initializeApp(firebaseConfig);
+  const dbRef = ref(getDatabase(app));
 
+  get(dbRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let data = snapshot.val().data;
+        for (var key in data) {
+          console.log(Object.keys(data));
+          console.log(data[key].temp);
+          console.log(data[key].humi);
+          setTemps(data[key].temp);
+        }
+      } else {
+        console.log("No data available");
+      }
+    }, [])
+    .catch((error) => {
+      console.error(error);
+    });
+  /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
@@ -371,10 +386,16 @@ function App() {
           <div className="record_box">
             <Row>
               <Col span={6} push={3} className="temperature_box">
-                <div id="temp" style={{ height: "350px",margin: "10% 0% 0% 30%" }}></div>
+                <div
+                  id="temp"
+                  style={{ height: "350px", margin: "10% 0% 0% 0%" }}
+                ></div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
-                <div>26°C</div>
+                {temps.map((temp, index) => (
+                  <div key={index}>{temp}</div>
+                ))}
+                {/* <div>26°C</div> */}
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
@@ -389,9 +410,19 @@ function App() {
         {/* 統計圖表標籤頁 */}
         <Col span={24} justify="centers" align="center">
           <div className="chart_box">
-            <Tabs defaultActiveKey={1} className="tabs" onChange={onTabChange} size="large">
+            <Tabs
+              defaultActiveKey={1}
+              className="tabs"
+              onChange={onTabChange}
+              size="large"
+            >
               <Tabs.TabPane tab="Hour" key="1">
-                <TimePicker value={value} onChange={onChange} format="HH" showNow={false} />
+                <TimePicker
+                  value={value}
+                  onChange={onChange}
+                  format="HH"
+                  showNow={false}
+                />
                 <HourChart />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">

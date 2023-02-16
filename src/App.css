@@ -2,9 +2,25 @@
   margin: 0;
   padding: 0;
   font-family: "Century Gothic";
+  color: #3c3c3c !important;
   /* background-color: #000000; */
 }
 
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: #282828 !important;
+}
+
+.ant-tabs-ink-bar {
+  position: absolute;
+  background: #b6b6b6 !important;
+  pointer-events: none;
+}
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible), 
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible), 
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:active, 
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-remove:active {
+  color: #282c34 !important;
+}
 .time_box {
   margin: 2% 0;
   background-color: none !important;
@@ -19,16 +35,24 @@
   background-color: #eeeeee;
   border-radius: 10px;
 }
+
 .temperature_box {
-  /* padding: 5%; */
+  height: 80%;
 }
+
+canvas{
+  /* object-fit: none; */
+}
+
 .humidity_box {
   padding: 0;
   display: flex;
+  height: 80%;
   justify-content: center;
   align-items: center;
   object-fit: fill;
 }
+
 .chart_box {
   background-color: #fff;
   /* border-radius: 10px; */
@@ -37,8 +61,8 @@
   justify-content: center;
 }
 
-.tabs{
-  font-weight: bold;  
+.tabs {
+  font-weight: bold;
   font-size: 20px !important;
 }
 
@@ -114,15 +138,16 @@
   }
 }
 
-:where(.css-dev-only-do-not-override-diro6f).ant-tabs >.ant-tabs-nav .ant-tabs-nav-wrap, :where(.css-dev-only-do-not-override-diro6f).ant-tabs >div>.ant-tabs-nav .ant-tabs-nav-wrap {
-    position: relative;
-    display: flex;
-    flex: auto;
-    align-self: stretch;
-    overflow: hidden;
-    white-space: nowrap;
-    transform: translate(0);
-    justify-content: center;
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs>.ant-tabs-nav .ant-tabs-nav-wrap,
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs>div>.ant-tabs-nav .ant-tabs-nav-wrap {
+  position: relative;
+  display: flex;
+  flex: auto;
+  align-self: stretch;
+  overflow: hidden;
+  white-space: nowrap;
+  transform: translate(0);
+  justify-content: center;
 }
 
 :where(.css-dev-only-do-not-override-ixblex).ant-tabs .ant-tabs-tab {
@@ -137,7 +162,7 @@
   cursor: pointer;
 }
 
-.temperature_degree{
+.temperature_degree {
   display: flex;
   justify-content: center;
   align-items: center;

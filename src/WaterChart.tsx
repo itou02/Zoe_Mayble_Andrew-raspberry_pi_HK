@@ -24,6 +24,7 @@ const LiquidCharts: FC = () => {
                             direction: 'left',
                             itemStyle: {
                                 // color: '#fff'
+                                
                             }
                         }],
                     outline: {
@@ -32,24 +33,24 @@ const LiquidCharts: FC = () => {
                     },
                     backgroundStyle: {
                         borderWidth: 5,
-                        // borderColor: '#5b5b5b',
+                        borderColor: '#fff',
                         color: '#fff'
                     },
                     itemStyle: {
-                        shadowBlur: 0
+                        shadowBlur: 0,
                     },
 
                     amplitude: 5,
                     animationDuration: 0,
                     animationDurationUpdate: 2000,
                     animationEasingUpdate: 'cubicOut',
-                    shape: 'roundRect'
+                    shape: 'roundRect',
                 },
             ],
         };
         map.clear()
         map.setOption(option);
     };
-    return <div id='main' style={{ width: 400, height: 400 }} />;
+    return <div id='main' style={{ width: 400, height: 400, objectFit:'none'}} />;
 };
 export default LiquidCharts;

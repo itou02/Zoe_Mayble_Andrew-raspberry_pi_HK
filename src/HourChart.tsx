@@ -52,7 +52,7 @@ const LineCharts: FC = () => {
             },
             xAxis: {
                 type: 'category',
-                boundaryGap: true,
+                boundaryGap: false,
                 data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             },
             yAxis: {
@@ -96,7 +96,7 @@ const LineCharts: FC = () => {
                     markLine: {
                         data: [{ type: 'average', name: 'Avg' }]
                     }
-                }
+                },
             ]
         };
         myChart.clear()
