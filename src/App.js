@@ -7,12 +7,37 @@ import WaterChart from "./WaterChart.tsx";
 import HourChart from "./HourChart.tsx";
 import DayChart from "./DayChart.tsx";
 import WeekChart from "./WeekChart.tsx";
-import Chart from "./components/chart/Chart";
-import TabPane from "antd/es/tabs/TabPane";
-import PropTypes from "prop-types";
-{/* <link rel="stylesheet/less" type="text/css" href="styles.less" /> */}
-let day=setTimeout(<RecordChart_day />,500);
-let week=setTimeout(<RecordChart_week />,1000);
+/*firebase相關*/
+import { getDatabase, ref, child, get } from "firebase/database";
+import { initializeApp } from "firebase/app";
+/*firebase連接測試*/
+// import { getDatabase, ref, onValue} from "firebase/database";
+
+// const db = getDatabase();
+// const starCountRef = ref(db, 'posts/' + postId + '/starCount');
+// onValue(starCountRef, (snapshot) => {
+//   const data = snapshot.val();
+//   updateStarCount(postElement, data);
+// });
+const firebaseConfig = {
+  databaseURL: "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+};
+
+const app = initializeApp(firebaseConfig);
+
+
+const dbRef = ref(getDatabase(app));
+get(dbRef).then((snapshot) => {
+  if (snapshot.exists()) {
+    console.log(snapshot.val());
+  } else {
+    console.log("No data available");
+  }
+}).catch((error) => {
+  console.error(error);
+});
+/*-----------------------------------------------------------------------*/
+
 /*圖表標籤頁*/
 const onTabChange = (key) => {
   console.log(key);
