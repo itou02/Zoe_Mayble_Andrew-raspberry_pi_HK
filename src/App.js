@@ -2,11 +2,11 @@ import * as echarts from "echarts";
 import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
-import WaterChart from "./WaterChart.tsx";
+import WaterChart from "./WaterChart_dark.tsx";
 import HourChart from "./HourChart.tsx";
 import DayChart from "./DayChart.tsx";
 import WeekChart from "./WeekChart.tsx";
-import "./App.css";
+import "./App_dark.css";
 import Chart from "./components/chart/Chart";
 import TabPane from "antd/es/tabs/TabPane";
 import PropTypes from "prop-types";
@@ -31,8 +31,8 @@ function App() {
 
   function ticking() {
     const element = (
-      <div>
-        <p className="date">
+      <div className="font-color">
+        <p className="date font-color">
           {new Date().getFullYear() +
             "/" +
             (new Date().getMonth() + 1) +
@@ -226,28 +226,28 @@ function App() {
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#fff", //整個上部的裡面
+              color: "#808080", //整個上部的裡面
               opacity: 1,
               barBorderRadius: 50,
             },
           },
           z: 1,
         },
-        {
-          name: "外框",
-          type: "bar",
-          xAxisIndex: 2,
-          barGap: "-100%",
-          data: [135],
-          barWidth: 38,
-          itemStyle: {
-            normal: {
-              color: "#eeeeee", //上面那條外框
-              barBorderRadius: 50,
-            },
-          },
-          z: 0,
-        },
+        // {
+        //   name: "外框",
+        //   type: "bar",
+        //   xAxisIndex: 2,
+        //   barGap: "-100%",
+        //   data: [135],
+        //   barWidth: 38,
+        //   itemStyle: {
+        //     normal: {
+        //       color: "#252525", //上面那條外框
+        //       barBorderRadius: 50,
+        //     },
+        //   },
+        //   z: 0,
+        // },
         {
           name: "圓",
           type: "scatter",
@@ -272,65 +272,65 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#fff", //下面的中間那層圓框
+              color: "#808080", //下面的中間那層圓框
               opacity: 1,
             },
           },
           z: 1,
         },
-        {
-          name: "外圓",
-          type: "scatter",
-          hoverAnimation: false,
-          data: [0],
-          xAxisIndex: 2,
-          symbolSize: 70,
-          itemStyle: {
-            normal: {
-              color: "#eeeeee", //下面圓圓的外框
-              opacity: 1,
-            },
-          },
-          z: 0,
-        },
-        {
-          name: "刻度",
-          type: "bar",
-          yAxisIndex: 0,
-          xAxisIndex: 3,
-          label: {
-            normal: {
-              show: true,
-              position: "left",
-              distance: 10,
-              color: "rgb(97, 97, 97)", //刻度數字
-              fontSize: 14,
-              formatter: function (params) {
-                if (params.dataIndex > 80 || params.dataIndex < 10) {
-                  return "";
-                } else {
-                  if ((params.dataIndex - 10) % 10 === 0) {
-                    return params.dataIndex - 30;
-                  } else {
-                    return "";
-                  }
-                }
-              },
-            },
-          },
-          // 小刻度
-          barGap: "-100%",
-          data: kd,
-          barWidth: 1,
-          itemStyle: {
-            normal: {
-              distance: 10,
-              color: "rgb(97, 97, 97)",
-              barBorderRadius: 120,
-            },
-          },
-          z: 0,
-        },
+        // {
+        //   name: "外圓",
+        //   type: "scatter",
+        //   hoverAnimation: false,
+        //   data: [0],
+        //   xAxisIndex: 2,
+        //   symbolSize: 70,
+        //   itemStyle: {
+        //     normal: {
+        //       color: "#252525", //下面圓圓的外框
+        //       opacity: 1,
+        //     },
+        //   },
+        //   z: 0,
+        // },
+        // {
+        //   name: "刻度",
+        //   type: "bar",
+        //   yAxisIndex: 0,
+        //   xAxisIndex: 3,
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: "left",
+        //       distance: 10,
+        //       color: "#fff", //刻度數字
+        //       fontSize: 14,
+        //       formatter: function (params) {
+        //         if (params.dataIndex > 80 || params.dataIndex < 10) {
+        //           return "";
+        //         } else {
+        //           if ((params.dataIndex - 10) % 10 === 0) {
+        //             return params.dataIndex - 30;
+        //           } else {
+        //             return "";
+        //           }
+        //         }
+        //       },
+        //     },
+        //   },
+        //   // 小刻度
+        //   barGap: "-100%",
+        //   data: kd,
+        //   barWidth: 1,
+        //   itemStyle: {
+        //     normal: {
+        //       distance: 10,
+        //       color: "#fff",
+        //       barBorderRadius: 120,
+        //     },
+        //   },
+        //   z: 0,
+        // },
       ],
     };
     option && myChart.setOption(option);
@@ -360,7 +360,7 @@ function App() {
                 <div id="temp" style={{ height: "350px",margin: "10% 0% 0% 0%" }}></div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
-                <div>26°C</div>
+                <div className="font-color">26°C</div>
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
@@ -375,7 +375,7 @@ function App() {
         {/* 統計圖表標籤頁 */}
         <Col span={24} justify="centers" align="center">
           <div className="chart_box">
-            <Tabs defaultActiveKey={1} className="tabs" onChange={onTabChange} size="large">
+            <Tabs defaultActiveKey={1} className="tabs font-color2" onChange={onTabChange} size="large">
               <Tabs.TabPane tab="Hour" key="1">
                 <TimePicker value={value} onChange={onChange} format="HH" showNow={false} />
                 <HourChart />
