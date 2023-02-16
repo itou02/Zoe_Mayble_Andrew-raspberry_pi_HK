@@ -6,11 +6,10 @@ import React from "react";
 const LineCharts: FC = () => {
 
     useEffect(() => {
-        DayChart();
+        HourChart();
     });
-
-    const DayChart = () => {
-        var chartDom = document.getElementById("dayLineChart");
+    const HourChart = () => {
+        var chartDom = document.getElementById("hourLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
 
@@ -19,14 +18,33 @@ const LineCharts: FC = () => {
         let valueBase = Math.random() * 300;
         let valueBase2 = Math.random() * 50;
         let time = [1, 2, 3, 4]; //[時間]
+        let line1 = [
+            [time[0], 10],
+            [time[1], 21],
+            [time[2], 20],
+            [time[3], 19]
+        ]; //[時間,值] 溫度數據
+        let line2 = [
+            [time[0], 14],
+            [time[1], 10],
+            [time[2], 31],
+            [time[3], 11]
+        ]; //[時間,值] 濕度數據
         option = {
             title: {
                 text: "溫溼度統計變化",
+                textStyle: {
+                    color: "#fff"
+                }
             },
             tooltip: {
                 trigger: 'axis'
             },
-            legend: {},
+            legend: {
+                textStyle: {
+                    color: "#fff"
+                }
+            },
             toolbox: {
                 show: true,
                 feature: {
@@ -35,19 +53,27 @@ const LineCharts: FC = () => {
                     },
                     dataView: { readOnly: false },
                     magicType: { type: ['line', 'bar'] },
-                    restore: {},
                     saveAsImage: {}
                 }
             },
             xAxis: {
                 type: 'category',
+                show: true,
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                axisLabel: {
+                    textStyle: {
+                        color: "#fff"
+                    }
+                }
             },
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}'
+                    formatter: '{value}',
+                    textStyle: {
+                        color: "#b1b1b1"
+                    }
                 }
             },
             series: [
@@ -90,12 +116,10 @@ const LineCharts: FC = () => {
         };
         myChart.clear()
         option && myChart.setOption(option);
-
-
     };
 
     return (
-        <div id="dayLineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />
+        <div id="hourLineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />
     );
 };
 export default LineCharts;

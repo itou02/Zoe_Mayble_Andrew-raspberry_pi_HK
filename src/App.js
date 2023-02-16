@@ -2,11 +2,11 @@ import * as echarts from "echarts";
 import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
-import WaterChart from "./WaterChart_dark.tsx";
-import HourChart from "./HourChart.tsx";
-import DayChart from "./DayChart.tsx";
-import WeekChart from "./WeekChart.tsx";
-import "./App_dark.css";
+import WaterChart from "./WaterChart.tsx";
+import HourChart from "./HourChart_whitefont.tsx";
+import DayChart from "./DayChart_whitefont.tsx";
+import WeekChart from "./WeekChart_whitefont.tsx";
+import "./App.css";
 import Chart from "./components/chart/Chart";
 import TabPane from "antd/es/tabs/TabPane";
 import PropTypes from "prop-types";
@@ -89,15 +89,17 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#FFDB29",
+          color: "#B5381C",
+          // color: "#FFDB29",
         },
         // {
         //   offset: 0.5,
-        //   color: "#EDB927",
+          // color: "#EDB927",
         // },
         {
           offset: 1,
-          color: "#C13131",
+          color: "#B5381C",
+          // color: "#C13131",
         }
       );
     } else if (TP_value > -20) {
@@ -105,18 +107,21 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#FFDB29",
+          color: "#B5381C",
+          // color: "#FFDB29",
         },
         {
           offset: 1,
-          color: "#E0862D",
+          color: "#B5381C",
+          // color: "#E0862D",
         }
       );
     } else {
       TP_txt = "溫度偏低";
       Gradient.push({
         offset: 1,
-        color: "#FFDB29",
+        color: "#B5381C",
+        // color: "#FFDB29",
       });
     }
     if (TP_value > 62) {
@@ -131,6 +136,7 @@ function App() {
     if (TP_value < -10) {
       boxPosition = [65, -120];
     }
+    
     leftColor = Gradient[Gradient.length - 1].color;
     // 因為柱狀初始化為0，溫度存在負值，所以加上負值60和空出距離10
     var option = {
@@ -226,7 +232,7 @@ function App() {
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#808080", //整個上部的裡面
+              color: "#fff", //整個上部的裡面
               opacity: 1,
               barBorderRadius: 50,
             },
@@ -242,7 +248,7 @@ function App() {
         //   barWidth: 38,
         //   itemStyle: {
         //     normal: {
-        //       color: "#252525", //上面那條外框
+        //       color: "#a0a0a0", //上面那條外框
         //       barBorderRadius: 50,
         //     },
         //   },
@@ -257,7 +263,8 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#FFDB29", //下面圓圓的
+              color: "#B5381C", //下面圓圓的
+              // color: "#FFDB29", //下面圓圓的
               opacity: 1,
             },
           },
@@ -272,7 +279,7 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#808080", //下面的中間那層圓框
+              color: "#fff", //下面的中間那層圓框
               opacity: 1,
             },
           },
@@ -287,7 +294,7 @@ function App() {
         //   symbolSize: 70,
         //   itemStyle: {
         //     normal: {
-        //       color: "#252525", //下面圓圓的外框
+        //       color: "#a0a0a0", //下面圓圓的外框
         //       opacity: 1,
         //     },
         //   },
