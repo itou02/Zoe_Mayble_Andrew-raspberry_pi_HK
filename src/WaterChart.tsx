@@ -32,7 +32,7 @@ const LiquidCharts: FC = () => {
                     },
                     backgroundStyle: {
                         borderWidth: 5,
-                        // borderColor: '#5b5b5b',
+                        borderColor: '#fff',
                         color: '#fff'
                     },
                     itemStyle: {

@@ -1,5 +1,4 @@
 import * as echarts from "echarts";
-import "./App.css";
 import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
@@ -7,6 +6,7 @@ import WaterChart from "./WaterChart.tsx";
 import HourChart from "./HourChart.tsx";
 import DayChart from "./DayChart.tsx";
 import WeekChart from "./WeekChart.tsx";
+import "./App.css";
 import Chart from "./components/chart/Chart";
 import TabPane from "antd/es/tabs/TabPane";
 import PropTypes from "prop-types";
@@ -174,25 +174,25 @@ function App() {
       xAxis: [
         {
           show: false,
-          min: -15,
+          min: -50,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -15,
+          min: -50,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -15,
+          min: -50,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -5,
+          min: -20,
           max: 80,
         },
       ],
@@ -357,7 +357,7 @@ function App() {
           <div className="record_box">
             <Row>
               <Col span={6} push={3} className="temperature_box">
-                <div id="temp" style={{ height: "350px",margin: "10% 0% 0% 30%" }}></div>
+                <div id="temp" style={{ height: "350px",margin: "10% 0% 0% 0%" }}></div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
                 <div>26°C</div>
