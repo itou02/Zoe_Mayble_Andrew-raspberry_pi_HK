@@ -31,7 +31,7 @@
 }
 .chart_box {
   background-color: #fff;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,11 +39,11 @@
 
 .tabs{
   font-weight: bold;  
-  font-size: 48px;
+  font-size: 20px !important;
 }
 
 .time_background {
-  background: #d7d7d7;
+  background: #b6b6b6;
 }
 
 .record_background {
