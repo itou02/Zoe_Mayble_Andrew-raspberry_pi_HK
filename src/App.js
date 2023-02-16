@@ -174,19 +174,19 @@ function App() {
       xAxis: [
         {
           show: false,
-          min: -50,
+          min: -10,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -50,
+          min: -10,
           max: 80,
           data: [],
         },
         {
           show: false,
-          min: -50,
+          min: -10,
           max: 80,
           data: [],
         },
