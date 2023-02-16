@@ -23,101 +23,72 @@ const LineCharts: FC = () => {
         ]; //[時間,值] 濕度數據
         option = {
             title: {
-                top: "5%",
-                left: "center",
                 text: "溫溼度統計變化",
             },
-            legend: {
-                top: "bottom",
-                data: ["Intention"],
-            },
             tooltip: {
-                triggerOn: "none",
-                position: function (pt) {
-                    return [pt[0], 130];
-                },
+                trigger: 'axis'
+            },
+            legend: {},
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: { readOnly: false },
+                    magicType: { type: ['line', 'bar'] },
+                    restore: {},
+                    saveAsImage: {}
+                }
             },
             xAxis: {
-                type: "time",
-                axisPointer: {
-                    value: "2016-10-7",
-                    snap: true,
-                    lineStyle: {
-                        color: "#7581BD",
-                        width: 2,
-                    },
-                    label: {
-                        show: true,
-                        formatter: function (params) {
-                            return echarts.format.formatTime("yyyy-MM-dd", params.value);
-                        },
-                        backgroundColor: "#7581BD",
-                    },
-                    handle: {
-                        show: false,
-                        color: "#7581BD",
-                    },
-                },
-                splitLine: {
-                    show: false,
-                },
+                type: 'category',
+                boundaryGap: true,
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
             },
             yAxis: {
-                type: "value",
-                axisTick: {
-                    inside: true,
-                },
-                splitLine: {
-                    show: false,
-                },
+                type: 'value',
                 axisLabel: {
-                    inside: true,
-                    formatter: "{value}\n",
-                },
-                z: 10,
+                    formatter: '{value}'
+                }
             },
-            grid: {
-                top: 110,
-                left: 150,
-                right: 150,
-                height: 250,
-            },
-            dataZoom: [
-                {
-                    type: "inside",
-                    throttle: 50,
-                },
-            ],
             series: [
                 {
-                    name: "Fake Data",
-                    type: "line",
-                    smooth: true,
-                    symbol: "circle",
-                    symbolSize: 5,
-                    sampling: "average",
+                    name: '濕度',
+                    type: 'line',
+                    data: [76, 73, 65, 78, 67, 70, 72],
                     itemStyle: {
-                        color: "#0770FF",
+                        color: '#4D82AB'
                     },
-                    stack: "a",
-
-                    data: line1,
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最高濕度' },
+                            { type: 'min', name: '最低濕度' }
+                        ]
+                    },
+                    markLine: {
+                        data: [{ type: 'average', name: 'Avg' }]
+                    }
                 },
+                //   data: [26,27,24,25,23,20,19],
                 {
-                    name: "Fake Data",
-                    type: "line",
-                    smooth: true,
-                    stack: "a",
-                    symbol: "circle",
-                    symbolSize: 5,
-                    sampling: "average",
+                    name: '溫度',
+                    type: 'line',
+                    data: [26, 27, 24, 25, 23, 20, 19],
                     itemStyle: {
-                        color: "#F2597F",
+                        color: '#AB594D'
                     },
-
-                    data: line2,
-                },
-            ],
+                    markPoint: {
+                        data: [
+                            { type: 'max', name: '最高濕度' },
+                            { type: 'min', name: '最低濕度' }
+                        ]
+                    },
+                    markLine: {
+                        data: [{ type: 'average', name: 'Avg' }]
+                    }
+                }
+            ]
         };
         myChart.clear()
         option && myChart.setOption(option);

@@ -26,6 +26,15 @@ const LiquidCharts: FC = () => {
                                 // color: '#fff'
                             }
                         }],
+                    outline: {
+                        borderColor: '#294D99',
+                        show: false
+                    },
+                    backgroundStyle: {
+                        borderWidth: 5,
+                        // borderColor: '#5b5b5b',
+                        color: '#fff'
+                    },
                     itemStyle: {
                         shadowBlur: 0
                     },
