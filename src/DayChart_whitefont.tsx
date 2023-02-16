@@ -114,7 +114,6 @@ const LineCharts: FC = () => {
     );
 };
 export default LineCharts;
- // 折線圖
   // const initChart = () => {
   //   var chartDom = document.getElementById("lineChart");
   //   var myChart = echarts.init(chartDom);

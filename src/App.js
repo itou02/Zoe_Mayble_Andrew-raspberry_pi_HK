@@ -7,9 +7,6 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-import Chart from "./components/chart/Chart";
-import TabPane from "antd/es/tabs/TabPane";
-import PropTypes from "prop-types";
 {/* <link rel="stylesheet/less" type="text/css" href="styles.less" /> */}
 
 /*圖表標籤頁*/
