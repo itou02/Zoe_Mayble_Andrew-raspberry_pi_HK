@@ -15,12 +15,14 @@
   background: #fff !important;
   pointer-events: none;
 }
-:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible), 
-:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible), 
-:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:active, 
+
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-remove:focus:not(:focus-visible),
+:where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-btn:active,
 :where(.css-dev-only-do-not-override-diro6f).ant-tabs .ant-tabs-tab-remove:active {
   color: #282c34 !important;
 }
+
 .time_box {
   margin: 2% 0;
   background-color: none !important;
@@ -62,13 +64,29 @@
 }
 
 .time_background {
-  background: #d5cdb9;
+  background: #d7ccaa;
   /* background: #e6e0d1; */
+  background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/lined-paper-2.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/nice-snow.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/notebook-dark.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/paper.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/pinstripe-dark.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/pinstripe-light.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png"); */
 }
 
 .record_background {
   /* background: #d5cdb9; */
-  background: #e6e0d1;
+  background-color: #ded5ba;
+  background-image: url("https://www.transparenttextures.com/patterns/inspiration-geometry.png");
+  /* background-image: url("https://www.transparenttextures.com/patterns/lined-paper-2.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/nice-snow.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/notebook-dark.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/paper.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/pinstripe-dark.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/pinstripe-light.png"); */
+  /* background-image: url("https://www.transparenttextures.com/patterns/subtle-grey.png"); */
 }
 
 .chart_background {

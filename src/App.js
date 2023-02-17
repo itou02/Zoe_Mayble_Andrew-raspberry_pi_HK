@@ -112,7 +112,7 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#993728",
+          color: "#913E31",
           // color: "#FFDB29",
         },
         // {
@@ -121,7 +121,7 @@ function App() {
         // },
         {
           offset: 1,
-          color: "#993728",
+          color: "#913E31",
           // color: "#C13131",
         }
       );
@@ -130,12 +130,12 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#993728",
+          color: "#913E31",
           // color: "#FFDB29",
         },
         {
           offset: 1,
-          color: "#993728",
+          color: "#913E31",
           // color: "#E0862D",
         }
       );
@@ -143,7 +143,7 @@ function App() {
       TP_txt = "溫度偏低";
       Gradient.push({
         offset: 1,
-        color: "#993728",
+        color: "#913E31",
         // color: "#FFDB29",
       });
     }
@@ -255,7 +255,7 @@ function App() {
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#fff", //整個上部的裡面
+              color: "#FFFBEE", //整個上部的裡面
               opacity: 1,
               barBorderRadius: 50,
             },
@@ -286,7 +286,7 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#993728", //下面圓圓的
+              color: "#913E31", //下面圓圓的~i
               // color: "#FFDB29", //下面圓圓的
               opacity: 1,
             },
@@ -302,7 +302,7 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#fff", //下面的中間那層圓框
+              color: "#FFFBEE", //下面的中間那層圓框
               opacity: 1,
             },
           },

@@ -30,13 +30,13 @@ const LiquidCharts: FC = () => {
                             value: humidity,
                             direction: 'left',
                             itemStyle: {
-                                color: '#336285'
+                                color: '#327085'
                             }
                         },
                         {
                             value: humidity - 0.02,
                             itemStyle: {
-                                color: '#5188A2'
+                                color: '#4C899A'
                             }
                         }
                     ],
@@ -45,9 +45,11 @@ const LiquidCharts: FC = () => {
                         show: false
                     },
                     backgroundStyle: {
-                        borderWidth: 5,
-                        borderColor: '#fff',
-                        color: '#fff'
+                        borderWidth: 6,
+                        borderColor: '#FFFBEE',
+                        color: '#FFFBEE',
+                        // color: '#efeadd',
+                        // opacity: 0.5
                     },
                     itemStyle: {
                         shadowBlur: 0
