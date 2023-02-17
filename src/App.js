@@ -4,11 +4,11 @@ import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
-import HourChart from "./HourChart.tsx";
-import DayChart from "./DayChart.tsx";
-import WeekChart from "./WeekChart.tsx";
-/*firebase相關*/
-import { getDatabase, ref, child, get } from "firebase/database";
+import HourChart from "./HourChart_whitefont.tsx";
+import DayChart from "./DayChart_whitefont.tsx";
+import WeekChart from "./WeekChart_whitefont.tsx";
+import "./App.css";
+import { getDatabase, ref, child, get, onValue } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
 /*圖表標籤頁*/
@@ -21,10 +21,7 @@ const onTimeChange = (date, dateString) => {
   console.log(date, dateString);
 };
 
-
 function App() {
-  
-
   // 時間選擇器
   const [value, setValue] = useState(null);
   const onChange = (time) => {
@@ -33,8 +30,8 @@ function App() {
 
   function ticking() {
     const element = (
-      <div>
-        <p className="date">
+      <div className="font-color">
+        <p className="date font-color">
           {new Date().getFullYear() +
             "/" +
             (new Date().getMonth() + 1) +
@@ -91,15 +88,17 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#FFDB29",
+          color: "#913E31",
+          // color: "#FFDB29",
         },
         // {
         //   offset: 0.5,
-        //   color: "#EDB927",
+        // color: "#EDB927",
         // },
         {
           offset: 1,
-          color: "#C13131",
+          color: "#913E31",
+          // color: "#C13131",
         }
       );
     } else if (TP_value > -20) {
@@ -107,18 +106,21 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#FFDB29",
+          color: "#913E31",
+          // color: "#FFDB29",
         },
         {
           offset: 1,
-          color: "#E0862D",
+          color: "#913E31",
+          // color: "#E0862D",
         }
       );
     } else {
       TP_txt = "溫度偏低";
       Gradient.push({
         offset: 1,
-        color: "#FFDB29",
+        color: "#913E31",
+        // color: "#FFDB29",
       });
     }
     if (TP_value > 62) {
@@ -133,6 +135,7 @@ function App() {
     if (TP_value < -10) {
       boxPosition = [65, -120];
     }
+
     leftColor = Gradient[Gradient.length - 1].color;
     // 因為柱狀初始化為0，溫度存在負值，所以加上負值60和空出距離10
     var option = {
@@ -228,28 +231,28 @@ function App() {
           barWidth: 28,
           itemStyle: {
             normal: {
-              color: "#fff", //整個上部的裡面
+              color: "#FFFBEE", //整個上部的裡面
               opacity: 1,
               barBorderRadius: 50,
             },
           },
           z: 1,
         },
-        {
-          name: "外框",
-          type: "bar",
-          xAxisIndex: 2,
-          barGap: "-100%",
-          data: [135],
-          barWidth: 38,
-          itemStyle: {
-            normal: {
-              color: "#eeeeee", //上面那條外框
-              barBorderRadius: 50,
-            },
-          },
-          z: 0,
-        },
+        // {
+        //   name: "外框",
+        //   type: "bar",
+        //   xAxisIndex: 2,
+        //   barGap: "-100%",
+        //   data: [135],
+        //   barWidth: 38,
+        //   itemStyle: {
+        //     normal: {
+        //       color: "#a0a0a0", //上面那條外框
+        //       barBorderRadius: 50,
+        //     },
+        //   },
+        //   z: 0,
+        // },
         {
           name: "圓",
           type: "scatter",
@@ -259,7 +262,8 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#FFDB29", //下面圓圓的
+              color: "#913E31", //下面圓圓的~i
+              // color: "#FFDB29", //下面圓圓的
               opacity: 1,
             },
           },
@@ -274,65 +278,65 @@ function App() {
           symbolSize: 60,
           itemStyle: {
             normal: {
-              color: "#fff", //下面的中間那層圓框
+              color: "#FFFBEE", //下面的中間那層圓框
               opacity: 1,
             },
           },
           z: 1,
         },
-        {
-          name: "外圓",
-          type: "scatter",
-          hoverAnimation: false,
-          data: [0],
-          xAxisIndex: 2,
-          symbolSize: 70,
-          itemStyle: {
-            normal: {
-              color: "#eeeeee", //下面圓圓的外框
-              opacity: 1,
-            },
-          },
-          z: 0,
-        },
-        {
-          name: "刻度",
-          type: "bar",
-          yAxisIndex: 0,
-          xAxisIndex: 3,
-          label: {
-            normal: {
-              show: true,
-              position: "left",
-              distance: 10,
-              color: "rgb(97, 97, 97)", //刻度數字
-              fontSize: 14,
-              formatter: function (params) {
-                if (params.dataIndex > 80 || params.dataIndex < 10) {
-                  return "";
-                } else {
-                  if ((params.dataIndex - 10) % 10 === 0) {
-                    return params.dataIndex - 30;
-                  } else {
-                    return "";
-                  }
-                }
-              },
-            },
-          },
-          // 小刻度
-          barGap: "-100%",
-          data: kd,
-          barWidth: 1,
-          itemStyle: {
-            normal: {
-              distance: 10,
-              color: "rgb(97, 97, 97)",
-              barBorderRadius: 120,
-            },
-          },
-          z: 0,
-        },
+        // {
+        //   name: "外圓",
+        //   type: "scatter",
+        //   hoverAnimation: false,
+        //   data: [0],
+        //   xAxisIndex: 2,
+        //   symbolSize: 70,
+        //   itemStyle: {
+        //     normal: {
+        //       color: "#a0a0a0", //下面圓圓的外框
+        //       opacity: 1,
+        //     },
+        //   },
+        //   z: 0,
+        // },
+        // {
+        //   name: "刻度",
+        //   type: "bar",
+        //   yAxisIndex: 0,
+        //   xAxisIndex: 3,
+        //   label: {
+        //     normal: {
+        //       show: true,
+        //       position: "left",
+        //       distance: 10,
+        //       color: "#fff", //刻度數字
+        //       fontSize: 14,
+        //       formatter: function (params) {
+        //         if (params.dataIndex > 80 || params.dataIndex < 10) {
+        //           return "";
+        //         } else {
+        //           if ((params.dataIndex - 10) % 10 === 0) {
+        //             return params.dataIndex - 30;
+        //           } else {
+        //             return "";
+        //           }
+        //         }
+        //       },
+        //     },
+        //   },
+        //   // 小刻度
+        //   barGap: "-100%",
+        //   data: kd,
+        //   barWidth: 1,
+        //   itemStyle: {
+        //     normal: {
+        //       distance: 10,
+        //       color: "#fff",
+        //       barBorderRadius: 120,
+        //     },
+        //   },
+        //   z: 0,
+        // },
       ],
     };
     option && myChart.setOption(option);
@@ -346,34 +350,76 @@ function App() {
   const [temps, setTemps] = useState([]);
   const [humis, setHumis] = useState([]);
   /*資料*/
+
   const firebaseConfig = {
     databaseURL:
       "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
   };
   const app = initializeApp(firebaseConfig);
-  const dbRef = ref(getDatabase(app));
+  const dbRef = ref(getDatabase(app), "data");
 
-  get(dbRef)
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        let data = snapshot.val().data;
-        for (var key in data) {
-          console.log(Object.keys(data));
-          console.log(data[key].temp);
-          console.log(data[key].humi);
-          setTemps(data[key].temp);
-        }
-      } else {
-        console.log("No data available");
+  onValue(
+    dbRef,
+    (snapshot) => {
+      let data = snapshot.val();
+      let dataValue = Object.values(data);
+      let dataArr = Array.from(dataValue);
+      for (var key in dataArr) {
+        // console.log(yo);
+        // console.log(Object(data[key]));
+        // console.log(Object(data[key].humi));
+        // console.log(Object(data[key].datetime));
+        // console.log(data[key].temp);
+        // console.log(data[key].humi);
+        // console.log(dataArr);
+        // setTemps(Object(data[key]));
+      console.log(dataArr[key].temp);
+      console.log(dataArr[key].humi);
+      console.log(dataArr[key].datetime);
       }
-    }, [])
-    .catch((error) => {
-      console.error(error);
-    });
+    },
+    []
+  );
+  // get(dbRef).then((snapshot) => {
+  //     if (snapshot.exists()) {
+  //       let data = snapshot.val();
+  //       // let dataArr = Array.from(Object.keys(data));
+  //       onValue(dbRef, snapshot => {
+  //         let data = snapshot.val();
+  //         let dataValue = (Object.values(data));
+  //         let dataArr = Array.from(dataValue);
+  //         setTemps(dataArr);
+  //         console.log(dataArr);
+  //       },[]);
+  //       // for (var key in data) {
+  //         // console.log(yo);
+  //         // console.log(Object(data[key]));
+  //         // console.log(Object(data[key].humi));
+  //         // console.log(Object(data[key].datetime));
+  //         // console.log(data[key].temp);
+  //         // console.log(data[key].humi);
+  //         // console.log(dataArr);
+
+  //         // setTemps(Object(data[key]));
+  //       // }
+  //     } else {
+  //       console.log("No data available");
+  //     }
+  //   }, [])
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
   /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
+      {/* <div class="mapContainer" ref="mapContainer">
+        <svg viewBox="0 0 200 200" ref="svg">
+          <rect width="200" height="200"></rect>
+          <rect x="75" y="23" width="50" height="50" fill="red"></rect>
+          <rect x="75" y="123" width="50" height="50" fill="#0013ff"></rect>
+        </svg>
+      </div> */}
       <Row justify="center" align="center" className="time_background">
         <Col justify="centers" align="center" className="time_box">
           {/* 插件時鐘 */}
@@ -392,10 +438,10 @@ function App() {
                 ></div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
-                {temps.map((temp, index) => (
+                {/* {temps.map((temp, index) => (
                   <div key={index}>{temp}</div>
-                ))}
-                {/* <div>26°C</div> */}
+                ))} */}
+                <div className="font-color">26°C</div>
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
@@ -412,7 +458,7 @@ function App() {
           <div className="chart_box">
             <Tabs
               defaultActiveKey={1}
-              className="tabs"
+              className="tabs font-color2"
               onChange={onTabChange}
               size="large"
             >

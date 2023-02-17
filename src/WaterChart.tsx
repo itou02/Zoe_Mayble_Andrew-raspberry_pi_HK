@@ -14,27 +14,42 @@ const LiquidCharts: FC = () => {
     const initChart = () => {
         const liquid = document.getElementById('main');
         const map = echarts.init(liquid as HTMLDivElement);
+        var humidity = 0.78;
         const option = {
             series: [
                 {
                     type: 'liquidFill',
-                    data: [0.52,
+                    data: [
+                        // {
+                        //     value: humidity + 0.02,
+                        //     itemStyle: {
+                        //         color: '#254D6C'
+                        //     }
+                        // },
                         {
-                            value: 0.5,
+                            value: humidity,
                             direction: 'left',
                             itemStyle: {
-                                // color: '#fff'
-                                
+                                color: '#327085'
                             }
-                        }],
+                        },
+                        {
+                            value: humidity - 0.02,
+                            itemStyle: {
+                                color: '#4C899A'
+                            }
+                        }
+                    ],
                     outline: {
-                        borderColor: '#294D99',
+                        // borderColor: '#336285'
                         show: false
                     },
                     backgroundStyle: {
-                        borderWidth: 5,
-                        borderColor: '#fff',
-                        color: '#fff'
+                        borderWidth: 6,
+                        borderColor: '#FFFBEE',
+                        color: '#FFFBEE',
+                        // color: '#efeadd',
+                        // opacity: 0.5
                     },
                     itemStyle: {
                         shadowBlur: 0,
@@ -45,6 +60,15 @@ const LiquidCharts: FC = () => {
                     animationDurationUpdate: 2000,
                     animationEasingUpdate: 'cubicOut',
                     shape: 'roundRect',
+                    label: {
+                        // position: ['38%', '40%'],
+                        // formatter: function() {
+                        //     return 'ECharts\nLiquid Fill';
+                        // },
+                        fontSize: 60,
+                        color: '#5188A2',
+                        fontfamily: "Century Gothic"
+                    }
                 },
             ],
         };
