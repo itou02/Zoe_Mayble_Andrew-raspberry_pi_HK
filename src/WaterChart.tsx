@@ -14,24 +14,32 @@ const LiquidCharts: FC = () => {
     const initChart = () => {
         const liquid = document.getElementById('main');
         const map = echarts.init(liquid as HTMLDivElement);
+        var humidity = 0.78;
         const option = {
             series: [
                 {
                     type: 'liquidFill',
-                    data: [{
-                        value: 0.52,
-                        direction: 'left',
-                        itemStyle: {
-                            color: '#336285'
+                    data: [
+                        // {
+                        //     value: humidity + 0.02,
+                        //     itemStyle: {
+                        //         color: '#254D6C'
+                        //     }
+                        // },
+                        {
+                            value: humidity,
+                            direction: 'left',
+                            itemStyle: {
+                                color: '#336285'
+                            }
+                        },
+                        {
+                            value: humidity - 0.02,
+                            itemStyle: {
+                                color: '#5188A2'
+                            }
                         }
-                    },
-                    {
-                        value: 0.5,
-                        direction: 'left',
-                        itemStyle: {
-                            color: '#5188A2'
-                        }
-                    }],
+                    ],
                     outline: {
                         // borderColor: '#336285'
                         show: false
