@@ -7,7 +7,33 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-{/* <link rel="stylesheet/less" type="text/css" href="styles.less" /> */}
+// import { mapContainer } from 'https://cdn.esm.sh/react-leaflet/MapContainer';
+// import L from 'leaflet';
+{/* <link rel="stylesheet/less" type="text/css" href="styles.less" /> */ }
+
+// const svg = ref(null);
+// const latLngBounds = L.latLngBounds([
+//   [32, -130],
+//   [13, -100],
+// ]);
+
+// onMounted(() => {
+//   const map = L.map(mapContainer.value);
+
+//   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+//     maxZoom: 19,
+//     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+//   }).addTo(map);
+    
+//    map.fitBounds(latLngBounds);  
+
+// });
+// onMounted(() => {
+//   L.svgOverlay(svg.value, latLngBounds, {
+//     opacity: 0.7,
+//     interactive: true,
+//   }).addTo(map);
+// });
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -86,16 +112,16 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#B5381C",
+          color: "#993728",
           // color: "#FFDB29",
         },
         // {
         //   offset: 0.5,
-          // color: "#EDB927",
+        // color: "#EDB927",
         // },
         {
           offset: 1,
-          color: "#B5381C",
+          color: "#993728",
           // color: "#C13131",
         }
       );
@@ -104,12 +130,12 @@ function App() {
       Gradient.push(
         {
           offset: 0,
-          color: "#B5381C",
+          color: "#993728",
           // color: "#FFDB29",
         },
         {
           offset: 1,
-          color: "#B5381C",
+          color: "#993728",
           // color: "#E0862D",
         }
       );
@@ -117,7 +143,7 @@ function App() {
       TP_txt = "溫度偏低";
       Gradient.push({
         offset: 1,
-        color: "#B5381C",
+        color: "#993728",
         // color: "#FFDB29",
       });
     }
@@ -133,7 +159,7 @@ function App() {
     if (TP_value < -10) {
       boxPosition = [65, -120];
     }
-    
+
     leftColor = Gradient[Gradient.length - 1].color;
     // 因為柱狀初始化為0，溫度存在負值，所以加上負值60和空出距離10
     var option = {
@@ -260,7 +286,7 @@ function App() {
           symbolSize: 48,
           itemStyle: {
             normal: {
-              color: "#B5381C", //下面圓圓的
+              color: "#993728", //下面圓圓的
               // color: "#FFDB29", //下面圓圓的
               opacity: 1,
             },
@@ -349,6 +375,15 @@ function App() {
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
+
+
+      {/* <div class="mapContainer" ref="mapContainer">
+        <svg viewBox="0 0 200 200" ref="svg">
+          <rect width="200" height="200"></rect>
+          <rect x="75" y="23" width="50" height="50" fill="red"></rect>
+          <rect x="75" y="123" width="50" height="50" fill="#0013ff"></rect>
+        </svg>
+      </div> */}
       <Row justify="center" align="center" className="time_background">
         <Col justify="centers" align="center" className="time_box">
           {/* 插件時鐘 */}
@@ -361,7 +396,7 @@ function App() {
           <div className="record_box">
             <Row>
               <Col span={6} push={3} className="temperature_box">
-                <div id="temp" style={{ height: "350px",margin: "10% 0% 0% 0%" }}></div>
+                <div id="temp" style={{ height: "350px", margin: "10% 0% 0% 0%" }}></div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
                 <div className="font-color">26°C</div>

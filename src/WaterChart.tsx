@@ -18,16 +18,22 @@ const LiquidCharts: FC = () => {
             series: [
                 {
                     type: 'liquidFill',
-                    data: [0.52,
-                        {
-                            value: 0.5,
-                            direction: 'left',
-                            itemStyle: {
-                                // color: '#fff'
-                            }
-                        }],
+                    data: [{
+                        value: 0.52,
+                        direction: 'left',
+                        itemStyle: {
+                            color: '#336285'
+                        }
+                    },
+                    {
+                        value: 0.5,
+                        direction: 'left',
+                        itemStyle: {
+                            color: '#5188A2'
+                        }
+                    }],
                     outline: {
-                        borderColor: '#294D99',
+                        // borderColor: '#336285'
                         show: false
                     },
                     backgroundStyle: {
@@ -43,7 +49,16 @@ const LiquidCharts: FC = () => {
                     animationDuration: 0,
                     animationDurationUpdate: 2000,
                     animationEasingUpdate: 'cubicOut',
-                    shape: 'roundRect'
+                    shape: 'roundRect',
+                    label: {
+                        // position: ['38%', '40%'],
+                        // formatter: function() {
+                        //     return 'ECharts\nLiquid Fill';
+                        // },
+                        fontSize: 60,
+                        color: '#5188A2',
+                        fontfamily: "Century Gothic"
+                    }
                 },
             ],
         };
