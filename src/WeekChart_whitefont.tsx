@@ -65,7 +65,12 @@ const LineCharts: FC = () => {
                     type: 'line',
                     data: [76, 73, 65, 78, 67, 70, 72],
                     itemStyle: {
-                        color: '#4D82AB'
+                        normal: {
+                            color: '#3F7D90',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [
@@ -76,6 +81,7 @@ const LineCharts: FC = () => {
                     markLine: {
                         data: [{ type: 'average', name: 'Avg' }]
                     }
+
                 },
                 //   data: [26,27,24,25,23,20,19],
                 {
@@ -83,7 +89,12 @@ const LineCharts: FC = () => {
                     type: 'line',
                     data: [26, 27, 24, 25, 23, 20, 19],
                     itemStyle: {
-                        color: '#AB594D'
+                        normal: {
+                            color: '#A55346',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [

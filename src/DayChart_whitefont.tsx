@@ -13,7 +13,10 @@ const LineCharts: FC = () => {
         var chartDom = document.getElementById("dayLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        
+        // var select_time = 17;//使用者選擇的時間
+        var humi = [76, 73, 65, 78, 67, 70, 72, 68, 67, 80, 70, 64, 68, 67, 80, 70, 66, 83, 64, 68, 67, 80, 70, 68];//濕度資料
+        var temp = [26, 27, 24, 25, 23, 20, 19, 27, 28, 25, 26, 22, 19, 23, 25, 23, 20, 19, 27, 28, 25, 23, 20, 19];//氣溫資料
+        var select_time = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
         option = {
             title: {
                 text: "溫溼度統計變化",
@@ -44,7 +47,31 @@ const LineCharts: FC = () => {
                 type: 'category',
                 show: true,
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                // data: [
+                //     select_time + "00:00",
+                //     select_time + "01:00",
+                //     select_time + "02:00",
+                //     select_time + "03:00",
+                //     select_time + "04:00",
+                //     select_time + "05:00",
+                //     select_time + "06:00",
+                //     select_time + "08:00",
+                //     select_time + "09:00",
+                //     select_time + "10:00",
+                //     select_time + "11:00",
+                //     select_time + "12:00",
+                //     select_time + "13:00",
+                //     select_time + "14:00",
+                //     select_time + "15:00",
+                //     select_time + "16:00",
+                //     select_time + "17:00",
+                //     select_time + "18:00",
+                //     select_time + "19:00",
+                //     select_time + "20:00",
+                //     select_time + "21:00",
+                //     select_time + "22:00",
+                //     select_time + "23:00"],
+                data: select_time,
                 axisLabel: {
                     textStyle: {
                         color: "#fff"
@@ -64,9 +91,14 @@ const LineCharts: FC = () => {
                 {
                     name: '濕度',
                     type: 'line',
-                    data: [76, 73, 65, 78, 67, 70, 72],
+                    data: humi,
                     itemStyle: {
-                        color: '#4D82AB'
+                        normal: {
+                            color: '#3F7D90',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [
@@ -77,14 +109,20 @@ const LineCharts: FC = () => {
                     markLine: {
                         data: [{ type: 'average', name: 'Avg' }]
                     }
+
                 },
                 //   data: [26,27,24,25,23,20,19],
                 {
                     name: '溫度',
                     type: 'line',
-                    data: [26, 27, 24, 25, 23, 20, 19],
+                    data: temp,
                     itemStyle: {
-                        color: '#AB594D'
+                        normal: {
+                            color: '#A55346',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [

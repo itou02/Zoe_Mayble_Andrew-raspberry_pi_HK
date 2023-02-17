@@ -12,6 +12,9 @@ const LineCharts: FC = () => {
         var chartDom = document.getElementById("hourLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
+        var select_time = 0;//使用者選擇的時間
+        var humi = [66, 83, 64, 68, 67, 80, 70];//濕度資料
+        var temp = [27, 28, 25, 26, 22, 19, 23];//氣溫資料
 
         option = {
             title: {
@@ -43,7 +46,7 @@ const LineCharts: FC = () => {
                 type: 'category',
                 show: true,
                 boundaryGap: false,
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                data: [select_time + ":00", select_time + ":10", select_time + ":20", select_time + ":30", select_time + ":40", select_time + ":50", (select_time + 1) + ":00"],
                 axisLabel: {
                     textStyle: {
                         color: "#fff"
@@ -63,10 +66,10 @@ const LineCharts: FC = () => {
                 {
                     name: '濕度',
                     type: 'line',
-                    data: [76, 73, 65, 78, 67, 70, 72],
+                    data: humi,
                     itemStyle: {
                         normal: {
-                            color: '#4D82AB',
+                            color: '#3F7D90',
                             lineStyle: {
                                 width: 4
                             }
@@ -87,10 +90,10 @@ const LineCharts: FC = () => {
                 {
                     name: '溫度',
                     type: 'line',
-                    data: [26, 27, 24, 25, 23, 20, 19],
+                    data: temp,
                     itemStyle: {
                         normal: {
-                            color: '#AB594D',
+                            color: '#A55346',
                             lineStyle: {
                                 width: 4
                             }
