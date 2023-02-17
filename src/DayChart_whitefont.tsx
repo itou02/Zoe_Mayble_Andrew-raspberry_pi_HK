@@ -13,12 +13,7 @@ const LineCharts: FC = () => {
         var chartDom = document.getElementById("dayLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-
-        let base = +new Date(2016, 9, 3);
-        let oneDay = 24 * 3600 * 1000;
-        let valueBase = Math.random() * 300;
-        let valueBase2 = Math.random() * 50;
-        let time = [1, 2, 3, 4]; //[時間]
+        
         option = {
             title: {
                 text: "溫溼度統計變化",

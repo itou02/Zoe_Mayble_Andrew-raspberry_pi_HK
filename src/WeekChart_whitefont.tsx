@@ -12,15 +12,7 @@ const LineCharts: FC = () => {
         var chartDom = document.getElementById("weekLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        let time = [1, 2, 3, 4]; //[時間]
-        let line1 = [
-            [time[0], 10],
-            [time[1], 21],
-        ]; //[時間,值] 溫度數據
-        let line2 = [
-            [time[0], 14],
-            [time[1], 20],
-        ]; //[時間,值] 濕度數據
+        
         option = {
             title: {
                 text: "溫溼度統計變化",

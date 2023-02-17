@@ -13,23 +13,6 @@ const LineCharts: FC = () => {
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
 
-        let base = +new Date(2016, 9, 3);
-        let oneDay = 24 * 3600 * 1000;
-        let valueBase = Math.random() * 300;
-        let valueBase2 = Math.random() * 50;
-        let time = [1, 2, 3, 4]; //[時間]
-        let line1 = [
-            [time[0], 10],
-            [time[1], 21],
-            [time[2], 20],
-            [time[3], 19]
-        ]; //[時間,值] 溫度數據
-        let line2 = [
-            [time[0], 14],
-            [time[1], 10],
-            [time[2], 31],
-            [time[3], 11]
-        ]; //[時間,值] 濕度數據
         option = {
             title: {
                 text: "溫溼度統計變化",
@@ -82,7 +65,12 @@ const LineCharts: FC = () => {
                     type: 'line',
                     data: [76, 73, 65, 78, 67, 70, 72],
                     itemStyle: {
-                        color: '#4D82AB'
+                        normal: {
+                            color: '#4D82AB',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [
@@ -93,6 +81,7 @@ const LineCharts: FC = () => {
                     markLine: {
                         data: [{ type: 'average', name: 'Avg' }]
                     }
+
                 },
                 //   data: [26,27,24,25,23,20,19],
                 {
@@ -100,7 +89,12 @@ const LineCharts: FC = () => {
                     type: 'line',
                     data: [26, 27, 24, 25, 23, 20, 19],
                     itemStyle: {
-                        color: '#AB594D'
+                        normal: {
+                            color: '#AB594D',
+                            lineStyle: {
+                                width: 4
+                            }
+                        }
                     },
                     markPoint: {
                         data: [
