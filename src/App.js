@@ -441,10 +441,7 @@ function App() {
                 {/* {temps.map((temp, index) => (
                   <div key={index}>{temp}</div>
                 ))} */}
-                <div className="font-color">
-                  <div id="TP_value" style={{ height: "350px", margin: "10% 0% 0% 0%" }}                >
-                  </div>+°C
-                </div>
+                <div className="font-color">26°C</div>
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
