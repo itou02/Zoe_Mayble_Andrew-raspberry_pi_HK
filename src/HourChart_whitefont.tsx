@@ -16,7 +16,7 @@ const LineCharts: FC = () => {
         var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
         var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
 
-        const colors = [ '#EE6666','#6398A5'];
+        const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
                 text: "溫濕度統計變化",
@@ -28,16 +28,16 @@ const LineCharts: FC = () => {
             },
             tooltip: {
                 trigger: 'axis',
-                width:30
+                width: 30
             },
             grid: {
                 // right: '20%'
-                top:'20%'
+                top: '20%'
             },
             legend: {
                 textStyle: {
                     color: "#fff",
-                    fontSize:20
+                    fontSize: 20
                 }
             },
             toolbox: {
@@ -45,9 +45,9 @@ const LineCharts: FC = () => {
                 color: '#fff',
                 show: true,
                 iconStyle: {
-                    borderColor:'#fff',
+                    borderColor: '#fff',
                     emphasis: {
-                           borderColor: '#d7ccaa',
+                        borderColor: '#d7ccaa',
                     },
                 },
                 feature: {
@@ -79,10 +79,19 @@ const LineCharts: FC = () => {
                 }
             },
             yAxis: [
-                
+
                 {
                     type: 'value',
-                    name: '溫度',
+                    // name: '溫度',
+                    // nameTextStyle: {
+                    //     fontSize: 20,
+                    //     padding: 10
+                    // },
+                    splitLine: {
+                        lineStyle: {
+                            opacity: 0.3
+                        }
+                    },
                     position: 'left',
                     alignTicks: true,
                     axisLine: {
@@ -93,12 +102,19 @@ const LineCharts: FC = () => {
                     },
                     axisLabel: {
                         formatter: '{value} °C',
-                        fontSize:20
+                        fontSize: 20
                     }
                 },
                 {
                     type: 'value',
-                    name: '濕度',
+                    // name: '濕度',
+                    // nameTextStyle: {
+                    //     fontSize: 20,
+                    //     padding: 10
+                    // },
+                    splitLine: {
+                        show: false
+                    },
                     position: 'right',
                     alignTicks: true,
                     axisLine: {
@@ -109,7 +125,7 @@ const LineCharts: FC = () => {
                     },
                     axisLabel: {
                         formatter: '{value} %',
-                        fontSize:20
+                        fontSize: 20
                     }
                 }
             ],
@@ -119,9 +135,8 @@ const LineCharts: FC = () => {
                     name: 'Temperature',
                     type: 'line',
                     data: temp,
-                    // symbol: 'circle',
-                    symbolSize: 10,
-                    smooth: true,
+                    symbolSize: 9,
+                    smooth: false,
                     itemStyle: {
                         normal: {
                             color: colors[0],
@@ -132,8 +147,8 @@ const LineCharts: FC = () => {
                     },
                     markPoint: {
                         data: [
-                            { type: 'max', name: '最高濕度' },
-                            { type: 'min', name: '最低濕度' }
+                            { type: 'max', name: '最高溫度' },
+                            { type: 'min', name: '最低溫度' }
                         ],
                         symbolSize: 60,
                         label: {
@@ -141,12 +156,12 @@ const LineCharts: FC = () => {
                         }
 
                     },
-                    markLine: {
-                        data: [{ type: 'average', name: 'Avg' }],
-                        lineStyle: {
-                            width: 2
-                        }
-                    }
+                    // markLine: {
+                    //     data: [{ type: 'average', name: 'Avg' }],
+                    //     lineStyle: {
+                    //         width: 2
+                    //     }
+                    // }
 
                 },
                 {
@@ -172,12 +187,12 @@ const LineCharts: FC = () => {
                             fontSize: 20
                         }
                     },
-                    markLine: {
-                        data: [{ type: 'average', name: 'Avg' }],
-                        lineStyle: {
-                            width: 2
-                        }
-                    }
+                    // markLine: {
+                    //     data: [{ type: 'average', name: 'Avg' }],
+                    //     lineStyle: {
+                    //         width: 2
+                    //     }
+                    // }
                 },
             ]
         };
