@@ -14,7 +14,7 @@ const LiquidCharts: FC = () => {
     const initChart = () => {
         const liquid = document.getElementById('main');
         const map = echarts.init(liquid as HTMLDivElement);
-        var humidity = 0.78;
+        var humidity = 0.52;
         const option = {
             series: [
                 {

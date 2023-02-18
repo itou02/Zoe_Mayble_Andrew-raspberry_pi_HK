@@ -56,7 +56,7 @@ canvas{
 }
 
 .chart_box {
-  background-color: #303030;
+  background-color: #404040;
   /* border-radius: 10px; */
   display: flex;
   flex-direction: column;

@@ -16,10 +16,10 @@ const LineCharts: FC = () => {
         // var select_time = 17;//使用者選擇的時間
         var humi = [76, 73, 65, 78, 67, 70, 72, 68, 67, 80, 70, 64, 68, 67, 80, 70, 66, 83, 64, 68, 67, 80, 70, 68];//濕度資料
         var temp = [26, 27, 24, 25, 23, 20, 19, 27, 28, 25, 26, 22, 19, 23, 25, 23, 20, 19, 27, 28, 25, 23, 20, 19];//氣溫資料
-        var select_time = ["00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"]
+        var select_time = ["00", "01", "02", "03", "04", "05", "06", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
         option = {
             title: {
-                text: "溫溼度統計變化",
+                text: "溫濕度統計變化",
                 textStyle: {
                     color: "#fff"
                 }
@@ -48,29 +48,29 @@ const LineCharts: FC = () => {
                 show: true,
                 boundaryGap: false,
                 // data: [
-                //     select_time + "00:00",
-                //     select_time + "01:00",
-                //     select_time + "02:00",
-                //     select_time + "03:00",
-                //     select_time + "04:00",
-                //     select_time + "05:00",
-                //     select_time + "06:00",
-                //     select_time + "08:00",
-                //     select_time + "09:00",
-                //     select_time + "10:00",
-                //     select_time + "11:00",
-                //     select_time + "12:00",
-                //     select_time + "13:00",
-                //     select_time + "14:00",
-                //     select_time + "15:00",
-                //     select_time + "16:00",
-                //     select_time + "17:00",
-                //     select_time + "18:00",
-                //     select_time + "19:00",
-                //     select_time + "20:00",
-                //     select_time + "21:00",
-                //     select_time + "22:00",
-                //     select_time + "23:00"],
+                //     select_time + "00",
+                //     select_time + "01",
+                //     select_time + "02",
+                //     select_time + "03",
+                //     select_time + "04",
+                //     select_time + "05",
+                //     select_time + "06",
+                //     select_time + "08",
+                //     select_time + "09",
+                //     select_time + "10",
+                //     select_time + "11",
+                //     select_time + "12",
+                //     select_time + "13",
+                //     select_time + "14",
+                //     select_time + "15",
+                //     select_time + "16",
+                //     select_time + "17",
+                //     select_time + "18",
+                //     select_time + "19",
+                //     select_time + "20",
+                //     select_time + "21",
+                //     select_time + "22",
+                //     select_time + "23"],
                 data: select_time,
                 axisLabel: {
                     textStyle: {

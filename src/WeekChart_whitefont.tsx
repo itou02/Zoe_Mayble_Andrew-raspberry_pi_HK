@@ -12,10 +12,10 @@ const LineCharts: FC = () => {
         var chartDom = document.getElementById("weekLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        
+
         option = {
             title: {
-                text: "溫溼度統計變化",
+                text: "溫濕度統計變化",
                 textStyle: {
                     color: "#fff"
                 }
@@ -108,6 +108,7 @@ const LineCharts: FC = () => {
                 }
             ]
         };
+
         myChart.clear()
         option && myChart.setOption(option);
 
@@ -115,7 +116,7 @@ const LineCharts: FC = () => {
     };
 
     return (
-            <div id="weekLineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />
+        <div id="weekLineChart" style={{ width: "80%", margin: "50px auto", height: "600px" }} />
     );
 };
 export default LineCharts;
