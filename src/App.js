@@ -197,7 +197,7 @@ function App() {
         },
         {
           show: false,
-          min: -40,
+          min: -30,
           max: 80,
         },
       ],
@@ -299,44 +299,44 @@ function App() {
         //   },
         //   z: 0,
         // },
-        // {
-        //   name: "刻度",
-        //   type: "bar",
-        //   yAxisIndex: 0,
-        //   xAxisIndex: 3,
-        //   label: {
-        //     normal: {
-        //       show: true,
-        //       position: "left",
-        //       distance: 10,
-        //       color: "#fff", //刻度數字
-        //       fontSize: 14,
-        //       formatter: function (params) {
-        //         if (params.dataIndex > 80 || params.dataIndex < 10) {
-        //           return "";
-        //         } else {
-        //           if ((params.dataIndex - 10) % 10 === 0) {
-        //             return params.dataIndex - 30;
-        //           } else {
-        //             return "";
-        //           }
-        //         }
-        //       },
-        //     },
-        //   },
-        //   // 小刻度
-        //   barGap: "-100%",
-        //   data: kd,
-        //   barWidth: 1,
-        //   itemStyle: {
-        //     normal: {
-        //       distance: 10,
-        //       color: "#fff",
-        //       barBorderRadius: 120,
-        //     },
-        //   },
-        //   z: 0,
-        // },
+        {
+          name: "刻度",
+          type: "bar",
+          yAxisIndex: 0,
+          xAxisIndex: 3,
+          label: {
+            normal: {
+              show: true,
+              position: "left",
+              distance: 10,
+              color: "#505050", //刻度數字
+              fontSize: 14,
+              formatter: function (params) {
+                if (params.dataIndex > 80 || params.dataIndex < 10) {
+                  return "";
+                } else {
+                  if ((params.dataIndex - 10) % 10 === 0) {
+                    return params.dataIndex - 30;
+                  } else {
+                    return "";
+                  }
+                }
+              },
+            },
+          },
+          // 小刻度
+          barGap: "-100%",
+          data: kd,
+          barWidth: 1,
+          itemStyle: {
+            normal: {
+              distance: 10,
+              color: "#505050",
+              barBorderRadius: 120,
+            },
+          },
+          z: 0,
+        },
       ],
     };
     option && myChart.setOption(option);
@@ -373,9 +373,9 @@ function App() {
         // console.log(data[key].humi);
         // console.log(dataArr);
         // setTemps(Object(data[key]));
-      console.log(dataArr[key].temp);
-      console.log(dataArr[key].humi);
-      console.log(dataArr[key].datetime);
+        console.log(dataArr[key].temp);
+        console.log(dataArr[key].humi);
+        console.log(dataArr[key].datetime);
       }
     },
     []
@@ -441,7 +441,10 @@ function App() {
                 {/* {temps.map((temp, index) => (
                   <div key={index}>{temp}</div>
                 ))} */}
-                <div className="font-color">26°C</div>
+                <div className="font-color">
+                  <div id="TP_value" style={{ height: "350px", margin: "10% 0% 0% 0%" }}                >
+                  </div>+°C
+                </div>
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
