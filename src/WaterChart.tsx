@@ -5,6 +5,32 @@ import 'echarts-liquidfill';
 
 import React from 'react';
 
+import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    databaseURL:
+        "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+};
+const app = initializeApp(firebaseConfig);
+const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+const dbref_get = ref(getDatabase())
+
+onValue(
+    dbRef,
+    (snapshot) => {
+        let data = snapshot.val();
+        let dataValue = Object.values(data);
+        let dataArr: object = Array.from(dataValue);
+        let temp: number = dataArr[0].temp
+        let humi: number = dataArr[0].humi
+        let datetime: string = dataArr[0].datetime
+        console.log(temp);
+        console.log(humi);
+        console.log(datetime);
+    }
+);
+
 const LiquidCharts: FC = () => {
 
     useEffect(() => {
@@ -75,6 +101,6 @@ const LiquidCharts: FC = () => {
         map.clear()
         map.setOption(option);
     };
-    return <div id='main' style={{ width: 400, height: 400, objectFit:'none'}} />;
+    return <div id='main' style={{ width: 400, height: 400, objectFit: 'none' }} />;
 };
 export default LiquidCharts;

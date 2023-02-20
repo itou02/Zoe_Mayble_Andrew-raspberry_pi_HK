@@ -8,7 +8,7 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-import { getDatabase, ref, child, get, onValue } from "firebase/database";
+import { getDatabase, ref, child, get, onValue , query, limitToLast} from "firebase/database";
 import { initializeApp } from "firebase/app";
 
 /*圖表標籤頁*/
@@ -358,7 +358,8 @@ function App() {
       "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
   };
   const app = initializeApp(firebaseConfig);
-  const dbRef = ref(getDatabase(app), "data");
+  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  const dbref_get = ref(getDatabase())
 
   onValue(
     dbRef,
@@ -366,7 +367,6 @@ function App() {
       let data = snapshot.val();
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
         // console.log(yo);
         // console.log(Object(data[key]));
         // console.log(Object(data[key].humi));
@@ -375,13 +375,65 @@ function App() {
         // console.log(data[key].humi);
         // console.log(dataArr);
         // setTemps(Object(data[key]));
-        console.log(dataArr[key].temp);
-        console.log(dataArr[key].humi);
-        console.log(dataArr[key].datetime);
-      }
+        // console.log(dataArr[0].temp);
+        // console.log(dataArr[0].humi);
+        // console.log(dataArr[0].datetime);
     },
     []
   );
+
+  let arr_data = [];
+
+
+  
+  function selectDate(date) {
+    let res = []
+    get(child(dbref_get, `data`)).then((snapshot) => {
+      let data = snapshot.val();
+      let dataValue = Object.values(data);
+      let dataArr = Array.from(dataValue);
+      for (var key in dataArr) {
+        // console.log(dataArr[key].temp);
+        // console.log(dataArr[key].humi);
+        // console.log(dataArr[key].datetime);
+        arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
+      }
+      // console.log(arr_data[1].temp)
+      for (var key in arr_data) {
+        if (arr_data[key].datetime.indexOf(date) == 0) {
+          res.push(arr_data[key])
+        }
+      }
+      // console.log(res)
+    });
+  }
+
+
+  function selectHour(hour) {
+    let res = []
+    get(child(dbref_get, `data`)).then((snapshot) => {
+      let data = snapshot.val();
+      let dataValue = Object.values(data);
+      let dataArr = Array.from(dataValue);
+      for (var key in dataArr) {
+        // console.log(dataArr[key].temp);
+        // console.log(dataArr[key].humi);
+        // console.log(dataArr[key].datetime);
+        arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
+      }
+
+      for (var key in arr_data) {
+        if (arr_data[key].datetime.indexOf(hour) == 0) {
+          res.push(arr_data[key])
+        }
+      }
+    });
+    return res
+  }
+
+  selectDate('23-02-18')
+  let res = selectHour('23-02-18 14')
+  // console.log(res)
   // get(dbRef).then((snapshot) => {
   //     if (snapshot.exists()) {
   //       let data = snapshot.val();
