@@ -18,9 +18,10 @@ const onTabChange = (key) => {
 
 /*日期選擇器*/
 const onTimeChange = (date, dateString) => {
-  console.log(date, dateString);
+  // console.log(date, dateString);
+  console.log('Selected Time: ', date);
+  console.log('Formatted Selected Time: ', dateString);
 };
-
 function App() {
   // 時間選擇器
   const [value, setValue] = useState(null);
@@ -344,6 +345,7 @@ function App() {
 
   useEffect(() => {
     onTabChange();
+    onTimeChange();
     onChange();
     temp();
   }, []);
@@ -465,18 +467,20 @@ function App() {
               <Tabs.TabPane tab="Hour" key="1">
                 <TimePicker
                   value={value}
-                  onChange={onChange}
+                  onChange={onTimeChange}
                   format="HH"
-                  showNow={false}
-                />
+                  showNow={false} />
                 <HourChart />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Day" key="2">
-                <DatePicker onChange={onTimeChange} />
+                <DatePicker onChange={onTimeChange}
+                  value={value}
+                  showNow={false} />
                 <DayChart />
               </Tabs.TabPane>
               <Tabs.TabPane tab="Week" key="3">
-                <DatePicker onChange={onTimeChange} picker="week" />
+                <DatePicker onChange={onTimeChange}
+                  picker="week" />
                 <WeekChart />
               </Tabs.TabPane>
             </Tabs>
