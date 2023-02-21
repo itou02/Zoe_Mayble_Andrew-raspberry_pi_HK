@@ -57,7 +57,6 @@ const LineCharts: FC = () => {
                         yAxisIndex: 'none'
                     },
                     dataView: { readOnly: false },
-                    magicType: { type: ['line', 'bar'] },
                     saveAsImage: {}
                 }
             },
