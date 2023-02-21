@@ -244,7 +244,6 @@ const LineCharts: FC = () => {
     );
 };
 export default LineCharts;
-  // const initChart = () => {
   //   var chartDom = document.getElementById("lineChart");
   //   var myChart = echarts.init(chartDom);
   //   var option;
