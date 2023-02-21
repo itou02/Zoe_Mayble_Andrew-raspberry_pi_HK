@@ -206,18 +206,12 @@ function App() {
         <Col span={16} offset={4} justify="centers" align="center">
           <div className="record_box">
             <Row>
-              <Col span={6} push={3} className="temperature_box">
+              <Col span={12} className="temperature_box">
                 <div>
                   <TempChart />
                 </div>
               </Col>
-              <Col span={8} pull={1} className="temperature_degree">
-                {/* {temps.map((temp, index) => (
-                  <div key={index}>{temp}</div>
-                ))} */}
-                <div>26°C</div>
-              </Col>
-              <Col span={8} className="humidity_box">
+              <Col span={12} className="humidity_box">
                 <div>
                   <WaterChart />
                 </div>

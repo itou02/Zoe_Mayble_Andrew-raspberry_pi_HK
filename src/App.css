@@ -25,12 +25,13 @@
   border-radius: 10px;
 }
 
-.temperature_box {
-  height: 80%;
-}
-
 canvas{
   /* object-fit: none; */
+}
+
+.temperature_box {
+  justify-content: center;
+  align-items: center;
 }
 
 .humidity_box {
@@ -47,7 +48,6 @@ canvas{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 .tabs {
