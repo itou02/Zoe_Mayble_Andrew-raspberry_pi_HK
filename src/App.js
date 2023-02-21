@@ -1,6 +1,6 @@
 import * as echarts from "echarts";
 import "./App.css";
-import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space } from "antd";
+import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space, ConfigProvider, theme } from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
@@ -8,7 +8,7 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-import { getDatabase, ref, child, get, onValue , query, limitToLast} from "firebase/database";
+import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
 /*圖表標籤頁*/
@@ -23,6 +23,8 @@ const onTimeChange = (date, dateString) => {
   console.log('Formatted Selected Time: ', dateString);
 };
 function App() {
+
+
   // 時間選擇器
   const [value, setValue] = useState(null);
   const onChange = (time) => {
@@ -31,8 +33,8 @@ function App() {
 
   function ticking() {
     const element = (
-      <div className="font-color">
-        <p className="date font-color">
+      <div>
+        <p className="date">
           {new Date().getFullYear() +
             "/" +
             (new Date().getMonth() + 1) +
@@ -367,17 +369,17 @@ function App() {
       let data = snapshot.val();
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
-        // console.log(yo);
-        // console.log(Object(data[key]));
-        // console.log(Object(data[key].humi));
-        // console.log(Object(data[key].datetime));
-        // console.log(data[key].temp);
-        // console.log(data[key].humi);
-        // console.log(dataArr);
-        // setTemps(Object(data[key]));
-        // console.log(dataArr[0].temp);
-        // console.log(dataArr[0].humi);
-        // console.log(dataArr[0].datetime);
+      // console.log(yo);
+      // console.log(Object(data[key]));
+      // console.log(Object(data[key].humi));
+      // console.log(Object(data[key].datetime));
+      // console.log(data[key].temp);
+      // console.log(data[key].humi);
+      // console.log(dataArr);
+      // setTemps(Object(data[key]));
+      // console.log(dataArr[0].temp);
+      // console.log(dataArr[0].humi);
+      // console.log(dataArr[0].datetime);
     },
     []
   );
@@ -385,7 +387,7 @@ function App() {
   let arr_data = [];
 
 
-  
+
   function selectDate(date) {
     let res = []
     get(child(dbref_get, `data`)).then((snapshot) => {
@@ -467,6 +469,7 @@ function App() {
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
+
       {/* <div class="mapContainer" ref="mapContainer">
         <svg viewBox="0 0 200 200" ref="svg">
           <rect width="200" height="200"></rect>
@@ -495,7 +498,7 @@ function App() {
                 {/* {temps.map((temp, index) => (
                   <div key={index}>{temp}</div>
                 ))} */}
-                <div className="font-color">26°C</div>
+                <div>26°C</div>
               </Col>
               <Col span={8} className="humidity_box">
                 <div>
@@ -508,39 +511,49 @@ function App() {
       </Row>
       <Row className="chart_background">
         {/* 統計圖表標籤頁 */}
-        <Col span={24} justify="centers" align="center">
-          <div className="chart_box">
-            <Tabs
-              defaultActiveKey={1}
-              className="tabs font-color2"
-              onChange={onTabChange}
-              size="large"
-            >
-              <Tabs.TabPane tab="Hour" key="1">
-                <TimePicker
-                  value={value}
-                  onChange={onTimeChange}
-                  format="HH"
-                  showNow={false} />
-                <HourChart />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Day" key="2">
-                <DatePicker onChange={onTimeChange}
-                  value={value}
-                  showNow={false} />
-                <DayChart />
-              </Tabs.TabPane>
-              <Tabs.TabPane tab="Week" key="3">
-                <DatePicker onChange={onTimeChange}
-                  picker="week" />
-                <WeekChart />
-              </Tabs.TabPane>
-            </Tabs>
-            <Space direction="vertical"></Space>
-          </div>
-        </Col>
+        <ConfigProvider
+          theme={{
+            // algorithm: theme.darkAlgorithm,
+            token: {
+              colorPrimary: '#D6B24E',
+            },
+          }}
+        >
+          <Col span={24} justify="centers" align="center">
+            <div className="chart_box">
+              <Tabs centered
+                defaultActiveKey={1}
+                className="tabs font-color2"
+                onChange={onTabChange}
+                size="large"
+              >
+                <Tabs.TabPane tab="Hour" key="1">
+                  <TimePicker
+                    value={value}
+                    onChange={onTimeChange}
+                    format="HH"
+                    showNow={false}
+                    popupStyle={{ color: '' }} />
+                  <HourChart />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Day" key="2">
+                  <DatePicker onChange={onTimeChange}
+                    value={value}
+                    showNow={false} />
+                  <DayChart />
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Week" key="3">
+                  <DatePicker onChange={onTimeChange}
+                    picker="week" />
+                  <WeekChart />
+                </Tabs.TabPane>
+              </Tabs >
+              <Space direction="vertical"></Space>
+            </div>
+          </Col>
+        </ConfigProvider>
       </Row>
-    </div>
+    </div >
   );
 }
 
