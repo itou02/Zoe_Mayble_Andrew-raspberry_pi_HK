@@ -28,7 +28,14 @@ const LineCharts: FC = () => {
             },
             tooltip: {
                 trigger: 'axis',
-                width: 30
+                width: 30,
+                axisPointer: {
+                    label: {
+                        formatter: '{value}',
+                        fontSize: 20
+                    }
+                },
+                // formatter: "{a0} {c0}°C<br />'axis'{a1} {c1}%"
             },
             grid: {
                 // right: '20%'
@@ -47,7 +54,7 @@ const LineCharts: FC = () => {
                 iconStyle: {
                     borderColor: '#fff',
                     emphasis: {
-                        borderColor: '#d7ccaa',
+                        borderColor: '#D6B24E',
                     },
                 },
                 feature: {
@@ -66,7 +73,7 @@ const LineCharts: FC = () => {
                 axisLabel: {
                     textStyle: {
                         color: "#fff",
-                        fontSize: 20
+                        fontSize: 16
                     }
                 }
             },
@@ -123,7 +130,7 @@ const LineCharts: FC = () => {
             series: [
                 //   data: [26,27,24,25,23,20,19],
                 {
-                    name: 'Temperature',
+                    name: '溫度',
                     type: 'line',
                     data: temp,
                     symbolSize: 9,
@@ -156,7 +163,7 @@ const LineCharts: FC = () => {
 
                 },
                 {
-                    name: 'Humidity',
+                    name: '濕度',
                     type: 'bar',
                     yAxisIndex: 1,
                     data: humi,
