@@ -244,7 +244,7 @@ function App() {
                 onChange={onTabChange}
                 size="large"
               >
-                <Tabs.TabPane tab="Hour" key="1">
+                <Tabs.TabPane tab="Minute" key="1">
                   <TimePicker
                     value={value}
                     onChange={onTimeChange}
@@ -253,13 +253,13 @@ function App() {
                     popupStyle={{ color: '' }} />
                   <HourChart />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Day" key="2">
+                <Tabs.TabPane tab="Hour" key="2">
                   <DatePicker onChange={onTimeChange}
                     value={value}
                     showNow={false} />
                   <DayChart />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Week" key="3">
+                <Tabs.TabPane tab="Day" key="3">
                   <DatePicker onChange={onTimeChange}
                     picker="week" />
                   <WeekChart />
