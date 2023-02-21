@@ -351,8 +351,7 @@ function App() {
     onChange();
     temp();
   }, []);
-  const [temps, setTemps] = useState([]);
-  const [humis, setHumis] = useState([]);
+
   /*資料*/
 
   const firebaseConfig = {
@@ -363,30 +362,12 @@ function App() {
   const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
   const dbref_get = ref(getDatabase())
 
-  onValue(
-    dbRef,
-    (snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      // console.log(yo);
-      // console.log(Object(data[key]));
-      // console.log(Object(data[key].humi));
-      // console.log(Object(data[key].datetime));
-      // console.log(data[key].temp);
-      // console.log(data[key].humi);
-      // console.log(dataArr);
-      // setTemps(Object(data[key]));
-      // console.log(dataArr[0].temp);
-      // console.log(dataArr[0].humi);
-      // console.log(dataArr[0].datetime);
-    },
-    []
-  );
+
 
   let arr_data = [];
 
-
+  const [temps, setTemps] = useState([]);
+  const [humis, setHumis] = useState([]);
 
   function selectDate(date) {
     let res = []
@@ -399,11 +380,14 @@ function App() {
         // console.log(dataArr[key].humi);
         // console.log(dataArr[key].datetime);
         arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
+
       }
+
       // console.log(arr_data[1].temp)
       for (var key in arr_data) {
         if (arr_data[key].datetime.indexOf(date) == 0) {
           res.push(arr_data[key])
+          setTemps(dataArr[key].temp)
         }
       }
       // console.log(res)
