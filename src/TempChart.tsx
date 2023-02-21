@@ -99,7 +99,7 @@ const TempChart: FC = () => {
                     fontSize: 56
                 },
                 top: '45%',
-                right: '7%',
+                right: '9%',
                 // padding:[0,0,0,0],
             },
             yAxis: [
