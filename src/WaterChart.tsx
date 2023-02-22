@@ -31,16 +31,17 @@ onValue(
     }
 );
 
-const LiquidCharts: FC = () => {
+const LiquidCharts: FC = (data_test) => {
 
     useEffect(() => {
-        initChart();
+        initChart(data_test);
     });
 
-    const initChart = () => {
+    const initChart = (data_test) => {
         const liquid = document.getElementById('main');
         const map = echarts.init(liquid as HTMLDivElement);
-        var humidity = 0.52;
+        // var humidity = 0.52;
+        var humidity = data_test
         const option = {
             series: [
                 {
