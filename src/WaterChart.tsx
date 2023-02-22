@@ -101,6 +101,6 @@ const LiquidCharts: FC = () => {
         map.clear()
         map.setOption(option);
     };
-    return <div id='main' style={{ width: 400, height: 400, objectFit: 'none' }} />;
+    return <div id='main' style={{ width: 450, height: 450, objectFit: 'none' }} />;
 };
 export default LiquidCharts;

@@ -241,7 +241,7 @@ function App() {
         <Col span={16} offset={4} justify="centers" align="center">
           <div className="record_box">
             <Row>
-              <Col span={6} push={3} className="temperature_box">
+              <Col span={12} className="temperature_box">
                 <div>
                   <TempChart />
                 </div>
@@ -251,7 +251,7 @@ function App() {
                   {/* <div>26°C</div> */}
               </Col>
 
-              <Col span={8} className="humidity_box">
+              <Col span={12} className="humidity_box">
                 <div>
                   <WaterChart />
                 </div>
@@ -279,7 +279,7 @@ function App() {
                 onChange={onTabChange}
                 size="large"
               >
-                <Tabs.TabPane tab="Hour" key="1">
+                <Tabs.TabPane tab="Minute" key="1">
                   <TimePicker
                     value={value}
                     onChange={onTimeChange}
@@ -289,16 +289,16 @@ function App() {
                   />
                   <HourChart />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Day" key="2">
-                  <DatePicker
-                    onChange={onTimeChange}
+                <Tabs.TabPane tab="Hour" key="2">
+                  <DatePicker onChange={onTimeChange}
                     value={value}
                     showNow={false}
                   />
                   <DayChart />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Week" key="3">
-                  <DatePicker onChange={onTimeChange} picker="week" />
+                <Tabs.TabPane tab="Day" key="3">
+                  <DatePicker onChange={onTimeChange}
+                    picker="week" />
                   <WeekChart />
                 </Tabs.TabPane>
               </Tabs>
