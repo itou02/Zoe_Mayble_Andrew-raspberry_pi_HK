@@ -19,9 +19,8 @@ import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
 import TempChart from "./TempChart.tsx";
-import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
-import { initializeApp } from "firebase/app";
-
+import { getDatabase, ref, onValue, query, limitToLast } from "firebase/database";
+import { initializeApp,getApp, getApps } from "firebase/app";
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -77,10 +76,11 @@ function App() {
 
   const firebaseConfig = {
     databaseURL:
-      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com",
   };
-  const app = initializeApp(firebaseConfig);
-  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  // const app = initializeApp(firebaseConfig);
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const dbRef = query(ref(getDatabase(app), "data"));
   const dbref_get = ref(getDatabase());
 
   let arr_data = [];
@@ -110,7 +110,7 @@ function App() {
         // let test2 = new RegExp("ab+c");
         // let test2 = (test.split("{/,"))
         
-        // console.log(allData);
+        console.log(dataArr);
         // setTemps(test);
         // setHumis(test);
         setDatas(allData);
@@ -181,25 +181,25 @@ function App() {
                 size="large"
               >
                 <Tabs.TabPane tab="Minute" key="1">
-                  <TimePicker
+                  {/* <TimePicker
                     value={value}
                     onChange={onTimeChange}
                     format="HH"
                     showNow={false}
                     popupStyle={{ color: "" }}
-                  />
-                  <HourChart />
+                  /> */}
+                  <HourChart  data_test={[datas.temp,datas.humi,datas.datetime]}/>
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Hour" key="2">
-                  <DatePicker
+                  {/* <DatePicker
                     onChange={onTimeChange}
                     value={value}
                     showNow={false}
-                  />
+                  /> */}
                   <DayChart />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Day" key="3">
-                  <DatePicker onChange={onTimeChange} picker="week" />
+                  {/* <DatePicker onChange={onTimeChange} picker="week" /> */}
                   <WeekChart />
                 </Tabs.TabPane>
               </Tabs>

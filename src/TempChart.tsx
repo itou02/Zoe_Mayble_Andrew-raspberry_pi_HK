@@ -2,8 +2,6 @@ import { FC, useEffect } from "react";
 import * as echarts from "echarts";
 import React from "react";
 import "./App.css";
-import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
-import { initializeApp } from "firebase/app";
 import { stringify } from "querystring";
 
 

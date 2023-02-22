@@ -10,7 +10,7 @@ import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
     databaseURL:
-        "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
 };
 const app = initializeApp(firebaseConfig);
 const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
