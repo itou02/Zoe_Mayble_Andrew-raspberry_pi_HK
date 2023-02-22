@@ -75,17 +75,17 @@ function App() {
 
   /*資料*/
 
-  // const firebaseConfig = {
-  //   databaseURL:
-  //     "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  // };
-  // const app = initializeApp(firebaseConfig);
-  // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-  // const dbref_get = ref(getDatabase());
+  const firebaseConfig = {
+    databaseURL:
+      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  };
+  const app = initializeApp(firebaseConfig);
+  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  const dbref_get = ref(getDatabase());
 
-  // let arr_data = [];
+  let arr_data = [];
 
-  // const [datas, setDatas] = useState([]);
+  const [datas, setDatas] = useState([]);
 
   function nowTemp(temp) {
     let res = [];
@@ -142,7 +142,7 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart/>
+                  <TempChart data_test={datas.temp}/>
                    {/* data_test={datas.temp} */}
                 </div>
               </Col>
