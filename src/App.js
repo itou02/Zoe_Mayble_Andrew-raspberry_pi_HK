@@ -22,6 +22,10 @@ import TempChart from "./TempChart.tsx";
 import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
+var now = new Date();
+
+// console.log("now:",now);
+console.log("now:",now.getDate()-1);
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -181,25 +185,25 @@ function App() {
                 size="large"
               >
                 <Tabs.TabPane tab="Minute" key="1">
-                  <TimePicker
+                  {/* <TimePicker
                     value={value}
                     onChange={onTimeChange}
                     format="HH"
                     showNow={false}
                     popupStyle={{ color: "" }}
-                  />
+                  /> */}
                   <HourChart />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Hour" key="2">
-                  <DatePicker
+                  {/* <DatePicker
                     onChange={onTimeChange}
                     value={value}
                     showNow={false}
-                  />
+                  /> */}
                   <DayChart />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Day" key="3">
-                  <DatePicker onChange={onTimeChange} picker="week" />
+                  {/* <DatePicker onChange={onTimeChange} picker="week" /> */}
                   <WeekChart />
                 </Tabs.TabPane>
               </Tabs>
