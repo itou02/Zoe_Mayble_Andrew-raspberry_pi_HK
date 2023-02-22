@@ -1,6 +1,16 @@
 import * as echarts from "echarts";
 import "./App.css";
-import { Row, Col, Anchor, Tabs, DatePicker, TimePicker, Space, ConfigProvider, theme } from "antd";
+import {
+  Row,
+  Col,
+  Anchor,
+  Tabs,
+  DatePicker,
+  TimePicker,
+  Space,
+  ConfigProvider,
+  theme,
+} from "antd";
 import ReactDOM from "react-dom";
 import React, { useState, useEffect } from "react";
 import WaterChart from "./WaterChart.tsx";
@@ -8,7 +18,17 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  child,
+  get,
+  onValue,
+  orderByChild,
+  query,
+  limitToLast,
+  orderByValue,
+} from "firebase/database";
 import { initializeApp } from "firebase/app";
 import TempChart from "./TempChart.tsx";
 
@@ -20,12 +40,10 @@ const onTabChange = (key) => {
 /*日期選擇器*/
 const onTimeChange = (date, dateString) => {
   // console.log(date, dateString);
-  console.log('Selected Time: ', date);
-  console.log('Formatted Selected Time: ', dateString);
+  console.log("Selected Time: ", date);
+  console.log("Formatted Selected Time: ", dateString);
 };
 function App() {
-
-
   // 時間選擇器
   const [value, setValue] = useState(null);
   const onChange = (time) => {
@@ -63,11 +81,11 @@ function App() {
     lineData.push(d);
   }
 
-
   useEffect(() => {
     onTabChange();
     onTimeChange();
     onChange();
+    nowTemp();
   }, []);
 
   /*資料*/
@@ -78,17 +96,15 @@ function App() {
   };
   const app = initializeApp(firebaseConfig);
   const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-  const dbref_get = ref(getDatabase())
-
-
+  const dbref_get = ref(getDatabase());
 
   let arr_data = [];
 
   const [temps, setTemps] = useState([]);
   const [humis, setHumis] = useState([]);
 
-  function selectDate(date) {
-    let res = []
+  function nowTemp(temp) {
+    let res = [];
     get(child(dbref_get, `data`)).then((snapshot) => {
       let data = snapshot.val();
       let dataValue = Object.values(data);
@@ -97,24 +113,56 @@ function App() {
         // console.log(dataArr[key].temp);
         // console.log(dataArr[key].humi);
         // console.log(dataArr[key].datetime);
-        arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
+        arr_data.push({
+          temp: dataArr[key].temp,
+          humi: dataArr[key].humi,
+          datetime: dataArr[key].datetime,
+        });
+      }
 
+      // console.log(arr_data[1].temp)
+      for (var key in arr_data) {
+        res.push(arr_data[key]);
+      }
+      let test = (res[key]);
+      // let test2 = new RegExp("ab+c");
+      // let test2 = (test.split("{/,"))
+      
+      // console.log(test);
+      setTemps(test);
+    });
+  }
+
+  function selectDate(date) {
+    let res = [];
+    get(child(dbref_get, `data`)).then((snapshot) => {
+      let data = snapshot.val();
+      let dataValue = Object.values(data);
+      let dataArr = Array.from(dataValue);
+      for (var key in dataArr) {
+        // console.log(dataArr[key].temp);
+        // console.log(dataArr[key].humi);
+        // console.log(dataArr[key].datetime);
+        arr_data.push({
+          temp: dataArr[key].temp,
+          humi: dataArr[key].humi,
+          datetime: dataArr[key].datetime,
+        });
       }
 
       // console.log(arr_data[1].temp)
       for (var key in arr_data) {
         if (arr_data[key].datetime.indexOf(date) == 0) {
-          res.push(arr_data[key])
-          setTemps(dataArr[key].temp)
+          res.push(arr_data[key]);
+          // setTemps(dataArr[key].temp)
         }
       }
       // console.log(res)
     });
   }
 
-
   function selectHour(hour) {
-    let res = []
+    let res = [];
     get(child(dbref_get, `data`)).then((snapshot) => {
       let data = snapshot.val();
       let dataValue = Object.values(data);
@@ -123,20 +171,24 @@ function App() {
         // console.log(dataArr[key].temp);
         // console.log(dataArr[key].humi);
         // console.log(dataArr[key].datetime);
-        arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
+        arr_data.push({
+          temp: dataArr[key].temp,
+          humi: dataArr[key].humi,
+          datetime: dataArr[key].datetime,
+        });
       }
 
       for (var key in arr_data) {
         if (arr_data[key].datetime.indexOf(hour) == 0) {
-          res.push(arr_data[key])
+          res.push(arr_data[key]);
         }
       }
     });
-    return res
+    return res;
   }
 
-  selectDate('23-02-18')
-  let res = selectHour('23-02-18 14')
+  selectDate("23-02-18");
+  let res = selectHour("23-02-18 14");
   // console.log(res)
   // get(dbRef).then((snapshot) => {
   //     if (snapshot.exists()) {
@@ -171,7 +223,6 @@ function App() {
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
-
       {/* <div class="mapContainer" ref="mapContainer">
         <svg viewBox="0 0 200 200" ref="svg">
           <rect width="200" height="200"></rect>
@@ -196,11 +247,10 @@ function App() {
                 </div>
               </Col>
               <Col span={8} pull={1} className="temperature_degree">
-                {/* {temps.map((temp, index) => (
-                  <div key={index}>{temp}</div>
-                ))} */}
-                <div>26°C</div>
+                  <div >{temps.temp}</div>
+                  {/* <div>26°C</div> */}
               </Col>
+
               <Col span={8} className="humidity_box">
                 <div>
                   <WaterChart />
@@ -216,13 +266,14 @@ function App() {
           theme={{
             // algorithm: theme.darkAlgorithm,
             token: {
-              colorPrimary: '#D6B24E',
+              colorPrimary: "#D6B24E",
             },
           }}
         >
           <Col span={24} justify="centers" align="center">
             <div className="chart_box">
-              <Tabs centered
+              <Tabs
+                centered
                 defaultActiveKey={1}
                 className="tabs font-color2"
                 onChange={onTabChange}
@@ -234,27 +285,29 @@ function App() {
                     onChange={onTimeChange}
                     format="HH"
                     showNow={false}
-                    popupStyle={{ color: '' }} />
+                    popupStyle={{ color: "" }}
+                  />
                   <HourChart />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Day" key="2">
-                  <DatePicker onChange={onTimeChange}
+                  <DatePicker
+                    onChange={onTimeChange}
                     value={value}
-                    showNow={false} />
+                    showNow={false}
+                  />
                   <DayChart />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Week" key="3">
-                  <DatePicker onChange={onTimeChange}
-                    picker="week" />
+                  <DatePicker onChange={onTimeChange} picker="week" />
                   <WeekChart />
                 </Tabs.TabPane>
-              </Tabs >
+              </Tabs>
               <Space direction="vertical"></Space>
             </div>
           </Col>
         </ConfigProvider>
       </Row>
-    </div >
+    </div>
   );
 }
 
