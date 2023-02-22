@@ -25,9 +25,6 @@ onValue(
         let temp: number = dataArr[0].temp
         let humi: number = dataArr[0].humi
         let datetime: string = dataArr[0].datetime
-        console.log(temp);
-        console.log(humi);
-        console.log(datetime);
     }
 );
 

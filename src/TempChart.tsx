@@ -92,15 +92,8 @@ const TempChart: FC = () => {
         var option = {
             // backgroundColor: "#0C2F6F", //背景色
             title: {
-                xAxisIndex: 0,  
-                text: TP_value + "°C",
-                show: true,
-                textStyle: {
-                    fontSize: 56
-                },
-                top: '45%',
-                right: '9%',
-                // padding:[0,0,0,0],
+                text: "溫度計",
+                show: false,
             },
             yAxis: [
                 {
@@ -155,7 +148,7 @@ const TempChart: FC = () => {
                 },
                 {
                     show: false,
-                    min: -45,
+                    min: -30,
                     max: 80,
                 },
             ],
