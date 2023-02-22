@@ -84,49 +84,49 @@ function App() {
 
   /*資料*/
 
-  const firebaseConfig = {
-    databaseURL:
-      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  };
-  const app = initializeApp(firebaseConfig);
-  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-  const dbref_get = ref(getDatabase());
+  // const firebaseConfig = {
+  //   databaseURL:
+  //     "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  // };
+  // const app = initializeApp(firebaseConfig);
+  // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  // const dbref_get = ref(getDatabase());
 
-  let arr_data = [];
+  // let arr_data = [];
 
-  const [datas, setDatas] = useState([]);
+  // const [datas, setDatas] = useState([]);
 
-  function nowTemp(temp) {
-    let res = [];
-    get(child(dbref_get, `data`)).then((snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        // console.log(dataArr[key].temp);
-        // console.log(dataArr[key].humi);
-        // console.log(dataArr[key].datetime);
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
+  // function nowTemp(temp) {
+  //   let res = [];
+  //   get(child(dbref_get, `data`)).then((snapshot) => {
+  //     let data = snapshot.val();
+  //     let dataValue = Object.values(data);
+  //     let dataArr = Array.from(dataValue);
+  //     for (var key in dataArr) {
+  //       // console.log(dataArr[key].temp);
+  //       // console.log(dataArr[key].humi);
+  //       // console.log(dataArr[key].datetime);
+  //       arr_data.push({
+  //         temp: dataArr[key].temp,
+  //         humi: dataArr[key].humi,
+  //         datetime: dataArr[key].datetime,
+  //       });
+  //     }
 
-      // console.log(arr_data[1].temp)
-      for (var key in arr_data) {
-        res.push(arr_data[key]);
-      }
-      let test = (res[key]);
-      // let test2 = new RegExp("ab+c");
-      // let test2 = (test.split("{/,"))
+  //     // console.log(arr_data[1].temp)
+  //     for (var key in arr_data) {
+  //       res.push(arr_data[key]);
+  //     }
+  //     let test = (res[key]);
+  //     // let test2 = new RegExp("ab+c");
+  //     // let test2 = (test.split("{/,"))
       
-      // console.log(test);
-      // setTemps(test);
-      // setHumis(test);
-      setDatas(test);
-    });
-  }
+  //     // console.log(test);
+  //     // setTemps(test);
+  //     // setHumis(test);
+  //     setDatas(test);
+  //   });
+  // }
   
   /*-----------------------------------------------------------------------*/
   return (
@@ -152,8 +152,8 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart data_test={datas.temp}/>
-                  
+                  <TempChart/>
+                   {/* data_test={datas.temp} */}
                 </div>
               </Col>
               {/* <Col span={8} pull={1} className="temperature_degree">
