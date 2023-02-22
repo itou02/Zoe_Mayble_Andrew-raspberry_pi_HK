@@ -22,11 +22,6 @@ import TempChart from "./TempChart.tsx";
 import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
 import { initializeApp } from "firebase/app";
 
-var now = new Date();
-
-// console.log("now:",now);
-console.log("now:",now.getDate()-1);
-
 /*圖表標籤頁*/
 const onTabChange = (key) => {
   console.log(key);
@@ -61,14 +56,15 @@ function App() {
     ReactDOM.render(element, document.getElementById("showbox"));
   }
   setInterval(ticking, 1000);
-  let category = [];
-  let dottedBase = +new Date();
-  for (let i = 0; i < 1; i++) {
-    let date = new Date((dottedBase += 3600 * 24 * 1000));
-    category.push(
-      [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
-    );
-  }
+  
+  // let category = [];
+  // let dottedBase = +new Date();
+  // for (let i = 0; i < 1; i++) {
+  //   let date = new Date((dottedBase += 3600 * 24 * 1000));
+  //   category.push(
+  //     [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
+  //   );
+  // }
 
   useEffect(() => {
     onTabChange();
@@ -108,26 +104,26 @@ function App() {
             datetime: dataArr[key].datetime,
           });
         }
-  
+
         for (var key in arr_data) {
           res.push(arr_data[key]);
         }
         let allData = (res[key]);
         // let test2 = new RegExp("ab+c");
         // let test2 = (test.split("{/,"))
-        
+
         // console.log(allData);
         // setTemps(test);
         // setHumis(test);
         setDatas(allData);
       }
-  );
+    );
   }
 
-  function GetData(){
+  function GetData() {
     let data_res = [];
     get(child(dbref_get, `data`)).then((snapshot) => {
-      
+
       let data = snapshot.val();
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
@@ -142,11 +138,34 @@ function App() {
         data_res.push(arr_data[key]);
       }
       InsertData(data_res);
+
+      var now = new Date();
+
+      // console.log("now:",now);
+      console.log("now:", now.getDate());
+
+      console.log("NOW:", data_res[0].datetime);
+      console.log("data0:", data_res[0].datetime);
+      console.log("dataL:", data_res.length);
     });
   }
-  
+
   console.log(AllDatas)
-  
+
+  var date = {
+    isDuringDate: function (beginDateStr, endDateStr) {
+      var curDate = new Date(),
+        beginDate = new Date(beginDateStr),
+        endDate = new Date(endDateStr);
+      if (curDate >= beginDate && curDate <= endDate) {
+        return true;
+      }
+      return false;
+    }
+  }
+
+  console.log(date.isDuringDate('2018-09-17 13:00', '2019-09-17 15:00'));
+
   /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
@@ -171,8 +190,8 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart data_test={datas.temp}/>
-                   {/* data_test={datas.temp} */}
+                  <TempChart data_test={datas.temp} />
+                  {/* data_test={datas.temp} */}
                 </div>
               </Col>
               {/* <Col span={8} pull={1} className="temperature_degree">

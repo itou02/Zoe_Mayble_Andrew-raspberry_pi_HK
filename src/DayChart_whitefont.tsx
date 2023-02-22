@@ -3,7 +3,7 @@ import * as echarts from 'echarts';
 import React from "react";
 
 
-const LineCharts: FC = () => {
+const LineCharts: FC = (data) => {
 
     useEffect(() => {
         DayChart();
@@ -21,7 +21,8 @@ const LineCharts: FC = () => {
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
-                text: "溫濕度統計變化",
+                // text: "溫濕度統計變化",
+                text: data,
                 textStyle: {
                     color: "#fff",
                     fontSize: 25,
