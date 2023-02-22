@@ -70,6 +70,7 @@ function App() {
     onTimeChange();
     onChange();
     nowTemp();
+    GetData()
   }, []);
 
   /*資料*/
@@ -86,6 +87,7 @@ function App() {
   let arr_data = [];
 
   const [datas, setDatas] = useState([]);
+  const [AllDatas, InsertData] = useState([]);
 
   function nowTemp(temp) {
     let res = [];
@@ -117,6 +119,29 @@ function App() {
       }
   );
   }
+
+  function GetData(){
+    let data_res = [];
+    get(child(dbref_get, `data`)).then((snapshot) => {
+      
+      let data = snapshot.val();
+      let dataValue = Object.values(data);
+      let dataArr = Array.from(dataValue);
+      for (var key in dataArr) {
+        arr_data.push({
+          temp: dataArr[key].temp,
+          humi: dataArr[key].humi,
+          datetime: dataArr[key].datetime,
+        });
+      }
+      for (var key in arr_data) {
+        data_res.push(arr_data[key]);
+      }
+      InsertData(data_res);
+    });
+  }
+  
+  console.log(AllDatas)
   
   /*-----------------------------------------------------------------------*/
   return (
