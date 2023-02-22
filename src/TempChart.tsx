@@ -2,17 +2,45 @@ import { FC, useEffect } from "react";
 import * as echarts from "echarts";
 import React from "react";
 import "./App.css";
+import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+    databaseURL:
+        "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+};
+const app = initializeApp(firebaseConfig);
+const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+const dbref_get = ref(getDatabase())
+
+var TP_value: Number;
+onValue(
+    dbRef,
+    (snapshot) => {
+        let data = snapshot.val();
+        let dataValue = Object.values(data);
+        let dataArr: object = Array.from(dataValue);
+        let temp: any = dataArr[0].temp
+        // let humi: number = dataArr[0].humi
+        // let datetime: string = dataArr[0].datetime
+        TP_value = parseInt(temp,10);
+        console.log(typeof TP_value);
+        // console.log(humi);
+        // humidity = humi*0.01
+        // console.log(datetime);
+    }
+);
 
 const TempChart: FC = (data_test) => {
     useEffect(() => {
-        console.log(data_test)
+        // console.log(data_test)
         temp(data_test);
     });
     const temp = (data_test) => {
         var chartDom: any = document.getElementById("temp");
         var myChart = echarts.init(chartDom);
         // var option;
-        var TP_value: any = data_test;
+        // var TP_value: any = data_test;
         var kd: any[];
         kd = []
         var Gradient: any[];

@@ -68,24 +68,18 @@ function App() {
   setInterval(ticking, 1000);
   let category = [];
   let dottedBase = +new Date();
-  let lineData = [];
-  let barData = [];
   for (let i = 0; i < 1; i++) {
     let date = new Date((dottedBase += 3600 * 24 * 1000));
     category.push(
       [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
     );
-    let b = 27;
-    let d = 50;
-    barData.push(b);
-    lineData.push(d);
   }
 
   useEffect(() => {
     onTabChange();
     onTimeChange();
     onChange();
-    nowTemp();
+    // nowTemp();
   }, []);
 
   /*資料*/
@@ -127,13 +121,12 @@ function App() {
       // let test2 = new RegExp("ab+c");
       // let test2 = (test.split("{/,"))
       
-      console.log(test);
+      // console.log(test);
       // setTemps(test);
       // setHumis(test);
       setDatas(test);
     });
   }
-  var yo = '123';
   
   /*-----------------------------------------------------------------------*/
   return (
@@ -159,7 +152,8 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart data_test={yo} />
+                  <TempChart data_test={datas.temp}/>
+                  
                 </div>
               </Col>
               {/* <Col span={8} pull={1} className="temperature_degree">
