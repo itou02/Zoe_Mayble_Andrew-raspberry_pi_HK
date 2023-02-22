@@ -12,7 +12,7 @@ const TempChart: FC = (data_test) => {
         var chartDom: any = document.getElementById("temp");
         var myChart = echarts.init(chartDom);
         // var option;
-        var TP_value: any = 21;
+        var TP_value: any = data_test;
         var kd: any[];
         kd = []
         var Gradient: any[];
@@ -92,7 +92,7 @@ const TempChart: FC = (data_test) => {
             // backgroundColor: "#0C2F6F", //背景色
             title: {
                 xAxisIndex: 0,  
-                text: data_test + "°C",
+                text: TP_value + "°C",
                 show: true,
                 textStyle: {
                     fontSize: 56
