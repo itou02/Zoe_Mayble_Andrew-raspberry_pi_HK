@@ -16,28 +16,36 @@ const app = initializeApp(firebaseConfig);
 const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
 const dbref_get = ref(getDatabase())
 
+
+var humidity:number
 onValue(
     dbRef,
     (snapshot) => {
         let data = snapshot.val();
         let dataValue = Object.values(data);
         let dataArr: object = Array.from(dataValue);
-        let temp: number = dataArr[0].temp
+        // let temp: number = dataArr[0].temp
         let humi: number = dataArr[0].humi
-        let datetime: string = dataArr[0].datetime
+        // let datetime: string = dataArr[0].datetime
+        // console.log(temp);
+        console.log(humi);
+        humidity = humi*0.01
+        // console.log(datetime);
     }
 );
 
 const LiquidCharts: FC = () => {
 
     useEffect(() => {
+        // console.log(data_test)
         initChart();
     });
 
     const initChart = () => {
         const liquid = document.getElementById('main');
         const map = echarts.init(liquid as HTMLDivElement);
-        var humidity = 0.52;
+        // var humidity = 0.52;
+        // var humidity = humi
         const option = {
             series: [
                 {

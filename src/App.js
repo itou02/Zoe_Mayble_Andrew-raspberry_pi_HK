@@ -18,8 +18,10 @@ import HourChart from "./HourChart_whitefont.tsx";
 import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
-import { child, get } from "firebase/database";
 import TempChart from "./TempChart.tsx";
+import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
+import { initializeApp } from "firebase/app";
+
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -57,17 +59,11 @@ function App() {
   setInterval(ticking, 1000);
   let category = [];
   let dottedBase = +new Date();
-  let lineData = [];
-  let barData = [];
   for (let i = 0; i < 1; i++) {
     let date = new Date((dottedBase += 3600 * 24 * 1000));
     category.push(
       [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-")
     );
-    let b = 27;
-    let d = 50;
-    barData.push(b);
-    lineData.push(d);
   }
 
   useEffect(() => {
@@ -77,115 +73,51 @@ function App() {
     nowTemp();
   }, []);
 
-  const [temps,setTemps] = useState([])
+  /*資料*/
+
+  const firebaseConfig = {
+    databaseURL:
+      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+  };
+  const app = initializeApp(firebaseConfig);
+  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  const dbref_get = ref(getDatabase());
+
+  let arr_data = [];
+
+  const [datas, setDatas] = useState([]);
+
   function nowTemp(temp) {
     let res = [];
-    get(child(dbref_get, data)).then((snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
+    onValue(
+      dbRef,
+      (snapshot) => {
+        let data = snapshot.val();
+        let dataValue = Object.values(data);
+        let dataArr = Array.from(dataValue);
+        for (var key in dataArr) {
+          arr_data.push({
+            temp: dataArr[key].temp,
+            humi: dataArr[key].humi,
+            datetime: dataArr[key].datetime,
+          });
+        }
+  
+        for (var key in arr_data) {
+          res.push(arr_data[key]);
+        }
+        let allData = (res[key]);
+        // let test2 = new RegExp("ab+c");
+        // let test2 = (test.split("{/,"))
+        
+        // console.log(allData);
+        // setTemps(test);
+        // setHumis(test);
+        setDatas(allData);
       }
-
-      for (var key in arr_data) {
-        res.push(arr_data[key]);
-      }
-      let temp = res[key];
-      setTemps(temp);
-    });
+  );
   }
-
-  // function selectDate(date) {
-  //   let res = [];
-  //   get(child(dbref_get, `data`)).then((snapshot) => {
-  //     let data = snapshot.val();
-  //     let dataValue = Object.values(data);
-  //     let dataArr = Array.from(dataValue);
-  //     for (var key in dataArr) {
-  //       // console.log(dataArr[key].temp);
-  //       // console.log(dataArr[key].humi);
-  //       // console.log(dataArr[key].datetime);
-  //       arr_data.push({
-  //         temp: dataArr[key].temp,
-  //         humi: dataArr[key].humi,
-  //         datetime: dataArr[key].datetime,
-  //       });
-  //     }
-
-  //     // console.log(arr_data[1].temp)
-  //     for (var key in arr_data) {
-  //       if (arr_data[key].datetime.indexOf(date) == 0) {
-  //         res.push(arr_data[key]);
-  //         // setTemps(dataArr[key].temp)
-  //       }
-  //     }
-  //     // console.log(res)
-  //   });
-  // }
-
-  // function selectHour(hour) {
-  //   let res = [];
-  //   get(child(dbref_get, `data`)).then((snapshot) => {
-  //     let data = snapshot.val();
-  //     let dataValue = Object.values(data);
-  //     let dataArr = Array.from(dataValue);
-  //     for (var key in dataArr) {
-  //       // console.log(dataArr[key].temp);
-  //       // console.log(dataArr[key].humi);
-  //       // console.log(dataArr[key].datetime);
-  //       arr_data.push({
-  //         temp: dataArr[key].temp,
-  //         humi: dataArr[key].humi,
-  //         datetime: dataArr[key].datetime,
-  //       });
-  //     }
-
-  //     for (var key in arr_data) {
-  //       if (arr_data[key].datetime.indexOf(hour) == 0) {
-  //         res.push(arr_data[key]);
-  //       }
-  //     }
-  //   });
-  //   return res;
-  // }
-
-  // selectDate("23-02-18");
-  // let res = selectHour("23-02-18 14");
-  // console.log(res)
-  // get(dbRef).then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       let data = snapshot.val();
-  //       // let dataArr = Array.from(Object.keys(data));
-  //       onValue(dbRef, snapshot => {
-  //         let data = snapshot.val();
-  //         let dataValue = (Object.values(data));
-  //         let dataArr = Array.from(dataValue);
-  //         setTemps(dataArr);
-  //         console.log(dataArr);
-  //       },[]);
-  //       // for (var key in data) {
-  //         // console.log(yo);
-  //         // console.log(Object(data[key]));
-  //         // console.log(Object(data[key].humi));
-  //         // console.log(Object(data[key].datetime));
-  //         // console.log(data[key].temp);
-  //         // console.log(data[key].humi);
-  //         // console.log(dataArr);
-
-  //         // setTemps(Object(data[key]));
-  //       // }
-  //     } else {
-  //       console.log("No data available");
-  //     }
-  //   }, [])
-  //   .catch((error) => {
-  //     console.error(error);
-  //   });
+  
   /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
@@ -210,13 +142,15 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart tempData={temps.temp} />
+                  <TempChart data_test={datas.temp}/>
+                  
                 </div>
               </Col>
-              <Col span={8} pull={1} className="temperature_degree">
-                {/* <div >{temps.temp}</div> */}
-                {/* <div>26°C</div> */}
-              </Col>
+              {/* <Col span={8} pull={1} className="temperature_degree">
+                  <div >{temps.temp}</div>
+                  <div >{humis.humi}</div>
+                  <div>26°C</div>
+              </Col> */}
 
               <Col span={12} className="humidity_box">
                 <div>

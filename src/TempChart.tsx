@@ -2,18 +2,46 @@ import { FC, useEffect } from "react";
 import * as echarts from "echarts";
 import React from "react";
 import "./App.css";
+import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
+import { initializeApp } from "firebase/app";
+import { stringify } from "querystring";
 
 
-const TempChart: FC = () => {
+
+const TempChart: FC = (data_test) => {
     useEffect(() => {
-        temp();
+        temp(data_test);
     });
+    const temp = (data_test) => {
 
-    const temp = () => {
+        // const firebaseConfig = {
+        //     databaseURL:
+        //         "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+        // };
+        // const app = initializeApp(firebaseConfig);
+        // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+        // const dbref_get = ref(getDatabase())
+        
+        // var TP_value: number;
+        // onValue(
+        //     dbRef,
+        //     (snapshot) => {
+        //         let data = snapshot.val();
+        //         let dataValue = Object.values(data);
+        //         let dataArr: object = Array.from(dataValue);
+        //         let temp: number = dataArr[0].temp
+        //         TP_value = temp;
+        //         // console.log(typeof TP_value);
+        //         // console.log(value);
+        //     }
+        // );
+
+            
         var chartDom: any = document.getElementById("temp");
         var myChart = echarts.init(chartDom);
         // var option;
-        var TP_value: any = 21;
+        var TP_value: number ;
+        TP_value =Number(Object.values(data_test));
         var kd: any[];
         kd = []
         var Gradient: any[];
@@ -92,9 +120,18 @@ const TempChart: FC = () => {
         var option = {
             // backgroundColor: "#0C2F6F", //背景色
             title: {
-                text: "溫度計",
-                show: false,
+                xAxisIndex: 0,  
+                text: TP_value + "°C",
+                show: true,
+                textStyle: {
+                    fontSize: 56
+                },
+                top: '45%',
+                right: '9%',
+                // padding:[0,0,0,0],
             },
+
+
             yAxis: [
                 {
                     show: false,
