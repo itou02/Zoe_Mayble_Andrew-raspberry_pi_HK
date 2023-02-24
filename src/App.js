@@ -19,8 +19,16 @@ import DayChart from "./DayChart_whitefont.tsx";
 import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
 import TempChart from "./TempChart.tsx";
-import { getDatabase, ref, onValue, query, limitToLast } from "firebase/database";
-import { initializeApp,getApp, getApps } from "firebase/app";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  query,
+  limitToLast,
+  get,
+  child,
+} from "firebase/database";
+import { initializeApp, getApp, getApps } from "firebase/app";
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -70,14 +78,13 @@ function App() {
     onTimeChange();
     onChange();
     nowTemp();
-    GetData()
+    // GetData();
   }, []);
 
   /*資料*/
 
   const firebaseConfig = {
-    databaseURL:
-      "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com",
+    databaseURL: "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com",
   };
   // const app = initializeApp(firebaseConfig);
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -86,63 +93,73 @@ function App() {
 
   let arr_data = [];
 
-  const [datas, setDatas] = useState([]);
-  const [AllDatas, InsertData] = useState([]);
+  const [nowTempDatas, setNowTempDatas] = useState([]);
+  const [tempDatas, setTempDatas] = useState([]);
+  const [humiDatas, setHumiDatas] = useState([]);
+  const [datetimeDatas, setDateDatas] = useState([]);
+
+  const [allDatas, setAllDatas] = useState([]);
 
   function nowTemp(temp) {
-    let res = [];
-    onValue(
-      dbRef,
-      (snapshot) => {
-        let data = snapshot.val();
-        let dataValue = Object.values(data);
-        let dataArr = Array.from(dataValue);
-        for (var key in dataArr) {
-          arr_data.push({
-            temp: dataArr[key].temp,
-            humi: dataArr[key].humi,
-            datetime: dataArr[key].datetime,
-          });
-        }
-  
-        for (var key in arr_data) {
-          res.push(arr_data[key]);
-        }
-        let allData = (res[key]);
-        // let test2 = new RegExp("ab+c");
-        // let test2 = (test.split("{/,"))
-        
-        console.log(dataArr);
-        // setTemps(test);
-        // setHumis(test);
-        setDatas(allData);
-      }
-  );
-  }
+    let tempres = [];
+    let humires = [];
+    let datetimeres = [];
 
-  function GetData(){
-    let data_res = [];
-    get(child(dbref_get, `data`)).then((snapshot) => {
-      
+    onValue(dbRef, (snapshot) => {
       let data = snapshot.val();
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
+      // 將三個參數拆分成三個陣列
+      dataValue.forEach((item) => {
+        tempres.push(parseInt(item.temp));
+        humires.push(parseInt(item.humi));
+        datetimeres.push(item.datetime.substr(9, 8));
+      });
+
+      setTempDatas(tempres);
+      setHumiDatas(humires);
+      setDateDatas(datetimeres);
+
+      // 上方即時顯示資料 ------------
+      let res = [];
+
       for (var key in dataArr) {
         arr_data.push({
           temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
         });
       }
+
       for (var key in arr_data) {
-        data_res.push(arr_data[key]);
+        res.push(arr_data[key]);
       }
-      InsertData(data_res);
+
+      let nowTempData = res[key];
+      setNowTempDatas(nowTempData);
+      // -----------------------------
     });
   }
-  
-  console.log(AllDatas)
-  
+  // 整包資料
+  // function GetData() {
+  //   let data_res = [];
+  //   get(child(dbref_get, `data`)).then((snapshot) => {
+  //     let data = snapshot.val();
+  //     let dataValue = Object.values(data);
+  //     let dataArr = Array.from(dataValue);
+  //     for (var key in dataArr) {
+  //       arr_data.push({
+  //         temp: dataArr[key].temp,
+  //         humi: dataArr[key].humi,
+  //         datetime: dataArr[key].datetime,
+  //       });
+  //     }
+  //     for (var key in arr_data) {
+  //       data_res.push(arr_data[key]);
+  //     }
+  //     setAllDatas(data_res);
+  //     console.log("test", dataArr);
+  //   });
+  // }
+
   /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
@@ -167,8 +184,8 @@ function App() {
             <Row>
               <Col span={12} className="temperature_box">
                 <div>
-                  <TempChart data_test={datas.temp}/>
-                   {/* data_test={datas.temp} */}
+                  <TempChart data_test={nowTempDatas.temp} />
+                  {/* data_test={datas.temp} */}
                 </div>
               </Col>
               {/* <Col span={8} pull={1} className="temperature_degree">
@@ -213,7 +230,9 @@ function App() {
                     showNow={false}
                     popupStyle={{ color: "" }}
                   /> */}
-                  <HourChart  data_test={[datas.temp,datas.humi,datas.datetime]}/>
+                  <HourChart
+                    data_test={[tempDatas, humiDatas, datetimeDatas]}
+                  />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Hour" key="2">
                   {/* <DatePicker

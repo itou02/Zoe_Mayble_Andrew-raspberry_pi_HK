@@ -46,16 +46,20 @@ const LineCharts: FC = (data_test) => {
 
     useEffect(() => {
         HourChart(data_test);
-        console.log('oyyoy',data_test);
+        console.log('小時圖表之資料',data_test);
         
     });
     const HourChart = (data_test) => {
         var chartDom = document.getElementById("hourLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        var select_time = 0;//使用者選擇的時間
-        var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
-        var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
+        var temp = data_test.data_test[0];
+        var humi = data_test.data_test[1];
+        var time = data_test.data_test[2];
+        console.log(temp);
+        
+        // var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
+        // var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
 
         const colors = ['#EE6666', '#79A6AF'];
         option = {
@@ -104,13 +108,13 @@ const LineCharts: FC = (data_test) => {
                 show: true,
                 boundaryGap: true,
                 data: [
-                    select_time + ":00", select_time + ":05",
-                    select_time + ":10", select_time + ":15",
-                    select_time + ":20", select_time + ":25",
-                    select_time + ":30", select_time + ":35",
-                    select_time + ":40", select_time + ":45",
-                    select_time + ":50", select_time + ":55",
-                    (select_time + 1) + ":00"],
+                    time + ":00", time + ":05",
+                    time + ":10", time + ":15",
+                    time + ":20", time + ":25",
+                    time + ":30", time + ":35",
+                    time + ":40", time + ":45",
+                    time + ":50", time + ":55",
+                    (time + 1) + ":00"],
                 axisLabel: {
                     textStyle: {
                         color: "#fff",

@@ -10,6 +10,8 @@ const TempChart: FC = (data_test) => {
     useEffect(() => {
         temp(data_test);
     });
+    console.log(data_test);
+    
     const temp = (data_test) => {
 
         // const firebaseConfig = {
