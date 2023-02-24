@@ -2,45 +2,6 @@ import { FC, useEffect } from "react";
 import * as echarts from 'echarts';
 import React from "react";
 
-import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
-import { initializeApp } from "firebase/app";
-
-
-const firebaseConfig = {
-    databaseURL:
-        "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-};
-const app = initializeApp(firebaseConfig);
-const dbRef = query(ref(getDatabase(app), "data"));
-const dbref_get = ref(getDatabase())
-
-let arr_data: any[];
-arr_data = []
-
-function selectHour(hour) {
-    let res: any[]
-    res = []
-    get(child(dbref_get, `data`)).then((snapshot) => {
-        let data = snapshot.val();
-        let dataValue = Object.values(data);
-        let dataArr: object = Array.from(dataValue);
-        for (var key in dataArr) {
-            arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
-        }
-
-        for (var key in arr_data) {
-            if (arr_data[key].datetime.indexOf(hour) == 0) {
-                res.push(arr_data[key])
-            }
-        }
-    });
-    return res
-}
-
-let res = selectHour('23-02-18 14')
-console.log(res)
-
-
 
 const LineCharts: FC = () => {
 

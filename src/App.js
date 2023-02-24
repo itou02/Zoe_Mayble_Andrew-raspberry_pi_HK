@@ -20,7 +20,7 @@ import WeekChart from "./WeekChart_whitefont.tsx";
 import "./App.css";
 import TempChart from "./TempChart.tsx";
 import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApp, getApps } from "firebase/app";
 
 /*圖表標籤頁*/
 const onTabChange = (key) => {
@@ -56,7 +56,7 @@ function App() {
     ReactDOM.render(element, document.getElementById("showbox"));
   }
   setInterval(ticking, 1000);
-  
+
   // let category = [];
   // let dottedBase = +new Date();
   // for (let i = 0; i < 1; i++) {
@@ -78,9 +78,9 @@ function App() {
 
   const firebaseConfig = {
     databaseURL:
-      "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
   };
-  const app = initializeApp(firebaseConfig);
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
   const dbref_get = ref(getDatabase());
 
@@ -141,30 +141,83 @@ function App() {
 
       var now = new Date();
 
-      // console.log("now:",now);
-      console.log("now:", now.getDate());
-
-      console.log("NOW:", data_res[0].datetime);
+      console.log("new:", data_res[0].datetime);
       console.log("data0:", data_res[0].datetime);
       console.log("dataL:", data_res.length);
+
+      var minusDate_min = new Date()
+      var minusDate_hour = new Date()
+      var minusDate_day = new Date()
+      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
+      minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
+      var Date_day = `${minusDate_min.getFullYear()}-${minusDate_day.getMonth() + 1}-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`
+      console.log("minusDate_day=", typeof minusDate_day)
+      console.log("Date_day=", Date_day)
+      minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
+      var Date_hour = `${minusDate_min.getFullYear()}-${minusDate_hour.getMonth() + 1}-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`
+      console.log("Date_hour=", Date_hour)
+      minusDate_min.setMinutes(minusDate_min.getMinutes() - 60);
+      var Date_min = `${minusDate_min.getFullYear()}-${minusDate_min.getMonth() + 1}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`
+      console.log("Date_min=", Date_min)
+
+      var day_Date = []
+      var hour_Date = []
+      var min_Date = []
+
+      var day_Temp = []
+      var hour_Temp = []
+      var min_Temp = []
+
+      var day_Humi = []
+      var hour_Humi = []
+      var min_Humi = []
+      for (var i = data_res.length; i != 0; i--) {
+        // console.log(isDuringDate(`20${data_res[i - 1].datetime}`, Date_day))
+        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i - 1].datetime}`))
+        if (isDuringDate(`20${data_res[i - 1].datetime}`, Date_day)) {
+          day_Date.push(data_res[i - 1].datetime)
+          day_Temp.push(parseInt(data_res[i - 1].temp))
+          day_Humi.push(parseInt(data_res[i - 1].humi))
+          if (isDuringDate(`20${data_res[i - 1].datetime}`, Date_hour)) {
+            hour_Date.push(data_res[i - 1].datetime)
+            hour_Temp.push(parseInt(data_res[i - 1].temp))
+            hour_Humi.push(parseInt(data_res[i - 1].humi))
+            if (isDuringDate(`20${data_res[i - 1].datetime}`, Date_min)) {
+              min_Date.push(data_res[i - 1].datetime)
+              min_Temp.push(parseInt(data_res[i - 1].temp))
+              min_Humi.push(parseInt(data_res[i - 1].humi))
+            }
+          }
+        }
+      }
+      console.log("day_Date:", day_Date)
+      console.log("day_Temp:", day_Temp)
+      console.log("day_Humi:", day_Humi)
+
+      console.log("hour_Date:", hour_Date)
+      console.log("hour_Temp:", hour_Temp)
+      console.log("hour_Humi:", hour_Humi)
+
+      console.log("min_Date:", min_Date)
+      console.log("min_Temp:", min_Temp)
+      console.log("min_Humi:", min_Humi)
     });
   }
 
   console.log(AllDatas)
 
-  var date = {
-    isDuringDate: function (beginDateStr, endDateStr) {
-      var curDate = new Date(),
-        beginDate = new Date(beginDateStr),
-        endDate = new Date(endDateStr);
-      if (curDate >= beginDate && curDate <= endDate) {
-        return true;
-      }
-      return false;
+  function isDuringDate(isDate, beginDate) {
+    var isDate = new Date(isDate),
+      beginDate = new Date(beginDate),
+      nowDate = new Date();
+    if (isDate >= beginDate && isDate <= nowDate) {
+      return true;
     }
+    return false;
   }
 
-  console.log(date.isDuringDate('2018-09-17 13:00', '2019-09-17 15:00'));
+
+
 
   /*-----------------------------------------------------------------------*/
   return (
