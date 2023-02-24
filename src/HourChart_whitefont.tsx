@@ -2,61 +2,19 @@ import { FC, useEffect } from "react";
 import * as echarts from 'echarts';
 import React from "react";
 
-// import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
-// import { initializeApp } from "firebase/app";
-
-
-// const firebaseConfig = {
-//     databaseURL:
-//         "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-// };
-// const app = initializeApp(firebaseConfig);
-// const dbRef = query(ref(getDatabase(app), "data"));
-// const dbref_get = ref(getDatabase())
-
-// let arr_data: any[];
-// arr_data = []
-
-// function selectHour(hour) {
-//     let res: any[]
-//     res = []
-//     get(child(dbref_get, `data`)).then((snapshot) => {
-//         let data = snapshot.val();
-//         let dataValue = Object.values(data);
-//         let dataArr: object = Array.from(dataValue);
-//         for (var key in dataArr) {
-//             arr_data.push({ temp: dataArr[key].temp, humi: dataArr[key].humi, datetime: dataArr[key].datetime })
-//         }
-
-//         for (var key in arr_data) {
-//             if (arr_data[key].datetime.indexOf(hour) == 0) {
-//                 res.push(arr_data[key])
-//             }
-//         }
-//     });
-//     return res
-// }
-
-// let res = selectHour('23-02-18 14')
-// console.log(res)
-
-
-
 const LineCharts: FC = (data_test) => {
 
     useEffect(() => {
         HourChart(data_test);
-        console.log('小時圖表之資料',data_test);
-        
     });
     const HourChart = (data_test) => {
         var chartDom = document.getElementById("hourLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        var temp = data_test.data_test[0];
-        var humi = data_test.data_test[1];
-        var time = data_test.data_test[2];
-        console.log(temp);
+        var temp = data_test.data_test[1];
+        var humi = data_test.data_test[2];
+        var time = data_test.data_test[0];
+        console.log("time",time);
         
         // var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
         // var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
@@ -108,13 +66,7 @@ const LineCharts: FC = (data_test) => {
                 show: true,
                 boundaryGap: true,
                 data: [
-                    time + ":00", time + ":05",
-                    time + ":10", time + ":15",
-                    time + ":20", time + ":25",
-                    time + ":30", time + ":35",
-                    time + ":40", time + ":45",
-                    time + ":50", time + ":55",
-                    (time + 1) + ":00"],
+                    time ],
                 axisLabel: {
                     textStyle: {
                         color: "#fff",

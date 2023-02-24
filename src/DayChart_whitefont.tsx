@@ -3,25 +3,26 @@ import * as echarts from 'echarts';
 import React from "react";
 
 
-const LineCharts: FC = () => {
+const LineCharts: FC = (data_test) => {
 
     useEffect(() => {
-        DayChart();
+        DayChart(data_test);
     });
 
-    const DayChart = () => {
+    const DayChart = (data_test) => {
         var chartDom = document.getElementById("dayLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        // var select_time = 17;//使用者選擇的時間
-        var humi = [76, 73, 65, 78, 67, 70, 72, 68, 67, 80, 70, 64, 68, 67, 80, 70, 66, 83, 64, 68, 67, 80, 70, 68];//濕度資料
-        var temp = [26, 27, 24, 25, 23, 20, 19, 27, 28, 25, 26, 22, 19, 23, 25, 23, 20, 19, 27, 28, 25, 23, 20, 19];//氣溫資料
-        var select_time = ["00", "01", "02", "03", "04", "05", "06", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+        // var time = 17;//使用者選擇的時間
+        var temp = data_test.data_test[1];
+        var humi = data_test.data_test[2];
+        var time = data_test.data_test[0];
 
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
                 text: "溫濕度統計變化",
+                // text: data,
                 textStyle: {
                     color: "#fff",
                     fontSize: 25,
@@ -64,7 +65,7 @@ const LineCharts: FC = () => {
                 type: 'category',
                 show: true,
                 boundaryGap: true,
-                data: select_time,
+                data: time,
                 axisLabel: {
                     textStyle: {
                         color: "#fff",

@@ -3,19 +3,19 @@ import * as echarts from 'echarts';
 import React from "react";
 
 
-const LineCharts: FC = () => {
+const LineCharts: FC = (data_test) => {
 
     useEffect(() => {
-        WeekChart();
+        WeekChart(data_test);
     });
-    const WeekChart = () => {
+    const WeekChart = (data_test) => {
         var chartDom = document.getElementById("weekLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        var select_time = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];//使用者選擇的時間
-        var humi = [60, 64, 65, 62, 64, 65, 62];//濕度資料
-        var temp = [27, 25, 22, 19, 23, 22, 22];//氣溫資料
-
+        // var time = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];//使用者選擇的時間
+        var temp = data_test.data_test[1];
+        var humi = data_test.data_test[2];
+        var time = data_test.data_test[0];
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
@@ -69,7 +69,7 @@ const LineCharts: FC = () => {
                 type: 'category',
                 show: true,
                 boundaryGap: true,
-                data: select_time,
+                data: time,
                 axisLabel: {
                     textStyle: {
                         color: "#fff",
