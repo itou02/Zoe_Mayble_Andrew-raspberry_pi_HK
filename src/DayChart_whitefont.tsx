@@ -17,7 +17,8 @@ const LineCharts: FC = (data_test) => {
         var temp = data_test.data_test[1];
         var humi = data_test.data_test[2];
         var time = data_test.data_test[0];
-
+        time.length == 0 ? time = ["目前無近一日資料 و(  °▽° )٩"] : time = data_test.data_test[0] ;
+        console.log("time",time);
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {

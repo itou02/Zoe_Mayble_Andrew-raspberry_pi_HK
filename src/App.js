@@ -399,7 +399,7 @@ function App() {
                 onChange={onTabChange}
                 size="large"
               >
-                <Tabs.TabPane tab="Minute" key="1">
+                <Tabs.TabPane tab="Hour" key="1">
                   {/* <TimePicker
                     value={value}
                     onChange={onTimeChange}
@@ -409,7 +409,7 @@ function App() {
                   /> */}
                   <HourChart data_test={[min_Dates, min_Temps, min_Humis]} />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Hour" key="2">
+                <Tabs.TabPane tab="Day" key="2">
                   {/* <DatePicker
                     onChange={onTimeChange}
                     value={value}
@@ -417,7 +417,7 @@ function App() {
                   /> */}
                   <DayChart data_test={[hour_Dates, hour_Temps, hour_Humis]} />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Day" key="3">
+                <Tabs.TabPane tab="Week" key="3">
                   {/* <DatePicker onChange={onTimeChange} picker="week" /> */}
                   <WeekChart data_test={[day_Dates, day_Temps, day_Humis]} />
                 </Tabs.TabPane>

@@ -14,6 +14,7 @@ const LineCharts: FC = (data_test) => {
         var temp = data_test.data_test[1];
         var humi = data_test.data_test[2];
         var time = data_test.data_test[0];
+        time.length == 0 ? time = ["目前無近一小時資料 و(  °▽° )٩"] : time = data_test.data_test[0] ;
         console.log("time",time);
         
         // var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
