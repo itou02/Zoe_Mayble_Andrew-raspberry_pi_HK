@@ -139,20 +139,13 @@ function App() {
 
     get(child(dbref_get, `/avg_5min`)).then((snapshot_avg_5min) => {
       let data = snapshot_avg_5min.val();
-      console.log("data_avg_5min=", data);
       let dataValue = Object.values(data);
-      console.log("dataValue=", dataValue);
 
       for (var j = 0; j < dataValue.length; j++) {
         data_res_min.push(dataValue[j]);
       }
-      console.log(data_res_min);
 
       var now = new Date();
-
-      console.log("new:", data_res_min[0].datetime);
-      console.log("data0:", data_res_min[0].datetime);
-      console.log("dataL:", data_res_min.length);
 
       var minusDate_min = new Date();
 
@@ -160,25 +153,12 @@ function App() {
       var Date_min = `${minusDate_min.getFullYear()}-${
         minusDate_min.getMonth() + 1
       }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
-      console.log("Date_min=", Date_min);
 
       var min_Date = [];
-
       var min_Temp = [];
-
       var min_Humi = [];
 
       for (var key in data_res_min) {
-        console.log("data_res_min[i].datetime=", typeof data_res_min);
-        console.log(
-          "`20${data_res_min[key].datetime}`=",
-          `20${data_res_min[key].datetime}`
-        );
-        console.log(
-          "isDuringDate(`20${data_res_min[key].datetime}`, Date_min)=",
-          isDuringDate(`20${data_res_min[key].datetime}`, Date_min)
-        );
-
         if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
           console.log(
             "data_res_min[key].datetime=",
@@ -192,10 +172,6 @@ function App() {
       setMinDates(min_Date);
       setMinTemps(min_Temp);
       setMinHumis(min_Humi);
-
-      console.log("min_Date:", min_Date);
-      console.log("min_Temp:", min_Temp);
-      console.log("min_Humi:", min_Humi);
     });
   }
 
@@ -204,19 +180,12 @@ function App() {
 
     get(child(dbref_get, `avg_1hr`)).then((snapshot_avg_1hr) => {
       let data = snapshot_avg_1hr.val();
-      console.log("data=", data);
       let dataValue = Object.values(data);
-      console.log("dataValue=", dataValue);
       for (var j = 0; j < dataValue.length; j++) {
         data_res_hour.push(dataValue[j]);
       }
-      console.log(data_res_hour);
 
       var now = new Date();
-
-      console.log("new:", data_res_hour[0].datetime);
-      console.log("data0:", data_res_hour[0].datetime);
-      console.log("dataL:", data_res_hour.length);
 
       var minusDate_hour = new Date();
 
@@ -224,7 +193,6 @@ function App() {
       var Date_hour = `${minusDate_hour.getFullYear()}-${
         minusDate_hour.getMonth() + 1
       }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
-      console.log("Date_hour=", Date_hour);
 
       var hour_Date = [];
 
@@ -243,10 +211,6 @@ function App() {
       setHourDates(hour_Date);
       setHourTemps(hour_Temp);
       setHourHumis(hour_Humi);
-
-      console.log("hour_Date=", hour_Date);
-      console.log("hour_Temp=", hour_Temp);
-      console.log("hour_Humi=", hour_Humi);
     });
   }
 
@@ -255,26 +219,19 @@ function App() {
 
     get(child(dbref_get, `/avg_day`)).then((snapshot_avg_day) => {
       let data = snapshot_avg_day.val();
-      console.log("data=", data);
       let dataValue = Object.values(data);
 
       for (var j = 0; j < dataValue.length; j++) {
         data_res_day.push(dataValue[j]);
       }
-      console.log(data_res_day);
 
       var now = new Date();
-
-      console.log("new=", data_res_day[0].datetime);
-      console.log("data0=", data_res_day[0].datetime);
-      console.log("dataL=", data_res_day.length);
 
       var minusDate_day = new Date();
       minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
       var Date_day = `${minusDate_day.getFullYear()}-${
         minusDate_day.getMonth() + 1
       }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
-      console.log("Date_day=", Date_day);
 
       var day_Date = [];
 
@@ -293,10 +250,6 @@ function App() {
       setDayDates(day_Date);
       setDayTemps(day_Temp);
       setDayHumis(day_Humi);
-
-      console.log("day_Date=", day_Date); //日圖表之日期
-      console.log("day_Temp=", day_Temp);
-      console.log("day_Humi=", day_Humi);
     });
   }
 

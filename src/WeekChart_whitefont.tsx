@@ -2,7 +2,6 @@ import { FC, useEffect } from "react";
 import * as echarts from 'echarts';
 import React from "react";
 
-
 const LineCharts: FC = (data_test) => {
 
     useEffect(() => {
@@ -60,7 +59,7 @@ const LineCharts: FC = (data_test) => {
                         yAxisIndex: 'none'
                     },
                     dataView: { readOnly: false },
-                    saveAsImage: { backgroundColor: '#404040', }
+                    saveAsImage: { backgroundColor: 'rgb(0,0,0,0)', }
                 }
             },
             xAxis: {

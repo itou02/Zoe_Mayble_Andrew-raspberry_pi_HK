@@ -1,12 +1,10 @@
 import { FC, useEffect } from 'react';
-
 import * as echarts from 'echarts';
 import 'echarts-liquidfill';
-
 import React from 'react';
-
 import { getDatabase, ref, child, get, onValue, query, limitToLast } from "firebase/database";
 import { initializeApp, getApp, getApps } from "firebase/app";
+
 const firebaseConfig = {
     databaseURL:
         "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
@@ -14,7 +12,6 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
 const dbref_get = ref(getDatabase())
-
 
 var humidity: number
 onValue(

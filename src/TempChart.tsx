@@ -4,8 +4,6 @@ import React from "react";
 import "./App.css";
 import { stringify } from "querystring";
 
-
-
 const TempChart: FC = (data_test) => {
     useEffect(() => {
         temp(data_test);
