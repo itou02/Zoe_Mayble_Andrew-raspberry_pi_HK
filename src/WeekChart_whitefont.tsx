@@ -12,12 +12,11 @@ const LineCharts: FC = (data_test) => {
         var chartDom = document.getElementById("weekLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        // var time = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];//使用者選擇的時間
         var temp = data_test.data_test[1];
         var humi = data_test.data_test[2];
         var time = data_test.data_test[0];
-        time.length == 0 ? time = ["目前無近一週資料 و(  °▽° )٩"] : time = data_test.data_test[0] ;
-        console.log("time",time);
+        time.length == 0 ? time = ["目前無近一週資料 و(  °▽° )٩"] : time = data_test.data_test[0];
+        console.log("time", time);
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
@@ -25,7 +24,6 @@ const LineCharts: FC = (data_test) => {
                 textStyle: {
                     color: "#fff",
                     fontSize: 25,
-                    // bottom: 20
                 }
             },
             tooltip: {
@@ -37,10 +35,8 @@ const LineCharts: FC = (data_test) => {
                         fontSize: 20
                     }
                 },
-                // formatter: "{a0} {c0}°C<br />'axis'{a1} {c1}%"
             },
             grid: {
-                // right: '20%'
                 top: '20%'
             },
             legend: {
@@ -64,7 +60,7 @@ const LineCharts: FC = (data_test) => {
                         yAxisIndex: 'none'
                     },
                     dataView: { readOnly: false },
-                    saveAsImage: {}
+                    saveAsImage: { backgroundColor: '#404040', }
                 }
             },
             xAxis: {
@@ -82,11 +78,6 @@ const LineCharts: FC = (data_test) => {
             yAxis: [
                 {
                     type: 'value',
-                    // name: '溫度',
-                    // nameTextStyle: {
-                    //     fontSize: 20,
-                    //     padding: 10
-                    // },
                     splitLine: {
                         lineStyle: {
                             opacity: 0.3
@@ -107,11 +98,6 @@ const LineCharts: FC = (data_test) => {
                 },
                 {
                     type: 'value',
-                    // name: '濕度',
-                    // nameTextStyle: {
-                    //     fontSize: 20,
-                    //     padding: 10
-                    // },
                     splitLine: {
                         show: false
                     },
@@ -130,7 +116,6 @@ const LineCharts: FC = (data_test) => {
                 },
             ],
             series: [
-                //   data: [26,27,24,25,23,20,19],
                 {
                     name: '溫度',
                     type: 'line',
@@ -156,12 +141,6 @@ const LineCharts: FC = (data_test) => {
                         }
 
                     },
-                    // markLine: {
-                    //     data: [{ type: 'average', name: 'Avg' }],
-                    //     lineStyle: {
-                    //         width: 2
-                    //     }
-                    // }
 
                 },
                 {
@@ -187,12 +166,6 @@ const LineCharts: FC = (data_test) => {
                             fontSize: 20
                         }
                     },
-                    // markLine: {
-                    //     data: [{ type: 'average', name: 'Avg' }],
-                    //     lineStyle: {
-                    //         width: 2
-                    //     }
-                    // }
                 },
             ]
         };

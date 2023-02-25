@@ -14,14 +14,11 @@ const LineCharts: FC = (data_test) => {
         var temp = data_test.data_test[1];
         var humi = data_test.data_test[2];
         var time = data_test.data_test[0];
-        time.length == 0 ? time = ["目前無近一小時資料 و(  °▽° )٩"] : time = data_test.data_test[0] ;
-        console.log("time",time);
-        
-        // var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
-        // var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
+        time.length == 0 ? time = ["目前無近一小時資料 و(  °▽° )٩"] : time = data_test.data_test[0];
+        console.log("time", time);
 
         const colors = ['#EE6666', '#79A6AF'];
-        option = { 
+        option = {
             title: {
                 text: "〈時〉溫濕度統計變化",
                 textStyle: {
@@ -59,14 +56,14 @@ const LineCharts: FC = (data_test) => {
                         yAxisIndex: 'none'
                     },
                     dataView: { readOnly: false },
-                    saveAsImage: {}
+                    saveAsImage: { backgroundColor: '#404040', }
                 }
             },
             xAxis: {
                 type: 'category',
                 show: true,
                 boundaryGap: true,
-                data: time ,
+                data: time,
                 axisLabel: {
                     textStyle: {
                         color: "#fff",

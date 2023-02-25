@@ -37,7 +37,6 @@ const onTabChange = (key) => {
 
 /*日期選擇器*/
 const onTimeChange = (date, dateString) => {
-  // console.log(date, dateString);
   console.log("Selected Time: ", date);
   console.log("Formatted Selected Time: ", dateString);
 };
@@ -76,13 +75,9 @@ function App() {
   }, []);
 
   /*資料*/
-
   const firebaseConfig = {
     databaseURL: "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
   };
-  // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-  // const dbref_get = ref(getDatabase());
 
   let arr_data = [];
   let temp_arr_data = [];
@@ -105,10 +100,7 @@ function App() {
   const [day_Dates, setDayDates] = useState([]);
   const [day_Temps, setDayTemps] = useState([]);
   const [day_Humis, setDayHumis] = useState([]);
-  // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  // const dbRef = query(ref(getDatabase(app), "avg_5min"));
   const dbref_get = ref(getDatabase());
-  // console.log("dbref_get=", dbref_get);
 
   function GetData() {
     const firebaseConfig = {
@@ -150,12 +142,11 @@ function App() {
       console.log("data_avg_5min=", data);
       let dataValue = Object.values(data);
       console.log("dataValue=", dataValue);
-      
+
       for (var j = 0; j < dataValue.length; j++) {
         data_res_min.push(dataValue[j]);
       }
       console.log(data_res_min);
-      // setAllDatas(data_res_min);
 
       var now = new Date();
 
@@ -179,11 +170,20 @@ function App() {
 
       for (var key in data_res_min) {
         console.log("data_res_min[i].datetime=", typeof data_res_min);
-        console.log("`20${data_res_min[key].datetime}`=", `20${data_res_min[key].datetime}`);
-        console.log("isDuringDate(`20${data_res_min[key].datetime}`, Date_min)=", isDuringDate(`20${data_res_min[key].datetime}`, Date_min));
+        console.log(
+          "`20${data_res_min[key].datetime}`=",
+          `20${data_res_min[key].datetime}`
+        );
+        console.log(
+          "isDuringDate(`20${data_res_min[key].datetime}`, Date_min)=",
+          isDuringDate(`20${data_res_min[key].datetime}`, Date_min)
+        );
 
         if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
-          console.log("data_res_min[key].datetime=", data_res_min[key].datetime);
+          console.log(
+            "data_res_min[key].datetime=",
+            data_res_min[key].datetime
+          );
           min_Date.push(data_res_min[key].datetime.substring(9, 14)); //.substring(9, 14)
           min_Temp.push(parseInt(data_res_min[key].temp));
           min_Humi.push(parseInt(data_res_min[key].humi));
@@ -200,9 +200,6 @@ function App() {
   }
 
   function GetData_avg_1hr() {
-    // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    // const dbRef = query(ref(getDatabase(app), "avg_1hr"), limitToLast(1));
-    // const dbref_get = ref(getDatabase());
     let data_res_hour = [];
 
     get(child(dbref_get, `avg_1hr`)).then((snapshot_avg_1hr) => {
@@ -210,20 +207,10 @@ function App() {
       console.log("data=", data);
       let dataValue = Object.values(data);
       console.log("dataValue=", dataValue);
-      // let dataArr = Array.from(dataValue);
-      // console.log("dataArr=",dataArr);
-      // for (var key in dataArr) {
-      //   arr_data.push({
-      //     temp: dataArr[key].temp,
-      //     humi: dataArr[key].humi,
-      //     datetime: dataArr[key].datetime,
-      //   });
-      // }
       for (var j = 0; j < dataValue.length; j++) {
         data_res_hour.push(dataValue[j]);
       }
       console.log(data_res_hour);
-      // setAllDatas(data_res_hour);
 
       var now = new Date();
 
@@ -264,28 +251,17 @@ function App() {
   }
 
   function GetData_avg_day() {
-    // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    // const dbRef = query(ref(getDatabase(app), "avg_day"), limitToLast(1));
-    // const dbref_get = ref(getDatabase());
     let data_res_day = [];
 
     get(child(dbref_get, `/avg_day`)).then((snapshot_avg_day) => {
       let data = snapshot_avg_day.val();
       console.log("data=", data);
       let dataValue = Object.values(data);
-      // let dataArr = Array.from(dataValue);
-      // for (var key in dataArr) {
-      //   arr_data.push({
-      //     temp: dataArr[key].temp,
-      //     humi: dataArr[key].humi,
-      //     datetime: dataArr[key].datetime,
-      //   });
-      // }
+
       for (var j = 0; j < dataValue.length; j++) {
         data_res_day.push(dataValue[j]);
       }
       console.log(data_res_day);
-      // setAllDatas(data_res_day);
 
       var now = new Date();
 
@@ -294,7 +270,6 @@ function App() {
       console.log("dataL=", data_res_day.length);
 
       var minusDate_day = new Date();
-      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
       minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
       var Date_day = `${minusDate_day.getFullYear()}-${
         minusDate_day.getMonth() + 1
@@ -308,8 +283,6 @@ function App() {
       var day_Humi = [];
 
       for (var i = 0; i != data_res_day.length; i++) {
-        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
-        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
         if (isDuringDate(`20${data_res_day[i].datetime}`, Date_day)) {
           day_Date.push(data_res_day[i].datetime.substring(3, 8));
           day_Temp.push(parseInt(data_res_day[i].temp));
@@ -336,22 +309,13 @@ function App() {
     }
     return false;
   }
-
   /*-----------------------------------------------------------------------*/
   return (
     // 在下方 <Content></Content>裡面加入喜歡的按鈕
     <div className="App" onload="ShowTime()">
-      {/* <div class="mapContainer" ref="mapContainer">
-        <svg viewBox="0 0 200 200" ref="svg">
-          <rect width="200" height="200"></rect>
-          <rect x="75" y="23" width="50" height="50" fill="red"></rect>
-          <rect x="75" y="123" width="50" height="50" fill="#0013ff"></rect>
-        </svg>
-      </div> */}
       <Row justify="center" align="center" className="time_background">
         <Col justify="centers" align="center" className="time_box">
           {/* 插件時鐘 */}
-          {/* <iframe className="time" id="c1 showbox" src="https://free.timeanddate.com/clock/i8pls9p1/n1068/tlhk8/fn6/fs48/tt0/tw0/tm3/td2/th2/tb4" frameborder="0" width="279" height="120"></iframe> */}
           <div id="showbox"></div>
         </Col>
       </Row>
@@ -362,14 +326,8 @@ function App() {
               <Col span={12} className="temperature_box">
                 <div>
                   <TempChart data_test={nowTempDatas.temp} />
-                  {/* data_test={datas.temp} */}
                 </div>
               </Col>
-              {/* <Col span={8} pull={1} className="temperature_degree">
-                  <div >{temps.temp}</div>
-                  <div >{humis.humi}</div>
-                  <div>26°C</div>
-              </Col> */}
 
               <Col span={12} className="humidity_box">
                 <div>
@@ -381,10 +339,8 @@ function App() {
         </Col>
       </Row>
       <Row className="chart_background">
-        {/* 統計圖表標籤頁 */}
         <ConfigProvider
           theme={{
-            // algorithm: theme.darkAlgorithm,
             token: {
               colorPrimary: "#D6B24E",
             },
@@ -400,25 +356,12 @@ function App() {
                 size="large"
               >
                 <Tabs.TabPane tab="Hour" key="1">
-                  {/* <TimePicker
-                    value={value}
-                    onChange={onTimeChange}
-                    format="HH"
-                    showNow={false}
-                    popupStyle={{ color: "" }}
-                  /> */}
                   <HourChart data_test={[min_Dates, min_Temps, min_Humis]} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Day" key="2">
-                  {/* <DatePicker
-                    onChange={onTimeChange}
-                    value={value}
-                    showNow={false}
-                  /> */}
                   <DayChart data_test={[hour_Dates, hour_Temps, hour_Humis]} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Week" key="3">
-                  {/* <DatePicker onChange={onTimeChange} picker="week" /> */}
                   <WeekChart data_test={[day_Dates, day_Temps, day_Humis]} />
                 </Tabs.TabPane>
               </Tabs>

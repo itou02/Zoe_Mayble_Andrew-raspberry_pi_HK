@@ -11,37 +11,12 @@ const TempChart: FC = (data_test) => {
         temp(data_test);
     });
     console.log(data_test);
-    
+
     const temp = (data_test) => {
-
-        // const firebaseConfig = {
-        //     databaseURL:
-        //         "https://data-30090-default-rtdb.asia-southeast1.firebasedatabase.app/",
-        // };
-        // const app = initializeApp(firebaseConfig);
-        // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-        // const dbref_get = ref(getDatabase())
-        
-        // var TP_value: number;
-        // onValue(
-        //     dbRef,
-        //     (snapshot) => {
-        //         let data = snapshot.val();
-        //         let dataValue = Object.values(data);
-        //         let dataArr: object = Array.from(dataValue);
-        //         let temp: number = dataArr[0].temp
-        //         TP_value = temp;
-        //         // console.log(typeof TP_value);
-        //         // console.log(value);
-        //     }
-        // );
-
-            
         var chartDom: any = document.getElementById("temp");
         var myChart = echarts.init(chartDom);
-        // var option;
-        var TP_value: number ;
-        TP_value =Number(Object.values(data_test));
+        var TP_value: number;
+        TP_value = Number(Object.values(data_test));
         var kd: any[];
         kd = []
         var Gradient: any[];
@@ -68,16 +43,11 @@ const TempChart: FC = (data_test) => {
                 {
                     offset: 0,
                     color: "#913E31",
-                    // color: "#FFDB29",
                 },
-                // {
-                //   offset: 0.5,
-                // color: "#EDB927",
-                // },
+
                 {
                     offset: 1,
                     color: "#913E31",
-                    // color: "#C13131",
                 }
             );
         } else if (TP_value > -20) {
@@ -86,12 +56,10 @@ const TempChart: FC = (data_test) => {
                 {
                     offset: 0,
                     color: "#913E31",
-                    // color: "#FFDB29",
                 },
                 {
                     offset: 1,
                     color: "#913E31",
-                    // color: "#E0862D",
                 }
             );
         } else {
@@ -99,7 +67,6 @@ const TempChart: FC = (data_test) => {
             Gradient.push({
                 offset: 1,
                 color: "#913E31",
-                // color: "#FFDB29",
             });
         }
         if (TP_value > 62) {
@@ -118,9 +85,8 @@ const TempChart: FC = (data_test) => {
         leftColor = Gradient[Gradient.length - 1].color;
         // 因為柱狀初始化為0，溫度存在負值，所以加上負值60和空出距離10
         var option = {
-            // backgroundColor: "#0C2F6F", //背景色
             title: {
-                xAxisIndex: 0,  
+                xAxisIndex: 0,
                 text: TP_value + "°C",
                 show: true,
                 textStyle: {
@@ -128,9 +94,7 @@ const TempChart: FC = (data_test) => {
                 },
                 top: '45%',
                 right: '9%',
-                // padding:[0,0,0,0],
             },
-
 
             yAxis: [
                 {
@@ -251,7 +215,6 @@ const TempChart: FC = (data_test) => {
                     itemStyle: {
                         normal: {
                             color: "#913E31", //下面圓圓的~i
-                            // color: "#FFDB29", //下面圓圓的
                             opacity: 1,
                         },
                     },

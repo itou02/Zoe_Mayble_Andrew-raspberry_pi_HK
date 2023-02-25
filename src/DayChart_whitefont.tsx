@@ -59,7 +59,7 @@ const LineCharts: FC = (data_test) => {
                         yAxisIndex: 'none'
                     },
                     dataView: { readOnly: false },
-                    saveAsImage: {}
+                    saveAsImage: { backgroundColor:'#404040', }
                 }
             },
             xAxis: {
