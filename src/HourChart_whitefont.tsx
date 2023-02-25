@@ -11,18 +11,18 @@ const LineCharts: FC = (data_test) => {
         var chartDom = document.getElementById("hourLineChart");
         var myChart = echarts.init(chartDom as HTMLDivElement);
         var option;
-        var temp = data_test[1];
-        var humi = data_test[2];
-        var time = data_test[0];
+        var temp = data_test.data_test[1];
+        var humi = data_test.data_test[2];
+        var time = data_test.data_test[0];
         console.log("time",time);
         
         // var humi = [66, 60, 64, 65, 67, 62, 63, 64, 68, 65, 66, 62, 67];//濕度資料
         // var temp = [27, 28, 25, 26, 22, 19, 23, 25, 26, 22, 25, 24, 22];//氣溫資料
 
         const colors = ['#EE6666', '#79A6AF'];
-        option = {
+        option = { 
             title: {
-                text: "『時』溫濕度統計變化",
+                text: "〈時〉溫濕度統計變化",
                 textStyle: {
                     color: "#fff",
                     fontSize: 25,
@@ -65,8 +65,7 @@ const LineCharts: FC = (data_test) => {
                 type: 'category',
                 show: true,
                 boundaryGap: true,
-                data: [
-                    time ],
+                data: time ,
                 axisLabel: {
                     textStyle: {
                         color: "#fff",

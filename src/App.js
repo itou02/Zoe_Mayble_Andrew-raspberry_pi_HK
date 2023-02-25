@@ -147,37 +147,12 @@ function App() {
 
     get(child(dbref_get, `/avg_5min`)).then((snapshot_avg_5min) => {
       let data = snapshot_avg_5min.val();
-      console.log("data=", data);
+      console.log("data_avg_5min=", data);
       let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-
-      // // 上方即時顯示溫度資料 ------------
-      // let res = [];
-
-      // for (var key in dataArr) {
-      //   arr_data.push({
-      //     temp: dataArr[key].temp,
-      //   });
-      // }
-
-      // for (var key in arr_data) {
-      //   res.push(arr_data[key]);
-      // }
-
-      // let nowTempData = res[key];
-      // setNowTempDatas(nowTempData);
-      // // -----------------------------
-
-      for (var key in dataArr) {
-        // arr_data=[];
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
-      for (var j = 0; j < arr_data.length; j++) {
-        data_res_min.push(arr_data[j]);
+      console.log("dataValue=", dataValue);
+      
+      for (var j = 0; j < dataValue.length; j++) {
+        data_res_min.push(dataValue[j]);
       }
       console.log(data_res_min);
       // setAllDatas(data_res_min);
@@ -204,9 +179,12 @@ function App() {
 
       for (var key in data_res_min) {
         console.log("data_res_min[i].datetime=", typeof data_res_min);
+        console.log("`20${data_res_min[key].datetime}`=", `20${data_res_min[key].datetime}`);
+        console.log("isDuringDate(`20${data_res_min[key].datetime}`, Date_min)=", isDuringDate(`20${data_res_min[key].datetime}`, Date_min));
 
         if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
-          min_Date.push(data_res_min[key].datetime); //.substring(9, 14)
+          console.log("data_res_min[key].datetime=", data_res_min[key].datetime);
+          min_Date.push(data_res_min[key].datetime.substring(9, 14)); //.substring(9, 14)
           min_Temp.push(parseInt(data_res_min[key].temp));
           min_Humi.push(parseInt(data_res_min[key].humi));
         }
