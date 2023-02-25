@@ -69,7 +69,6 @@ function App() {
     onTabChange();
     onTimeChange();
     onChange();
-    GetData();
     GetData_avg_5min();
     GetData_avg_1hr();
     GetData_avg_day();
@@ -85,7 +84,6 @@ function App() {
   // const dbref_get = ref(getDatabase());
 
   let arr_data = [];
-  let temp_arr_data = [];
 
   const [nowTempDatas, setNowTempDatas] = useState([]);
   const [tempDatas, setTempDatas] = useState([]);
@@ -105,44 +103,13 @@ function App() {
   const [day_Dates, setDayDates] = useState([]);
   const [day_Temps, setDayTemps] = useState([]);
   const [day_Humis, setDayHumis] = useState([]);
-  // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  // const dbRef = query(ref(getDatabase(app), "avg_5min"));
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const dbRef = query(ref(getDatabase(app), "avg_5min"));
   const dbref_get = ref(getDatabase());
-  // console.log("dbref_get=", dbref_get);
-
-  function GetData() {
-    const firebaseConfig = {
-      databaseURL:
-        "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
-    };
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const dbRef = query(ref(getDatabase(app), "data"));
-    const dbref_get = ref(getDatabase());
-
-    // 上方即時顯示溫度資料 ------------
-    get(child(dbref_get, `data`)).then((snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      let res = [];
-
-      for (var key in dataArr) {
-        temp_arr_data.push({
-          temp: dataArr[key].temp,
-        });
-      }
-
-      for (var key in temp_arr_data) {
-        res.push(temp_arr_data[key]);
-      }
-
-      let nowTempData = res[key];
-      setNowTempDatas(nowTempData);
-    });
-    // -----------------------------
-  }
+  console.log("dbref_get=", dbref_get);
 
   function GetData_avg_5min() {
+
     let data_res_min = [];
 
     get(child(dbref_get, `/avg_5min`)).then((snapshot_avg_5min) => {
@@ -169,7 +136,6 @@ function App() {
       // // -----------------------------
 
       for (var key in dataArr) {
-        // arr_data=[];
         arr_data.push({
           temp: dataArr[key].temp,
           humi: dataArr[key].humi,
@@ -191,9 +157,8 @@ function App() {
       var minusDate_min = new Date();
 
       minusDate_min.setMinutes(minusDate_min.getMinutes() - 60);
-      var Date_min = `${minusDate_min.getFullYear()}-${
-        minusDate_min.getMonth() + 1
-      }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
+      var Date_min = `${minusDate_min.getFullYear()}-${minusDate_min.getMonth() + 1
+        }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
       console.log("Date_min=", Date_min);
 
       var min_Date = [];
@@ -206,7 +171,7 @@ function App() {
         console.log("data_res_min[i].datetime=", typeof data_res_min);
 
         if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
-          min_Date.push(data_res_min[key].datetime); //.substring(9, 14)
+          min_Date.push(data_res_min[key].datetime);//.substring(9, 14)
           min_Temp.push(parseInt(data_res_min[key].temp));
           min_Humi.push(parseInt(data_res_min[key].humi));
         }
@@ -256,9 +221,8 @@ function App() {
       var minusDate_hour = new Date();
 
       minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
-      var Date_hour = `${minusDate_hour.getFullYear()}-${
-        minusDate_hour.getMonth() + 1
-      }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
+      var Date_hour = `${minusDate_hour.getFullYear()}-${minusDate_hour.getMonth() + 1
+        }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
       console.log("Date_hour=", Date_hour);
 
       var hour_Date = [];
@@ -268,11 +232,13 @@ function App() {
       var hour_Humi = [];
 
       for (var i = 0; i != data_res_hour.length; i++) {
+
         if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_hour)) {
           hour_Date.push(data_res_hour[i].datetime);
           hour_Temp.push(parseInt(data_res_hour[i].temp));
           hour_Humi.push(parseInt(data_res_hour[i].humi));
         }
+
       }
 
       setHourDates(hour_Date);
@@ -318,9 +284,8 @@ function App() {
       var minusDate_day = new Date();
       // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
       minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
-      var Date_day = `${minusDate_day.getFullYear()}-${
-        minusDate_day.getMonth() + 1
-      }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
+      var Date_day = `${minusDate_day.getFullYear()}-${minusDate_day.getMonth() + 1
+        }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
       console.log("Date_day=", Date_day);
 
       var day_Date = [];
