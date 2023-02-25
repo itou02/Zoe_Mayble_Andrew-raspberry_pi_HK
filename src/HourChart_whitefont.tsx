@@ -22,7 +22,7 @@ const LineCharts: FC = (data_test) => {
         const colors = ['#EE6666', '#79A6AF'];
         option = {
             title: {
-                text: "溫濕度統計變化",
+                text: "『時』溫濕度統計變化",
                 textStyle: {
                     color: "#fff",
                     fontSize: 25,

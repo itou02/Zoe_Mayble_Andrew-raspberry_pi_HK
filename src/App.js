@@ -234,7 +234,7 @@ function App() {
       for (var i = 0; i != data_res_hour.length; i++) {
 
         if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_hour)) {
-          hour_Date.push(data_res_hour[i].datetime);
+          hour_Date.push(data_res_hour[i].datetime.substring(9, 14));
           hour_Temp.push(parseInt(data_res_hour[i].temp));
           hour_Humi.push(parseInt(data_res_hour[i].humi));
         }
@@ -298,7 +298,7 @@ function App() {
         // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
         // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
         if (isDuringDate(`20${data_res_day[i].datetime}`, Date_day)) {
-          day_Date.push(data_res_day[i].datetime);
+          day_Date.push(data_res_day[i].datetime.substring(3, 8));
           day_Temp.push(parseInt(data_res_day[i].temp));
           day_Humi.push(parseInt(data_res_day[i].humi));
         }
