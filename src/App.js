@@ -69,7 +69,9 @@ function App() {
     onTabChange();
     onTimeChange();
     onChange();
-    GetData();
+    GetData_avg_5min();
+    GetData_avg_1hr();
+    GetData_avg_day();
   }, []);
 
   /*資料*/
@@ -77,9 +79,9 @@ function App() {
   const firebaseConfig = {
     databaseURL: "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
   };
-  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-  const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
-  const dbref_get = ref(getDatabase());
+  // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  // const dbRef = query(ref(getDatabase(app), "data"), limitToLast(1));
+  // const dbref_get = ref(getDatabase());
 
   let arr_data = [];
 
@@ -101,33 +103,37 @@ function App() {
   const [day_Dates, setDayDates] = useState([]);
   const [day_Temps, setDayTemps] = useState([]);
   const [day_Humis, setDayHumis] = useState([]);
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const dbRef = query(ref(getDatabase(app), "avg_5min"));
+  const dbref_get = ref(getDatabase());
+  console.log("dbref_get=",dbref_get);
 
-  function GetData() {
+  function GetData_avg_5min() {
+    
     let data_res_min = [];
-    let data_res_hour = [];
-    let data_res_day = [];
 
-    get(child(dbref_get, `/avg_5min`)).then((snapshot) => {
-      let data = snapshot.val();
+    get(child(dbref_get, `/avg_5min`)).then((snapshot_avg_5min) => {
+      let data = snapshot_avg_5min.val();
+      console.log("data=",data);
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
 
-      // 上方即時顯示溫度資料 ------------
-      let res = [];
+      // // 上方即時顯示溫度資料 ------------
+      // let res = [];
 
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-        });
-      }
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //   });
+      // }
 
-      for (var key in arr_data) {
-        res.push(arr_data[key]);
-      }
+      // for (var key in arr_data) {
+      //   res.push(arr_data[key]);
+      // }
 
-      let nowTempData = res[key];
-      setNowTempDatas(nowTempData);
-      // -----------------------------
+      // let nowTempData = res[key];
+      // setNowTempDatas(nowTempData);
+      // // -----------------------------
 
       for (var key in dataArr) {
         arr_data.push({
@@ -136,11 +142,11 @@ function App() {
           datetime: dataArr[key].datetime,
         });
       }
-      for (var key in arr_data) {
-        data_res_min.push(arr_data[key]);
+      for (var j=0; j< arr_data.length;j++) {
+        data_res_min.push(arr_data[j]);
       }
       console.log(data_res_min);
-      setAllDatas(data_res_min);
+      // setAllDatas(data_res_min);
 
       var now = new Date();
 
@@ -149,261 +155,30 @@ function App() {
       console.log("dataL:", data_res_min.length);
 
       var minusDate_min = new Date();
-      var minusDate_hour = new Date();
-      var minusDate_day = new Date();
-      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
-      minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
-      var Date_day = `${minusDate_min.getFullYear()}-${
-        minusDate_day.getMonth() + 1
-      }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
-      console.log("minusDate_day=", typeof minusDate_day);
-      console.log("Date_day=", Date_day);
-      minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
-      var Date_hour = `${minusDate_min.getFullYear()}-${
-        minusDate_hour.getMonth() + 1
-      }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
-      console.log("Date_hour=", Date_hour);
+
       minusDate_min.setMinutes(minusDate_min.getMinutes() - 60);
-      var Date_min = `${minusDate_min.getFullYear()}-${
-        minusDate_min.getMonth() + 1
-      }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
+      var Date_min = `${minusDate_min.getFullYear()}-${minusDate_min.getMonth() + 1
+        }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
       console.log("Date_min=", Date_min);
 
-      var day_Date = [];
-      var hour_Date = [];
       var min_Date = [];
 
-      var day_Temp = [];
-      var hour_Temp = [];
       var min_Temp = [];
 
-      var day_Humi = [];
-      var hour_Humi = [];
       var min_Humi = [];
 
-      for (var i = 0; i != data_res_min.length - 1; i++) {
-        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
-        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
-        if (isDuringDate(`20${data_res_min[i].datetime}`, Date_day)) {
-          day_Date.push(data_res_min[i].datetime.substring(3, 8));
-          day_Temp.push(parseInt(data_res_min[i].temp));
-          day_Humi.push(parseInt(data_res_min[i].humi));
-          if (isDuringDate(`20${data_res_min[i].datetime}`, Date_hour)) {
-            hour_Date.push(data_res_min[i].datetime.substring(9, 5));
-            hour_Temp.push(parseInt(data_res_min[i].temp));
-            hour_Humi.push(parseInt(data_res_min[i].humi));
-            if (isDuringDate(`20${data_res_min[i].datetime}`, Date_min)) {
-              min_Date.push(data_res_min[i].datetime.substring(9, 14));
-              min_Temp.push(parseInt(data_res_min[i].temp));
-              min_Humi.push(parseInt(data_res_min[i].humi));
-            }
-          }
+      for (var key in data_res_min) { 
+        console.log("data_res_min[i].datetime=", typeof data_res_min);
+
+        if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
+          min_Date.push(data_res_min[key].datetime);//.substring(9, 14)
+          min_Temp.push(parseInt(data_res_min[key].temp));
+          min_Humi.push(parseInt(data_res_min[key].humi));
         }
       }
       setMinDates(min_Date);
       setMinTemps(min_Temp);
       setMinHumis(min_Humi);
-
-      setHourDates(hour_Date);
-      setHourTemps(hour_Temp);
-      setHourHumis(hour_Humi);
-
-      setDayDates(day_Date);
-      setDayTemps(day_Temp);
-      setDayHumis(day_Humi);
-
-      console.log("day_Date:", data_res_min[i].datetime.substring(14, 8)); //日圖表之日期
-      console.log("day_Temp:", day_Temp);
-      console.log("day_Humi:", day_Humi);
-
-      console.log("hour_Date:", hour_Date);
-      console.log("hour_Temp:", hour_Temp);
-      console.log("hour_Humi:", hour_Humi);
-
-      console.log("min_Date:", min_Date);
-      console.log("min_Temp:", min_Temp);
-      console.log("min_Humi:", min_Humi);
-    });
-
-    get(child(dbref_get, `/avg_1hr`)).then((snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
-      for (var key in arr_data) {
-        data_res_hour.push(arr_data[key]);
-      }
-      console.log(data_res_hour);
-      setAllDatas(data_res_hour);
-
-      var now = new Date();
-
-      console.log("new:", data_res_hour[0].datetime);
-      console.log("data0:", data_res_hour[0].datetime);
-      console.log("dataL:", data_res_hour.length);
-
-      var minusDate_min = new Date();
-      var minusDate_hour = new Date();
-      var minusDate_day = new Date();
-      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
-      minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
-      var Date_day = `${minusDate_min.getFullYear()}-${
-        minusDate_day.getMonth() + 1
-      }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
-      console.log("minusDate_day=", typeof minusDate_day);
-      console.log("Date_day=", Date_day);
-      minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
-      var Date_hour = `${minusDate_min.getFullYear()}-${
-        minusDate_hour.getMonth() + 1
-      }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
-      console.log("Date_hour=", Date_hour);
-      minusDate_min.setMinutes(minusDate_min.getMinutes() - 60);
-      var Date_min = `${minusDate_min.getFullYear()}-${
-        minusDate_min.getMonth() + 1
-      }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
-      console.log("Date_min=", Date_min);
-
-      var day_Date = [];
-      var hour_Date = [];
-      var min_Date = [];
-
-      var day_Temp = [];
-      var hour_Temp = [];
-      var min_Temp = [];
-
-      var day_Humi = [];
-      var hour_Humi = [];
-      var min_Humi = [];
-
-      for (var i = 0; i != data_res_hour.length - 1; i++) {
-        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
-        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
-        if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_day)) {
-          day_Date.push(data_res_hour[i].datetime);
-          day_Temp.push(parseInt(data_res_hour[i].temp));
-          day_Humi.push(parseInt(data_res_hour[i].humi));
-          if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_hour)) {
-            hour_Date.push(data_res_hour[i].datetime);
-            hour_Temp.push(parseInt(data_res_hour[i].temp));
-            hour_Humi.push(parseInt(data_res_hour[i].humi));
-            if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_min)) {
-              min_Date.push(data_res_hour[i].datetime);
-              min_Temp.push(parseInt(data_res_hour[i].temp));
-              min_Humi.push(parseInt(data_res_hour[i].humi));
-            }
-          }
-        }
-      }
-
-      setHourDates(hour_Date);
-      setHourTemps(hour_Temp);
-      setHourHumis(hour_Humi);
-
-      console.log("hour_Date:", hour_Date);
-      console.log("hour_Temp:", hour_Temp);
-      console.log("hour_Humi:", hour_Humi);
-    });
-
-    get(child(dbref_get, `/avg_day`)).then((snapshot) => {
-      let data = snapshot.val();
-      let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
-      for (var key in arr_data) {
-        data_res_day.push(arr_data[key]);
-      }
-      console.log(data_res_day);
-      setAllDatas(data_res_day);
-
-      var now = new Date();
-
-      console.log("new:", data_res_day[0].datetime);
-      console.log("data0:", data_res_day[0].datetime);
-      console.log("dataL:", data_res_day.length);
-
-      var minusDate_min = new Date();
-      var minusDate_hour = new Date();
-      var minusDate_day = new Date();
-      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
-      minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
-      var Date_day = `${minusDate_min.getFullYear()}-${
-        minusDate_day.getMonth() + 1
-      }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
-      console.log("minusDate_day=", typeof minusDate_day);
-      console.log("Date_day=", Date_day);
-      minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
-      var Date_hour = `${minusDate_min.getFullYear()}-${
-        minusDate_hour.getMonth() + 1
-      }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
-      console.log("Date_hour=", Date_hour);
-      minusDate_min.setMinutes(minusDate_min.getMinutes() - 60);
-      var Date_min = `${minusDate_min.getFullYear()}-${
-        minusDate_min.getMonth() + 1
-      }-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`;
-      console.log("Date_min=", Date_min);
-
-      var day_Date = [];
-      var hour_Date = [];
-      var min_Date = [];
-
-      var day_Temp = [];
-      var hour_Temp = [];
-      var min_Temp = [];
-
-      var day_Humi = [];
-      var hour_Humi = [];
-      var min_Humi = [];
-
-      for (var i = 0; i != data_res_day.length - 1; i++) {
-        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
-        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
-        if (isDuringDate(`20${data_res_day[i].datetime}`, Date_day)) {
-          day_Date.push(data_res_day[i].datetime);
-          day_Temp.push(parseInt(data_res_day[i].temp));
-          day_Humi.push(parseInt(data_res_day[i].humi));
-          if (isDuringDate(`20${data_res_day[i].datetime}`, Date_hour)) {
-            hour_Date.push(data_res_day[i].datetime);
-            hour_Temp.push(parseInt(data_res_day[i].temp));
-            hour_Humi.push(parseInt(data_res_day[i].humi));
-            if (isDuringDate(`20${data_res_day[i].datetime}`, Date_min)) {
-              min_Date.push(data_res_day[i].datetime);
-              min_Temp.push(parseInt(data_res_day[i].temp));
-              min_Humi.push(parseInt(data_res_day[i].humi));
-            }
-          }
-        }
-      }
-      setMinDates(min_Date);
-      setMinTemps(min_Temp);
-      setMinHumis(min_Humi);
-
-      setHourDates(hour_Date);
-      setHourTemps(hour_Temp);
-      setHourHumis(hour_Humi);
-
-      setDayDates(day_Date);
-      setDayTemps(day_Temp);
-      setDayHumis(day_Humi);
-
-      console.log("day_Date:", day_Date); //日圖表之日期
-      console.log("day_Temp:", day_Temp);
-      console.log("day_Humi:", day_Humi);
-
-      console.log("hour_Date:", hour_Date);
-      console.log("hour_Temp:", hour_Temp);
-      console.log("hour_Humi:", hour_Humi);
 
       console.log("min_Date:", min_Date);
       console.log("min_Temp:", min_Temp);
@@ -411,6 +186,134 @@ function App() {
     });
   }
 
+  function GetData_avg_1hr() {
+    // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    // const dbRef = query(ref(getDatabase(app), "avg_1hr"), limitToLast(1));
+    // const dbref_get = ref(getDatabase());
+    let data_res_hour = [];
+
+    get(child(dbref_get, `avg_1hr`)).then((snapshot_avg_1hr) => {
+      let data = snapshot_avg_1hr.val();
+      console.log("data=",data);
+      let dataValue = Object.values(data);
+      console.log("dataValue=",dataValue);
+      // let dataArr = Array.from(dataValue);
+      // console.log("dataArr=",dataArr);
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //     humi: dataArr[key].humi,
+      //     datetime: dataArr[key].datetime,
+      //   });
+      // }
+      for (var j=0; j< dataValue.length;j++) {
+        data_res_hour.push(dataValue[j]);
+      }
+      console.log(data_res_hour);
+      // setAllDatas(data_res_hour);
+
+      var now = new Date();
+
+      console.log("new:", data_res_hour[0].datetime);
+      console.log("data0:", data_res_hour[0].datetime);
+      console.log("dataL:", data_res_hour.length);
+
+      var minusDate_hour = new Date();
+
+      minusDate_hour.setMinutes(minusDate_hour.getMinutes() - 60 * 24);
+      var Date_hour = `${minusDate_hour.getFullYear()}-${minusDate_hour.getMonth() + 1
+        }-${minusDate_hour.getDate()} ${minusDate_hour.getHours()}:${minusDate_hour.getMinutes()}`;
+      console.log("Date_hour=", Date_hour);
+
+      var hour_Date = [];
+
+      var hour_Temp = [];
+
+      var hour_Humi = [];
+
+      for (var i = 0; i != data_res_hour.length; i++) {
+
+        if (isDuringDate(`20${data_res_hour[i].datetime}`, Date_hour)) {
+          hour_Date.push(data_res_hour[i].datetime);
+          hour_Temp.push(parseInt(data_res_hour[i].temp));
+          hour_Humi.push(parseInt(data_res_hour[i].humi));
+        }
+
+      }
+
+      setHourDates(hour_Date);
+      setHourTemps(hour_Temp);
+      setHourHumis(hour_Humi);
+
+      console.log("hour_Date=", hour_Date);
+      console.log("hour_Temp=", hour_Temp);
+      console.log("hour_Humi=", hour_Humi);
+    });
+  }
+
+  function GetData_avg_day() {
+    // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    // const dbRef = query(ref(getDatabase(app), "avg_day"), limitToLast(1));
+    // const dbref_get = ref(getDatabase());
+    let data_res_day = [];
+
+    get(child(dbref_get, `/avg_day`)).then((snapshot_avg_day) => {
+      let data = snapshot_avg_day.val();
+      console.log("data=",data);
+      let dataValue = Object.values(data);
+      // let dataArr = Array.from(dataValue);
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //     humi: dataArr[key].humi,
+      //     datetime: dataArr[key].datetime,
+      //   });
+      // }
+      for (var j=0; j< dataValue.length;j++) {
+        data_res_day.push(dataValue[j]);
+      }
+      console.log(data_res_day);
+      // setAllDatas(data_res_day);
+
+      var now = new Date();
+
+      console.log("new=", data_res_day[0].datetime);
+      console.log("data0=", data_res_day[0].datetime);
+      console.log("dataL=", data_res_day.length);
+
+      var minusDate_day = new Date();
+      // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
+      minusDate_day.setMinutes(minusDate_day.getMinutes() - 60 * 24 * 7);
+      var Date_day = `${minusDate_day.getFullYear()}-${minusDate_day.getMonth() + 1
+        }-${minusDate_day.getDate()} ${minusDate_day.getHours()}:${minusDate_day.getMinutes()}`;
+      console.log("Date_day=", Date_day);
+
+      var day_Date = [];
+
+      var day_Temp = [];
+
+      var day_Humi = [];
+
+      for (var i = 0; i != data_res_day.length; i++) {
+        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
+        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
+        if (isDuringDate(`20${data_res_day[i].datetime}`, Date_day)) {
+          day_Date.push(data_res_day[i].datetime);
+          day_Temp.push(parseInt(data_res_day[i].temp));
+          day_Humi.push(parseInt(data_res_day[i].humi));
+        }
+      }
+
+      setDayDates(day_Date);
+      setDayTemps(day_Temp);
+      setDayHumis(day_Humi);
+
+      console.log("day_Date=", day_Date); //日圖表之日期
+      console.log("day_Temp=", day_Temp);
+      console.log("day_Humi=", day_Humi);
+    });
+  }
+  
   function isDuringDate(isDate, beginDate) {
     var isDate = new Date(isDate),
       beginDate = new Date(beginDate),
