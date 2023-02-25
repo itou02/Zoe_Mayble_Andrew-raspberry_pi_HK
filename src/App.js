@@ -105,6 +105,10 @@ function App() {
   const [day_Dates, setDayDates] = useState([]);
   const [day_Temps, setDayTemps] = useState([]);
   const [day_Humis, setDayHumis] = useState([]);
+  // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  // const dbRef = query(ref(getDatabase(app), "avg_5min"));
+  const dbref_get = ref(getDatabase());
+  // console.log("dbref_get=", dbref_get);
 
   function GetData() {
     const firebaseConfig = {
@@ -112,6 +116,7 @@ function App() {
         "https://raspberry-pi-data-6403d-default-rtdb.firebaseio.com/",
     };
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    const dbRef = query(ref(getDatabase(app), "data"));
     const dbref_get = ref(getDatabase());
 
     // 上方即時顯示溫度資料 ------------
@@ -138,32 +143,30 @@ function App() {
   }
 
   function GetData_avg_5min() {
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const dbRef = query(ref(getDatabase(app), "avg_5min"), limitToLast(1));
-    const dbref_get = ref(getDatabase());
     let data_res_min = [];
 
-    get(child(dbRef, `/avg_5min`)).then((snapshot) => {
-      let data = snapshot.val();
+    get(child(dbref_get, `/avg_5min`)).then((snapshot_avg_5min) => {
+      let data = snapshot_avg_5min.val();
+      console.log("data=", data);
       let dataValue = Object.values(data);
       let dataArr = Array.from(dataValue);
 
-      // 上方即時顯示溫度資料 ------------
-      let res = [];
-console.log('分鐘');
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-        });
-      }
+      // // 上方即時顯示溫度資料 ------------
+      // let res = [];
 
-      for (var key in arr_data) {
-        res.push(arr_data[key]);
-      }
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //   });
+      // }
 
-      let nowTempData = res[key];
-      setNowTempDatas(nowTempData);
-      // -----------------------------
+      // for (var key in arr_data) {
+      //   res.push(arr_data[key]);
+      // }
+
+      // let nowTempData = res[key];
+      // setNowTempDatas(nowTempData);
+      // // -----------------------------
 
       for (var key in dataArr) {
         // arr_data=[];
@@ -173,11 +176,11 @@ console.log('分鐘');
           datetime: dataArr[key].datetime,
         });
       }
-      for (var key in arr_data) {
-        data_res_min.push(arr_data[key]);
+      for (var j = 0; j < arr_data.length; j++) {
+        data_res_min.push(arr_data[j]);
       }
-      console.log("arr_data=", data_res_min);
-      setAllDatas(data_res_min);
+      console.log(data_res_min);
+      // setAllDatas(data_res_min);
 
       var now = new Date();
 
@@ -199,14 +202,13 @@ console.log('分鐘');
 
       var min_Humi = [];
 
-      for (var i = 0; i != data_res_min.length; i++) {
-        // console.log(isDuringDate(`20${data_res[i].datetime}`, Date_day))
-        // console.log("isDuringDate(`20${data_res[i-1].datetime}`)", isDuringDate(`20${data_res[i].datetime}`))
+      for (var key in data_res_min) {
+        console.log("data_res_min[i].datetime=", typeof data_res_min);
 
-        if (isDuringDate(`20${data_res_min[i].datetime}`, Date_min)) {
-          min_Date.push(data_res_min[i].datetime.substring(9, 14));
-          min_Temp.push(parseInt(data_res_min[i].temp));
-          min_Humi.push(parseInt(data_res_min[i].humi));
+        if (isDuringDate(`20${data_res_min[key].datetime}`, Date_min)) {
+          min_Date.push(data_res_min[key].datetime); //.substring(9, 14)
+          min_Temp.push(parseInt(data_res_min[key].temp));
+          min_Humi.push(parseInt(data_res_min[key].humi));
         }
       }
       setMinDates(min_Date);
@@ -222,25 +224,28 @@ console.log('分鐘');
   function GetData_avg_1hr() {
     // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
     // const dbRef = query(ref(getDatabase(app), "avg_1hr"), limitToLast(1));
-    const dbref_get = ref(getDatabase());
+    // const dbref_get = ref(getDatabase());
     let data_res_hour = [];
 
-    get(child(dbref_get, `avg_1hr`)).then((snapshot) => {
-      let data = snapshot.val();
+    get(child(dbref_get, `avg_1hr`)).then((snapshot_avg_1hr) => {
+      let data = snapshot_avg_1hr.val();
+      console.log("data=", data);
       let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
-      for (var key in arr_data) {
-        data_res_hour.push(arr_data[key]);
+      console.log("dataValue=", dataValue);
+      // let dataArr = Array.from(dataValue);
+      // console.log("dataArr=",dataArr);
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //     humi: dataArr[key].humi,
+      //     datetime: dataArr[key].datetime,
+      //   });
+      // }
+      for (var j = 0; j < dataValue.length; j++) {
+        data_res_hour.push(dataValue[j]);
       }
       console.log(data_res_hour);
-      setAllDatas(data_res_hour);
+      // setAllDatas(data_res_hour);
 
       var now = new Date();
 
@@ -274,40 +279,41 @@ console.log('分鐘');
       setHourTemps(hour_Temp);
       setHourHumis(hour_Humi);
 
-      console.log("hour_Date:", hour_Date);
-      console.log("hour_Temp:", hour_Temp);
-      console.log("hour_Humi:", hour_Humi);
-    }, []);
+      console.log("hour_Date=", hour_Date);
+      console.log("hour_Temp=", hour_Temp);
+      console.log("hour_Humi=", hour_Humi);
+    });
   }
 
   function GetData_avg_day() {
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const dbRef = query(ref(getDatabase(app), `avg_day`));
-    const dbref_get = ref(getDatabase());
+    // const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+    // const dbRef = query(ref(getDatabase(app), "avg_day"), limitToLast(1));
+    // const dbref_get = ref(getDatabase());
     let data_res_day = [];
 
-    get(dbRef).then((snapshot) => {
-      let data = snapshot.val();
+    get(child(dbref_get, `/avg_day`)).then((snapshot_avg_day) => {
+      let data = snapshot_avg_day.val();
+      console.log("data=", data);
       let dataValue = Object.values(data);
-      let dataArr = Array.from(dataValue);
-      for (var key in dataArr) {
-        arr_data.push({
-          temp: dataArr[key].temp,
-          humi: dataArr[key].humi,
-          datetime: dataArr[key].datetime,
-        });
-      }
-      for (var key in arr_data) {
-        data_res_day.push(arr_data[key]);
+      // let dataArr = Array.from(dataValue);
+      // for (var key in dataArr) {
+      //   arr_data.push({
+      //     temp: dataArr[key].temp,
+      //     humi: dataArr[key].humi,
+      //     datetime: dataArr[key].datetime,
+      //   });
+      // }
+      for (var j = 0; j < dataValue.length; j++) {
+        data_res_day.push(dataValue[j]);
       }
       console.log(data_res_day);
-      setAllDatas(data_res_day);
+      // setAllDatas(data_res_day);
 
       var now = new Date();
 
-      console.log("new:", data_res_day[0].datetime);
-      console.log("data0:", data_res_day[0].datetime);
-      console.log("dataL:", data_res_day.length);
+      console.log("new=", data_res_day[0].datetime);
+      console.log("data0=", data_res_day[0].datetime);
+      console.log("dataL=", data_res_day.length);
 
       var minusDate_day = new Date();
       // console.log("minusDate_min",`${minusDate_min.getFullYear()}-${minusDate_min.getMonth()}-${minusDate_min.getDate()} ${minusDate_min.getHours()}:${minusDate_min.getMinutes()}`)
@@ -336,15 +342,11 @@ console.log('分鐘');
       setDayDates(day_Date);
       setDayTemps(day_Temp);
       setDayHumis(day_Humi);
-      
-      console.log("day_Date:", day_Date); //日圖表之日期
-      console.log("day_Temp:", day_Temp);
-      console.log("day_Humi:", day_Humi);
 
-      day_Date.clear();
-      day_Temp.clear();
-      day_Humi.clear();
-    }, []);
+      console.log("day_Date=", day_Date); //日圖表之日期
+      console.log("day_Temp=", day_Temp);
+      console.log("day_Humi=", day_Humi);
+    });
   }
 
   function isDuringDate(isDate, beginDate) {
